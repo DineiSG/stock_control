@@ -11,3 +11,74 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+/*Formularios*/
+form{
+  max-width: 80%;
+  margin: 0 auto;
+  padding:15px 10px;
+  display:inline-block;
+  justify-content: center;
+}
+label{
+  display:flow-root;
+  margin:20px 20px;
+}
+span{
+  margin-right: 10px;
+  text-align:left;
+  font-weight: 600;
+  float:inline-start
+}
+input{
+  box-sizing: border-box;
+  border-radius: 3px;
+  border:1px solid rgba(181, 12, 242, 0.354);
+  float: inline-end;
+  text-transform:uppercase;
+}
+/*Estilo dos botoes*/
+.btn{
+  background-color:rgba(122, 5, 113, 0.871);
+  color: #FFF;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 3px;
+  width: 120px;
+  font-weight: bold;
+  border: none;
+  padding: 10px 10px;
+  font-size: 1em;
+}
+.btn.btndark{
+  background-color: #000;
+  border-radius: 0;
+}
+.btn.btn-outline{
+  background-color: #fdf3f3;
+  border-radius: 3px;
+  color: #000;
+  border: 1px solid #000;
+  padding: 7px 30px;
+}
+.btn:hover{
+  background-color:rgba(48, 155, 9, 0.871);
+  color: #FFF;
+}
+.btn.btn-outline :hover{
+  background-color: #000;
+}
+.btn.btn-danger:hover{
+  background-color: #DC3545;
+}
+button [disable]{
+  background-color: #AAA;
+}
+.container .error{
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 5px;
+  border-radius: 5px;
+}
