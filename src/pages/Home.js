@@ -23,7 +23,7 @@ const Home = () => {
             </div>
             <div class={styles.card}>
               <div class={styles.content}>
-              <Link to=''>
+              <Link to='/rel_estoque'>
                 <p>Relatório de Estoque</p>
               </Link>
               </div>
