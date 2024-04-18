@@ -10,96 +10,90 @@ const Filter = () => {
 
 
   return (
-    <div className="container-md">
-      <h2>Selecione um filtro:</h2>
-        <div className={styles.select}>
-          <div>
-          <button className={styles.filtrar} onClick={()=>setFiltroLoja(!filtroLoja)}>{filtroLoja?'Por Loja':'Filtrar por Loja'}</button>
-          {filtroLoja ? 
-            <table className="table table-success table-striped-columns">
-             <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Loja</th>
-                  <th>Marca</th>
-                  <th>Modelo</th>
-                  <th>Ano</th>
-                  <th>Cor</th>
-                  <th>Nº Tag</th>
-                </tr>
-            </thead>
-            <tbody>   
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-            </tbody>
-          </table> : null }
-          </div>
-          <div>
-          <button className={styles.filtrar} onClick={()=>setFiltroMarca(!filtroMarca)}>{filtroMarca?'Por Marca':'Filtrar por Marca'}</button>
-          {filtroMarca ? 
-            <table className="table table-success table-striped-columns">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Marca</th>
-                  <th>Modelo</th>
-                  <th>Ano</th>
-                  <th>Cor</th>
-                  <th>Loja</th>
-                  <th>Nº Tag</th>
-                </tr>
-              </thead>
-              <tbody>   
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </tbody>
-          </table> : null }
-          </div>
-          <div>
-          <button className={styles.filtrar} onClick={()=>setFiltroModelo(!filtroModelo)}>{filtroModelo? 'Por Modelo':'Filtrar por Modelo'}</button>
-          {filtroModelo? 
-          <table className="table table-success table-striped-columns">
-            <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Modelo</th>
-                  <th>Marca</th>
-                  <th>Ano</th>
-                  <th>Cor</th>
-                  <th>Loja</th>
-                  <th>Nº Tag</th>
-                </tr>
-              </thead>
-              <tbody>   
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </tbody>
-        </table> : null }
-        
+    <div>
+        <div class="container">
+          <h2>Selecione um filtro:</h2>
+          <div className={styles.select}>
+              <button className={styles.filtrar} onClick={()=>setFiltroLoja(!filtroLoja)}>{filtroLoja?'Por Loja':'Filtrar por Loja'}</button>
+              {filtroLoja ? 
+                <table className="table table-success">
+                  <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Loja</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Ano</th>
+                        <th>Cor</th>
+                        <th>Nº Tag</th>
+                      </tr>
+                  </thead>
+                  <tbody>   
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                  </tbody>
+                </table> : null }
+              <button className={styles.filtrar} onClick={()=>setFiltroMarca(!filtroMarca)}>{filtroMarca?'Por Marca':'Filtrar por Marca'}</button>
+              {filtroMarca ? 
+                <table className="table table-success">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Marca</th>
+                      <th>Modelo</th>
+                      <th>Ano</th>
+                      <th>Cor</th>
+                      <th>Loja</th>
+                      <th>Nº Tag</th>
+                    </tr>
+                  </thead>
+                  <tbody>   
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+              </table> : null }
+              <button className={styles.filtrar} onClick={()=>setFiltroModelo(!filtroModelo)}>{filtroModelo? 'Por Modelo':'Filtrar por Modelo'}</button>
+              {filtroModelo? 
+                <table className="table table-success">
+                  <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Modelo</th>
+                        <th>Marca</th>
+                        <th>Ano</th>
+                        <th>Cor</th>
+                        <th>Loja</th>
+                        <th>Nº Tag</th>
+                      </tr>
+                    </thead>
+                    <tbody>   
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+              </table> : null }
           </div>
         </div>
-        
     </div>
   )
 }

@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #aaaaaa44;
 }
 
 code {
@@ -14,22 +15,21 @@ code {
 h2{
   position:relative;
   margin:35px;
-  color:rgb(98, 5, 133);
-  display:inline-flexbox;
+  color:rgba(30, 5, 122, 0.871);
+  
 }
 
 
 /*Formularios*/
 form{
-  max-width: 80%;
-  margin: 0 auto;
-  padding:15px 10px;
-  display:inline-block;
-  justify-content: center;
+  margin: 8% 5%;
+  padding:20px 22px;
+  display:inherit
+  
+  
 }
 label{
-  display:flow-root;
-  margin:20px 20px;
+  margin:40px 20px;
 }
 span{
   margin-right: 10px;
@@ -38,19 +38,18 @@ span{
   float:inline-start
 }
 input{
-  box-sizing: border-box;
-  border-radius: 3px;
-  border:1px solid rgba(181, 12, 242, 0.354);
-  float: inline-end;
+  border-radius: 2px;
+  border:1px solid rgba(30, 5, 122, 0.871);
   text-transform:uppercase;
 }
+
 /*Estilo dos botoes*/
 .btn{
-  background-color:rgba(122, 5, 113, 0.871);
+  background-color:rgba(30, 5, 122, 0.871);
   color: #FFF;
   text-align: center;
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 2px;
   width: 120px;
   font-weight: bold;
   border: none;

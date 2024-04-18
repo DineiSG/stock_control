@@ -1,31 +1,42 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 .conteudo{
-   margin: 50px; 
-   display:flexbox;
-   justify-items: center;
+  
+   display:flex;
+   justify-content:space-around;
+   margin: 50px;
+   
+   
    
 }
+.conteudo :hover{
+  font-size: 30px;
+  font-weight: 600;
+  border-radius: 15px;
+}
+
 
 .card {
   position:relative;
-  width:1000px;
-  height:300px;
+  width:200px;
+  height:200px;
   border-radius: 2px;
-  background-color: #f0e9f054;
-  box-shadow: 1px 1px 7px #8b0394;
+  background-color: rgba(220, 231, 239, 0.871);
+  box-shadow: 1px 1px 7px #797879;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   margin-top: 50px;
-  
- 
+}h1{
+  margin-left: 5%;
 }
+
 
 .content p {
   margin-bottom: 10px;
-  color:#8b0394;
-  font-size: 50px;
+  color:#031194;
+  font-size: 25px;
+  padding: 10px;
 
 }

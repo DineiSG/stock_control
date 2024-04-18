@@ -8,16 +8,22 @@ const Home = () => {
       <div class="styles.container-md">
         <div class='col-md-12'>
            <h1>Seja Bem Vindo !!!</h1>
-          <div class="container text-center">
-          <div class="row align-items-center">
-            <div class="col">
-            </div>
+          <div class="container">
+          <div class="row">
+            
             <div class="col">
                <div className={styles.conteudo}>
             <div class={styles.card}>
               <div class={styles.content}>
               <Link to='/cad_veic'>
                 <p>Cadastrar Veículo</p>
+              </Link>
+              </div>
+            </div>
+            <div class={styles.card}>
+              <div class={styles.content}>
+              <Link to='/cad_loja'>
+                <p>Cadastrar Loja</p>
               </Link>
               </div>
             </div>
@@ -30,14 +36,12 @@ const Home = () => {
             </div>
             <div class={styles.card}>
               <div class={styles.content}>
-              <Link to=''>
+              <Link to='/rel_acesso'>
                 <p>Relatório de Acessos</p>
               </Link>
               </div>
             </div>
             </div>
-            </div>
-            <div class="col">
             </div>
             </div>
           </div>
