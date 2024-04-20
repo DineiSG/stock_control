@@ -10,14 +10,12 @@ span{
 input {
     background-color: rgba(252, 252, 252, 0.871);
 }
+
 .formulario_cad{
     height: 340px;
     width: 1000px;
     border-radius: 3px;
     margin: 2% 12%;
-    background-color: rgba(220, 231, 239, 0.871);
-    box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
-    
 }
 .cadastrar_lj{
     background-color:rgba(30, 5, 122, 0.871);
@@ -54,6 +52,10 @@ input {
 .nome{
     width: 200px;
 }
-h2{
-    
+.container{
+    border:1px solid rgba(30, 5, 122, 0.871);
+    box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
+    border-radius: 3px;
+    background-color: rgba(220, 231, 239, 0.871);
+    margin:25px 8%;
 }

@@ -1,0 +1,104 @@
+
+
+.group {
+  position: relative;
+}
+.logo{
+  position:relative;
+  left: 25%;
+  width: 600px;
+  margin-bottom: -8%;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 20px;
+  padding-bottom: 50px;
+  padding-right: 40px;
+  padding-left: 40px;
+  background-color:rgba(30, 5, 122, 0.871);
+  border-radius: 3px;
+  position: absolute;
+  margin-left: 30%;
+}
+
+.form p {
+  padding-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: .5px;
+  color: white;
+}
+
+.container_1 {
+  padding-top: 30px;
+}
+
+.main_input {
+  font-size: 20px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 300px;
+  border: none;
+  border-bottom: 1px solid #ffffff;
+  background: transparent;
+  color: #ffffff;
+ 
+}
+
+.main_input:focus {
+  outline:none;
+  border-bottom-color: #fffbfb;
+}
+
+.lebal_email {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  position: absolute;
+  pointer-events: none;
+  bottom: 15px;
+  top: 10px;
+  
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+.main_input:focus ~ .lebal_email,
+.main_input:valid ~ .lebal_email {
+  top: -50px;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+
+.main_input:focus ~ .highlight_span {
+  -webkit-animation: input-focus 0.3s ease;
+  animation: input-focus 0.3s ease;
+}
+
+@keyframes input_focus {
+  from {
+    background: #42ff1c;
+  }
+
+  to {
+    width: 185px;
+  }
+}
+
+.submit {
+  margin-top: 5rem;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color:30, 5, 122, 0.871;
+  font-weight: 600;
+  
+}
+.submit:hover{
+  background-color: #04a117;
+  color:#fffbfb
+}

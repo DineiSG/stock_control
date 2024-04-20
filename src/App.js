@@ -6,6 +6,8 @@ import CadVeic from './pages/CadVeic';
 import RelEstoque from './pages/RelEstoque';
 import CadLoja from './pages/CadLoja';
 import RelAcesso from './pages/RelAcesso';
+import Acesso from './components/Acesso';
+
 
 function App() {
   return (
@@ -13,7 +15,8 @@ function App() {
      <BrowserRouter>
      <Navbar/>
      <Routes>
-      <Route path='/' element={<Home/>} />
+      <Route path='/' element={<Acesso/>}/>
+      <Route path='/home' element={<Home/>} />
       <Route path='/cad_veic' element={<CadVeic/>}/>
       <Route path='/rel_estoque' element={<RelEstoque/>}/>
       <Route path='/cad_loja' element={<CadLoja/>}/>

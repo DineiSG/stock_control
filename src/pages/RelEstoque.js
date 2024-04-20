@@ -11,8 +11,6 @@ const RelEstoque = () => {
           <div className={styles.options}>
               <Filter></Filter>
           </div>
-          
-        
       </div>
     </div>
   )

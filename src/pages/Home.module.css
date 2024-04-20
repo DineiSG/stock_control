@@ -22,12 +22,12 @@
   height:200px;
   border-radius: 2px;
   background-color: rgba(220, 231, 239, 0.871);
-  box-shadow: 1px 1px 7px #797879;
+  box-shadow: 1px 1px 7px rgba(30, 5, 122, 0.871);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin-top: 50px;
+  margin-top: 8%;
 }h1{
   margin-left: 5%;
 }

@@ -12,20 +12,15 @@ cursor: pointer;
 
 .navbar {
 height: 60px;
-background-color: hsl(0, 0%, 10%);
+background-color: rgba(30, 5, 122, 0.871);
 padding: 20px 40px;
 display: flex;
 justify-content: space-between;
 align-items: center;
 margin-bottom: 30px;
+box-shadow: 1px 2px 10px #1e057ade;
 
 }
-
-.navbar .logo i {
-color: #0aa5ff;
-font-size: 22px;
-}
-
 .menu {
 display: flex;
 align-items: center;

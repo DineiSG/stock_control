@@ -11,15 +11,15 @@ const Filter = () => {
 
   return (
     <div>
-        <div class="container">
+        <div className={styles.container}>
           <h2>Selecione um filtro:</h2>
           <div className={styles.select}>
-              <button className={styles.filtrar} onClick={()=>setFiltroLoja(!filtroLoja)}>{filtroLoja?'Por Loja':'Filtrar por Loja'}</button>
+              <button className={styles.filtrar} onClick={()=>setFiltroLoja(!filtroLoja)}>
+                {filtroLoja?'Por Loja':'Filtrar por Loja'}</button>
               {filtroLoja ? 
                 <table className="table table-success">
                   <thead>
                       <tr>
-                        <th>#</th>
                         <th>Loja</th>
                         <th>Marca</th>
                         <th>Modelo</th>
@@ -36,7 +36,6 @@ const Filter = () => {
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
                       </tr>
                   </tbody>
                 </table> : null }
@@ -45,7 +44,6 @@ const Filter = () => {
                 <table className="table table-success">
                   <thead>
                     <tr>
-                      <th>#</th>
                       <th>Marca</th>
                       <th>Modelo</th>
                       <th>Ano</th>
@@ -62,7 +60,6 @@ const Filter = () => {
                       <td></td>
                       <td></td>
                       <td></td>
-                      <td></td>
                     </tr>
                   </tbody>
               </table> : null }
@@ -71,7 +68,6 @@ const Filter = () => {
                 <table className="table table-success">
                   <thead>
                       <tr>
-                        <th>#</th>
                         <th>Modelo</th>
                         <th>Marca</th>
                         <th>Ano</th>
@@ -82,7 +78,6 @@ const Filter = () => {
                     </thead>
                     <tbody>   
                       <tr>
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>

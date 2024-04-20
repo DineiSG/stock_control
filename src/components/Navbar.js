@@ -8,13 +8,15 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
         <div className={styles.logo}>
-          <img src='/logo.png' className={styles.logo}/>
+          <img src='/logo.png' className={styles.logo} alt='Stock Control' title='Stock Control'/>
         </div>
         <div className={styles.menu}>
           <div className={styles.links}>
-          <Link to='/'>Home</Link>
+          <Link to='/home'>Home</Link>
+          <Link to='/configuracoes'>Configurações</Link>
           </div>
-          <button className={styles.login}>Log In</button>
+          <Link to='/'><button className={styles.login}>Log In</button></Link>
+          
         </div>
     </nav>
   )

@@ -1,0 +1,44 @@
+.liberar{
+    height: 40px;
+    width: 120px;
+    border-radius: 3px;
+    background-color: rgba(30, 5, 122, 0.871);
+    font-size: 18px;
+    font-weight: 600;
+    color:rgba(254, 253, 255, 0.871);
+    margin:10px 50px ;
+    position: relative;
+    left:35%
+}
+.liberar:hover{
+    background-color: rgba(244, 246, 246, 0.871);
+    border:1px solid rgba(30, 5, 122, 0.871);
+    color:rgba(30, 5, 122, 0.871);
+    box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
+}
+.confirmacao{
+    height: 40px;
+    width: 120px;
+    border-radius: 3px;
+    background-color: rgba(30, 5, 122, 0.871);
+    font-size: 18px;
+    font-weight: 600;
+    color:rgba(254, 253, 255, 0.871);
+}
+.confirmacao:hover{
+    background-color: rgba(244, 246, 246, 0.871);
+    border:1px solid rgba(30, 5, 122, 0.871);
+    color:rgba(30, 5, 122, 0.871);
+    box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
+}
+.aviso{
+    color:rgba(30, 5, 122, 0.871);
+    font-size: 20px;
+    font-weight: 400;
+}
+.acesso{
+    border:1px solid rgba(30, 5, 122, 0.871);
+    box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
+    border-radius: 3px;
+    background-color: rgba(220, 231, 239, 0.871);
+}

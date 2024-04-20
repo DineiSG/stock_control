@@ -15,9 +15,6 @@ input {
     width: 1000px;
     border-radius: 3px;
     margin: 2% 12%;
-    background-color: rgba(220, 231, 239, 0.871);
-    box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
-    
 }
 .cadastrar{
     background-color:rgba(30, 5, 122, 0.871);
@@ -40,4 +37,11 @@ input {
 }
 .cadastro{
     margin-top:5%
+}
+.container{
+    border:1px solid rgba(30, 5, 122, 0.871);
+    box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
+    border-radius: 3px;
+    background-color: rgba(220, 231, 239, 0.871);
+    margin:25px 8%;
 }
