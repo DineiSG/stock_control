@@ -5,7 +5,7 @@ const Acesso = () => {
   return (
     <div>
       <div className='container-md'>
-        <img className={styles.logo} src='/logo_aspa.png' alt='logo'/>
+        <img className={styles.logo} src='/logo2.png' alt='logo'/>
         <form className={styles.form}>
           <p>Login</p>
           <div className={styles.group}>
