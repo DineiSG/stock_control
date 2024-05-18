@@ -1,10 +1,10 @@
 h1{
-    color: rgba(30, 5, 122, 0.871);
+    color: rgba(89, 3, 110, 0.871);
     font-weight: bold;
     font-style: oblique;
 }
 span{
-    color:rgba(30, 5, 122, 0.871)
+    color:rgba(89, 3, 110, 0.871)
 }
 
 input {
@@ -17,7 +17,7 @@ input {
     margin: 2% 12%;
 }
 .cadastrar{
-    background-color:rgba(30, 5, 122, 0.871);
+    background-color:rgba(89, 3, 110, 0.871);
     color: #FFF;
     text-align: center;
     cursor: pointer;
@@ -31,16 +31,16 @@ input {
   }
 .cadastrar:hover{
     background-color: rgba(244, 246, 246, 0.871);
-    border:1px solid rgba(30, 5, 122, 0.871);
-    color:rgba(30, 5, 122, 0.871);
+    border:1px solid rgba(89, 3, 110, 0.871);
+    color:rgba(89, 3, 110, 0.871);
     box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
 }
 .cadastro{
     margin-top:5%
 }
 .container{
-    border:1px solid rgba(30, 5, 122, 0.871);
-    box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
+    border:1px solid rgba(89, 3, 110, 0.871);
+    box-shadow: 1px 1px 8px rgba(89, 3, 110, 0.871);
     border-radius: 3px;
     background-color: rgba(220, 231, 239, 0.871);
     margin:25px 8%;

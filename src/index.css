@@ -15,7 +15,7 @@ code {
 h2{
   position:relative;
   margin:35px;
-  color:rgba(30, 5, 122, 0.871);
+  color:rgba(89, 3, 110, 0.871);
   
 }
 
@@ -39,7 +39,7 @@ span{
 }
 input{
   border-radius: 2px;
-  border:1px solid rgba(30, 5, 122, 0.871);
+  border:1px solid rgba(89, 3, 110, 0.871);
   text-transform:uppercase;
 }
 

@@ -11,14 +11,14 @@ cursor: pointer;
 }
 
 .navbar {
-height: 60px;
-background-color: rgba(30, 5, 122, 0.871);
+height: 70px;
+background-color: rgba(89, 3, 110, 0.871);
 padding: 20px 40px;
 display: flex;
 justify-content: space-between;
 align-items: center;
-margin-bottom: 30px;
-box-shadow: 1px 2px 10px #1e057ade;
+margin-bottom: 10px;
+box-shadow: 1px 2px 10px rgba(89, 3, 110, 0.871);
 
 }
 .menu {

@@ -1,3 +1,8 @@
+.box{
+  
+  padding-right:10% ;
+  padding-left: 10%;
+}
 
 
 .group {
@@ -5,9 +10,9 @@
 }
 .logo{
   position:relative;
-  left: 38%;
-  width: 300px;
-  margin-bottom: -8%;
+  left: 45%;
+  width: 700px;
+  margin-bottom: -45%;
 }
 
 .form {
@@ -18,15 +23,15 @@
   padding-bottom: 50px;
   padding-right: 40px;
   padding-left: 40px;
-  background-color:rgba(30, 5, 122, 0.871);
+  background-color:rgba(89, 3, 110, 0.871);
   border-radius: 3px;
   position: absolute;
-  margin-left: 30%;
+  
 }
 
 .form p {
   padding-bottom: 20px;
-  font-size: 24px;
+  font-size: 40px;
   font-weight: bold;
   letter-spacing: .5px;
   color: white;
