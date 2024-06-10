@@ -1,15 +1,14 @@
 
 .filtrar{
     height: 50px;
-    width: 180px;
+    width: 250px;
     border-radius: 3px;
     background-color: rgba(89, 3, 110, 0.871);
     font-size: 18px;
     font-weight: 600;
     color:rgba(254, 253, 255, 0.871);
     display: block;
-    margin:50px 0 ;
-    
+    margin: 0 38%
 }
 .filtrar:hover{
     color: rgba(89, 3, 110, 0.871);
@@ -27,6 +26,11 @@
     background-color: rgba(220, 231, 239, 0.871);
     margin:25px 0;
 }
+
+
+
+
+
 
 
 

@@ -16,6 +16,7 @@ input {
     border-radius: 3px;
     margin: 2% 12%;
 }
+/*Botao de input*/
 .cadastrar{
     background-color:rgba(89, 3, 110, 0.871);
     color: #FFF;
@@ -44,4 +45,11 @@ input {
     border-radius: 3px;
     background-color: rgba(220, 231, 239, 0.871);
     margin:25px 8%;
+}
+.selecionar{
+    
+        border-radius: 2px;
+        border:1px solid rgba(89, 3, 110, 0.871);
+        text-transform:uppercase;
+      
 }

@@ -1,5 +1,9 @@
 import React from 'react'
 import styles from './CadLoja.module.css'
+import { useState, useEffect } from 'react'
+
+
+
 
 const CadLoja = () => {
     return (

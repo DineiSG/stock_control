@@ -10,6 +10,7 @@ import Acesso from './components/Acesso';
 import CadUser from './pages/CadUser';
 
 
+
 function App() {
   return (
     <div className="App">
@@ -22,7 +23,7 @@ function App() {
       <Route path='/rel_estoque' element={<RelEstoque/>}/>
       <Route path='/cad_loja' element={<CadLoja/>}/>
       <Route path='/rel_acesso' element={<RelAcesso/>}/> 
-      <Route path='/cad_user' element={<CadUser/>}/>
+      {/*<Route path='/cad_user' element={<CadUser/>}/>*/}
      </Routes>
      </BrowserRouter>
     </div>
