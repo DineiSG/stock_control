@@ -1,34 +1,97 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react"
 
 
-
-export const useFetch = () => {
-    const urlLojas = "http://localhost:8090/api/lojas"
-    const urlVeiculos="http://localhost:8090/api/veiculos"
-
+export const useFetch = (url) => {
+    const [data, setData] = useState(null);
+   
+    // 5 - refatorando post
+    const [config, setConfig] = useState(null);
+    const [method, setMethod] = useState(null);
+    const [callFetch, setCallFetch] = useState(false);
+   
+    // 6 - loading
+    const [loading, setLoading] = useState(false);
+   
+    // 8 - tratando erros
+    const [error, setError] = useState(null);
+   
+    // 9 - desafio 6
+    const [itemId, setItemId] = useState(null);
   
-    const [data, setData]=useState(null)
-
-    useEffect(()=>{
-        const fetchData = async()=>{
-            const res = await fetch(urlVeiculos)
-            const json = await res.json()
-            setData(json)
+   
+    const httpConfig = (data, method) => {
+      if (method === "POST") {
+        setConfig({
+          method,
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+   
+        setMethod(method);
+      } else if (method === "DELETE") {
+        setConfig({
+          method,
+          headers: {
+            "Content-type": "application/json",
+          },
+        });
+   
+        setMethod(method);
+        setItemId(data);
+      }
+    };
+   
+    useEffect(() => {
+      const fetchData = async () => {
+        // 6 - loading
+        setLoading(true);
+   
+        try {
+          const res = await fetch(url);
+   
+          const json = await res.json();
+   
+          setData(json);
+        } catch (error) {
+          console.log(error.message);
+   
+          setError("Houve algum erro ao carregar os dados!");
         }
-        fetchData()
-    },[urlVeiculos])
-
-    useEffect(()=>{
-        const fetchData = async()=>{
-            const res = await fetch(urlLojas)
-            const json = await res.json()
-            setData(json)
+   
+        setLoading(false);
+      };
+   
+      fetchData();
+    }, [url, callFetch]);
+   
+    // 5 - refatorando post
+    useEffect(() => {
+      const httpRequest = async () => {
+        let json;
+   
+        if (method === "POST") {
+          let fetchOptions = [url, config];
+   
+          const res = await fetch(...fetchOptions);
+   
+          json = await res.json();
+        } else if (method === "DELETE") {
+          const deleteUrl = `http://localhost:3000/products/${itemId}`;
+   
+          const res = await fetch(deleteUrl, config);
+   
+          json = await res.json();
         }
-        fetchData()
-    },[urlLojas])
+   
+        setCallFetch(json);
+      };
+   
+      httpRequest();
+    }, [config, method, url, itemId]);
+   
+    return { data, httpConfig, loading, error };
+  };
 
-
-    return{data}
-  
-}
-
+export default useFetch

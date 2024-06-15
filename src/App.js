@@ -3,11 +3,12 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import CadVeic from './pages/CadVeic';
-import RelEstoque from './pages/RelEstoque';
+import Relatorios from './pages/Relatórios';
 import CadLoja from './pages/CadLoja';
-import RelAcesso from './pages/RelAcesso';
 import Acesso from './components/Acesso';
-import CadUser from './pages/CadUser';
+import Buscas from './pages/Buscas';
+import Search from './pages/Search';
+
 
 
 
@@ -20,9 +21,10 @@ function App() {
       <Route path='/' element={<Acesso/>}/>
       <Route path='/home' element={<Home/>} />
       <Route path='/cad_veic' element={<CadVeic/>}/>
-      <Route path='/rel_estoque' element={<RelEstoque/>}/>
+      <Route path='/relatorios' element={<Relatorios/>}/>
       <Route path='/cad_loja' element={<CadLoja/>}/>
-      <Route path='/rel_acesso' element={<RelAcesso/>}/> 
+      <Route path='/buscas' element={<Buscas/>}/> 
+      <Route path='search' element={<Search/>}/>
       {/*<Route path='/cad_user' element={<CadUser/>}/>*/}
      </Routes>
      </BrowserRouter>

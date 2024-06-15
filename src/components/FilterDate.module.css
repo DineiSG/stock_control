@@ -18,13 +18,14 @@ label {
 }
 .pesquisar{
   height: 50px;
-  width: 130px;
+  width: 150px;
   border-radius: 3px;
   background-color: rgba(89, 3, 110, 0.871);
   font-size: 18px;
   font-weight: 600;
   color:rgba(254, 253, 255, 0.871);
-  margin:80px 25px ;
+  margin:20px 43% ;
+
 }
 .pesquisar:hover{
   color: rgba(89, 3, 110, 0.871);

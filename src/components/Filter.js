@@ -1,5 +1,4 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
 import styles from './Filter.module.css'
 import useCombinedData from '../hooks/useCombinedData'
 import * as XLSX from'xlsx'
@@ -7,9 +6,7 @@ import * as XLSX from'xlsx'
 
 
 const Filter = () => {
-  const [filtroLoja, setFiltroLoja]=useState(false)
-
-  
+ 
   const urlA='http://localhost:8090/api/lojas'
   const urlB='http://localhost:8090/api/veiculos'
   const sortKey = 'descricao'
@@ -40,7 +37,7 @@ const Filter = () => {
     <div>
         <div className={styles.container}>
           <h2>Clique no botao abaixo para gerar o relatorio de estoque:</h2>
-          <button className={styles.filtrar}onClick={generateExcel} disabled={data.length === 0}>Gerar Relatorio em Excel</button>
+          <button className={styles.filtrar}onClick={generateExcel} disabled={data.length === 0}>Gerar Relatorio</button>
           <div className={styles.select}>
           </div>
         </div>

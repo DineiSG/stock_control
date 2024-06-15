@@ -1,24 +1,57 @@
 import React, { useState } from 'react'
 import styles from './CadVeic.module.css'
-import useInsertDataVeic from '../hooks/useInsertDataVeic'
 
 
+
+
+const url='http://localhost:8090/api/veiculos'
 
 const CadVeic = () => {
-    const [loja, setLoja]=useState('')
+
+    const [unidade, setUnidade]=useState('')
     const [marca, setMarca]=useState('')
     const [modelo, setModelo]=useState('')
     const [cor, setCor]=useState('')
-    const [ano, setAno]=useState('')
     const [placa, setPlaca]=useState('')
-    const [tag, setTag]=useState('')
-    const {insertDataVeic, loading, error, data} = useInsertDataVeic()
+    const [ano, setAno]=useState('')
+    const [valor_meio_acesso, setValorMeioAcesso]=useState('')
+    const [veiculo_status, setVeiculoStatus]= useState('')
+    const [loading, setLoading]=useState()
+    
 
-    const handleSubmit = (e) =>{
-        e.preventDefault();
-        insertDataVeic(loja, marca, modelo, cor, ano, placa, tag)
+
+    const handleSubmit = async (e)=>{
+        e.preventDefault()
+        const payload ={
+            unidade, marca, modelo,ano, cor, placa, valor_meio_acesso, veiculo_status
+        }
+        
+        console.log('Payload enviado: ', payload)
+
+        try{
+        const response = await fetch(url, {
+            method: 'POST', 
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(payload),
+        })
+            if (response.ok){
+                console.log('Cadastro realizado com sucesso!')
+                window.alert('Cadastro realizado com sucesso!');
+                window.location.reload();
+            }else{
+                console.log('Erro ao enviar os dados')
+                window.alert('Erro ao realizar o cadastro. Tente novamente.');
+            }
+        } catch (error) {
+            window.alert('Erro ao realizar o cadastro. Tente novamente.');
+        } finally {
+            
+        }
     }
-
+    
+   
 
     return (
         <div >
@@ -31,41 +64,40 @@ const CadVeic = () => {
                 <div class="container-lg">
                     <h2>Informe os dados do veículo:</h2>
                     <div className={styles.formulario}>
-                        <form className={styles.cadastro}onSubmit={handleSubmit}>
+                        <form className={styles.cadastro}  onSubmit={handleSubmit}>
                             <label>
                                 <span>Loja:</span>
-                                <select className={styles.selecionar}>
-                                <option >Selecione uma Loja</option>
-                                <option value="1">Ton Motors</option>
-                                <option value="2">Primeira Mao</option>
-                                <option value="3">Three</option>
-                                </select>
+                                <input type='text' name='loja' value={unidade} onChange={(e)=>setUnidade(e.target.value)} required ></input>
                             </label>
                             <label>
                                 <span>Marca:</span>
-                                <input type='text' name='marca' required></input>
+                                <input type='text' name='marca' value={marca} onChange={(e)=>setMarca(e.target.value)} required></input>
                             </label>
                             <label>
                                 <span>Modelo:</span>
-                                <input type='text' name='modelo' required></input>
+                                <input type='text' name='modelo' value={modelo} onChange={(e)=>setModelo(e.target.value)} required></input>
                             </label>
                             <label>
                                 <span>Cor:</span>
-                                <input type='text' name='cor' required></input>
+                                <input className={styles.cor} type='text' name='cor' value={cor} onChange={(e)=>setCor(e.target.value)} required></input>
                             </label>
                             <label>
                                 <span>Ano:</span>
-                                <input type='text' name='ano' required></input>
+                                <input className={styles.ano}type='text' name='ano' value={ano} onChange={(e)=>setAno(e.target.value)} required></input>
                             </label>
                             <label>
                                 <span>Placa:</span>
-                                <input type='text' name='placa' required></input>
+                                <input className={styles.placa}type='text' name='placa' value={placa} onChange={(e)=>setPlaca(e.target.value)} required></input>
                             </label>
                             <label>
                                 <span>Tag:</span>
-                                <input type='text' name='tag' required></input>
+                                <input className={styles.tag}type='text' name='tag' value={valor_meio_acesso} onChange={(e)=>setValorMeioAcesso(e.target.value)} required></input>
                             </label>
-                            <button className={styles.cadastrar}>Cadastrar</button>
+                            <label>
+                                <span>Status (D: Dentro/ F:Fora):</span>
+                                <input className={styles.status} type='text' name='status' value={veiculo_status} onChange={(e)=>setVeiculoStatus(e.target.value)} required maxLength={1}></input>
+                            </label>
+                            <button className={styles.cadastrar} onClick={()=>setLoading} disabled={loading}>{loading ? 'Cadastrando...' : 'Cadastrar'}</button>
                         </form>
                     </div>
                 </div>

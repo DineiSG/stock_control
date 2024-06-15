@@ -10,20 +10,18 @@ span{
 input {
     background-color: rgba(252, 252, 252, 0.871);
 }
-.formulario{
-    height: 340px;
-    width: 1000px;
+.formulario {
+    height: 350px;
+    width: 1100px;
     border-radius: 3px;
-    margin: 2% 12%;
+    margin: 2% 8%;
 }
 /*Botao de input*/
 .cadastrar{
     background-color:rgba(89, 3, 110, 0.871);
     color: #FFF;
-    text-align: center;
     cursor: pointer;
     border-radius: 2px;
-    width: 120px;
     font-weight: bold;
     border: none;
     padding: 10px 10px;
@@ -37,7 +35,7 @@ input {
     box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
 }
 .cadastro{
-    margin-top:5%
+    margin-top:3%
 }
 .container{
     border:1px solid rgba(89, 3, 110, 0.871);
@@ -46,10 +44,9 @@ input {
     background-color: rgba(220, 231, 239, 0.871);
     margin:25px 8%;
 }
-.selecionar{
-    
-        border-radius: 2px;
-        border:1px solid rgba(89, 3, 110, 0.871);
-        text-transform:uppercase;
-      
+.status{
+    width: 50px;
+}
+.tag, .ano, .placa, .cor{
+    width: 100px;
 }

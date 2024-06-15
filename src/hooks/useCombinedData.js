@@ -24,7 +24,7 @@ const useCombinedData = (urlA, urlB, sortKey) => {
                 const itemA = tableA.find(itemA => itemA.id === itemB.id_unidade)
                 return{
                     ...itemB,
-                    descricao: itemB ? itemA.descricao : 'Descricao nao encontrada'
+                    descricao: itemA ? itemA.descricao : 'Descricao nao encontrada'
                 }
             })
             const sortedData = sortAlphabetically(combinedData, sortKey)
@@ -39,6 +39,7 @@ const useCombinedData = (urlA, urlB, sortKey) => {
     }
     fetchdata()
   },[urlA,urlB, sortKey])
+
   return{data, loading, error}
   
 }
