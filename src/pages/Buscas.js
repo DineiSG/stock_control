@@ -1,10 +1,12 @@
 import React from 'react'
-import SearchForm from '../components/SearchForm'
+import SearchLojas from '../components/SearchLojas'
+import SearchVeiculos from '../components/SearchVeiculos'
 
 const Buscas = () => {
   return (
     <div>
-      <SearchForm></SearchForm>
+      <SearchLojas></SearchLojas>
+      <SearchVeiculos></SearchVeiculos>
     </div>
   )
 }

@@ -16,6 +16,7 @@ const CadVeic = () => {
     const [ano, setAno]=useState('')
     const [valor_meio_acesso, setValorMeioAcesso]=useState('')
     const [veiculo_status, setVeiculoStatus]= useState('')
+    const [renavan, setRenavan]=useState('')
     const [loading, setLoading]=useState()
     
 
@@ -23,7 +24,7 @@ const CadVeic = () => {
     const handleSubmit = async (e)=>{
         e.preventDefault()
         const payload ={
-            unidade, marca, modelo,ano, cor, placa, valor_meio_acesso, veiculo_status
+            unidade, marca, modelo,ano, cor, placa, valor_meio_acesso, veiculo_status, renavan
         }
         
         console.log('Payload enviado: ', payload)
@@ -92,6 +93,10 @@ const CadVeic = () => {
                             <label>
                                 <span>Tag:</span>
                                 <input className={styles.tag}type='text' name='tag' value={valor_meio_acesso} onChange={(e)=>setValorMeioAcesso(e.target.value)} required></input>
+                            </label>
+                            <label>
+                                <span>Renavan:</span>
+                                <input type='text' name='modelo' value={renavan} onChange={(e)=>setRenavan(e.target.value)} required></input>
                             </label>
                             <label>
                                 <span>Status (D: Dentro/ F:Fora):</span>

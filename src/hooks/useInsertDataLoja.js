@@ -18,9 +18,9 @@ const useInsertDataLoja = (url) => {
 
         })
         if(response.ok){
-            
+            window.alert("Cadastro realizado com sucesso.")
         }else{
-           
+            window.alert("Falha ao realizar o cadastro.")
             throw new Error('Erro ao enviar dados para o servidor')
         }
          window.location.reload();//Função responsavel por recarregar a pagina apos o envio de dados
@@ -29,7 +29,7 @@ const useInsertDataLoja = (url) => {
     }catch(err){
         setError(err.message)
     }finally{
-        setLoading(false)
+        setLoading(true)
     }
   }
   return {cadastro, loading, error}

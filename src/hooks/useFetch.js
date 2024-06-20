@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 
 
-export const useFetch = (url) => {
+export const useFetch = (urlLojas, urlVeiculos) => {
     const [data, setData] = useState(null);
    
     // 5 - refatorando post
@@ -49,7 +49,7 @@ export const useFetch = (url) => {
         setLoading(true);
    
         try {
-          const res = await fetch(url);
+          const res = await fetch(urlLojas);
    
           const json = await res.json();
    
@@ -64,7 +64,7 @@ export const useFetch = (url) => {
       };
    
       fetchData();
-    }, [url, callFetch]);
+    }, [urlLojas, callFetch]);
    
     // 5 - refatorando post
     useEffect(() => {
@@ -72,7 +72,7 @@ export const useFetch = (url) => {
         let json;
    
         if (method === "POST") {
-          let fetchOptions = [url, config];
+          let fetchOptions = [urlLojas,  config];
    
           const res = await fetch(...fetchOptions);
    
@@ -89,7 +89,7 @@ export const useFetch = (url) => {
       };
    
       httpRequest();
-    }, [config, method, url, itemId]);
+    }, [config, method, urlLojas, itemId]);
    
     return { data, httpConfig, loading, error };
   };

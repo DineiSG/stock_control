@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import styles from './CadLoja.module.css'
 import useInsertDataLoja from '../hooks/useInsertDataLoja'
 
@@ -8,6 +8,8 @@ const CadLoja = () => {
     const { cadastro, loading, error } = useInsertDataLoja('http://localhost:8090/api/lojas')
     const [lojas, setlojas] = useState({ descricao: '', box: 0, telefone: '', email: '', vagas: '' })
 
+    
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setlojas((prevData) => ({
@@ -16,10 +18,10 @@ const CadLoja = () => {
         }))
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = useCallback ((e) => {
         e.preventDefault()
         setlojas(cadastro)
-    }
+    })
 
 
 
@@ -56,7 +58,6 @@ const CadLoja = () => {
                             </label>
                             <button type="submit" className={styles.cadastrar_lj} disabled={loading}>{loading ? 'Cadastrando...' : 'Cadastrar'}</button>
                         </form>
-                        {error && <p style={{ color: 'red' }}>{error}</p>}
                     </div>
                 </div>
             </div>
