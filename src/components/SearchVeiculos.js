@@ -21,7 +21,7 @@ const SearchVeiculos = () => {
                 setError('')
             }else{
                 setResults([])
-                setError(window.alert("Nao há nenhuma loja com o nome informado."))
+                setError(window.alert("Nao há nenhum veiculo com a placa informada."))
             }
 
             

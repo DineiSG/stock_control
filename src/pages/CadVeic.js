@@ -2,13 +2,12 @@ import React, { useState } from 'react'
 import styles from './CadVeic.module.css'
 
 
-
-
 const url='http://localhost:8090/api/veiculos'
 
 const CadVeic = () => {
 
     const [unidade, setUnidade]=useState('')
+    const [id_unidade, setIdUnidade]=useState('')
     const [marca, setMarca]=useState('')
     const [modelo, setModelo]=useState('')
     const [cor, setCor]=useState('')
@@ -24,8 +23,23 @@ const CadVeic = () => {
     const handleSubmit = async (e)=>{
         e.preventDefault()
         const payload ={
-            unidade, marca, modelo,ano, cor, placa, valor_meio_acesso, veiculo_status, renavan
+            unidade,id_unidade, marca, modelo,ano, cor, placa, valor_meio_acesso, veiculo_status, renavan
         }
+
+        const toUpperCasePayload=(data)=>{
+            const upperCaseData = {};
+            for (const key in data){
+                if (typeof data[key] === 'string'){
+                    upperCaseData[key] = data[key].toUpperCase()
+                }else{
+                    upperCaseData[key]=data[key]
+                }
+            }
+            return upperCaseData
+        }
+
+        const upperCasePayload = toUpperCasePayload(payload)
+        console.log('Payload enviado: ', upperCasePayload)
         
         console.log('Payload enviado: ', payload)
 
@@ -35,7 +49,7 @@ const CadVeic = () => {
             headers:{
                 'Content-Type':'application/json'
             },
-            body: JSON.stringify(payload),
+            body: JSON.stringify(upperCasePayload),
         })
             if (response.ok){
                 console.log('Cadastro realizado com sucesso!')
@@ -69,6 +83,10 @@ const CadVeic = () => {
                             <label>
                                 <span>Loja:</span>
                                 <input type='text' name='loja' value={unidade} onChange={(e)=>setUnidade(e.target.value)} required ></input>
+                            </label>
+                            <label>
+                                <span>Cod Loja::</span>
+                                <input className={styles.tag} type='number' name='Cod' value={id_unidade} onChange={(e)=>setIdUnidade(e.target.value)} required></input>
                             </label>
                             <label>
                                 <span>Marca:</span>

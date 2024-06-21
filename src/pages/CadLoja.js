@@ -14,14 +14,14 @@ const CadLoja = () => {
         const { name, value } = e.target;
         setlojas((prevData) => ({
             ...prevData,
-            [name]: value,
+            [name]: value.toUpperCase()
         }))
     }
 
-    const handleSubmit = useCallback ((e) => {
-        e.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault(e)
         setlojas(cadastro)
-    })
+    }
 
 
 
@@ -40,6 +40,7 @@ const CadLoja = () => {
                                 <span>Nome:</span>
                                 <input className={styles.nome} type='text' name='descricao' value={lojas.descricao} onChange={handleChange} required></input>
                             </label>
+                            
                             <label>
                                 <span>Nº Box:</span>
                                 <input className={styles.box} type='number' name='box' value={lojas.box} onChange={handleChange} required></input>
