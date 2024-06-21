@@ -53,7 +53,7 @@ const CadVeic = () => {
         })
             if (response.ok){
                 console.log('Cadastro realizado com sucesso!')
-                window.alert('Cadastro realizado com sucesso!');
+                window.alert('Veiculo cadastrado com sucesso!');
                 window.location.reload();
             }else{
                 console.log('Erro ao enviar os dados')

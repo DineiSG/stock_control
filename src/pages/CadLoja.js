@@ -1,28 +1,64 @@
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import styles from './CadLoja.module.css'
-import useInsertDataLoja from '../hooks/useInsertDataLoja'
 
 
+const url='http://localhost:8090/api/lojas'
 const CadLoja = () => {
 
-    const { cadastro, loading, error } = useInsertDataLoja('http://localhost:8090/api/lojas')
-    const [lojas, setlojas] = useState({ descricao: '', box: 0, telefone: '', email: '', vagas: '' })
-
+    const [descricao, setDescricao]=useState('')
+    const [box, setBox]=useState('')
+    const [telefone, setTelefone]=useState('')
+    const [email, setEmail]=useState('')
+    const [vagas, setVagas]=useState('')
+    const [loading, setLoading]=useState()
     
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setlojas((prevData) => ({
-            ...prevData,
-            [name]: value.toUpperCase()
-        }))
-    }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault(e)
-        setlojas(cadastro)
-    }
+    const handleSubmit = async (e)=>{
+        e.preventDefault()
+        const payload ={
+            descricao, box, telefone, email, vagas
+        }
 
+        const toUpperCasePayload=(data)=>{
+            const upperCaseData = {};
+            for (const key in data){
+                if (typeof data[key] === 'string'){
+                    upperCaseData[key] = data[key].toUpperCase()
+                }else{
+                    upperCaseData[key]=data[key]
+                }
+            }
+            return upperCaseData
+        }
+
+        const upperCasePayload = toUpperCasePayload(payload)
+        console.log('Payload enviado: ', upperCasePayload)
+        
+        console.log('Payload enviado: ', payload)
+
+        try{
+        const response = await fetch(url, {
+            method: 'POST', 
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(upperCasePayload),
+        })
+            if (response.ok){
+                console.log('Cadastro realizado com sucesso!')
+                window.alert('Loja cadastrada com sucesso!');
+                window.location.reload();
+            }else{
+                console.log('Erro ao enviar os dados')
+                window.alert('Erro ao realizar o cadastro. Tente novamente.');
+            }
+        } catch (error) {
+            window.alert('Erro ao realizar o cadastro. Tente novamente.');
+        } finally {
+            
+        }
+    }
 
 
     return (
@@ -38,26 +74,26 @@ const CadLoja = () => {
                         <form className={styles.cadastro_lj} onSubmit={handleSubmit}>
                             <label>
                                 <span>Nome:</span>
-                                <input className={styles.nome} type='text' name='descricao' value={lojas.descricao} onChange={handleChange} required></input>
+                                <input className={styles.nome} type='text' name='descricao' value={descricao} onChange={(e)=>setDescricao(e.target.value)} required></input>
                             </label>
                             
                             <label>
                                 <span>Nº Box:</span>
-                                <input className={styles.box} type='number' name='box' value={lojas.box} onChange={handleChange} required></input>
+                                <input className={styles.box} type='number' name='box' value={box} onChange={(e)=>setBox(e.target.value)} required></input>
                             </label>
                             <label>
                                 <span>Tel.:</span>
-                                <input type='text' name='telefone' value={lojas.telefone} onChange={handleChange} required></input>
+                                <input type='text' name='telefone' value={telefone} onChange={(e)=>setTelefone(e.target.value)} required></input>
                             </label>
                             <label>
                                 <span>E-mail:</span>
-                                <input className={styles.email} type='text' name='email' value={lojas.email} onChange={handleChange} required></input>
+                                <input className={styles.email} type='text' name='email' value={email} onChange={(e)=>setEmail(e.target.value)} required></input>
                             </label>
                             <label >
                                 <span>Qtd Vagas:</span>
-                                <input className={styles.vagas} type='text' name='vagas' value={lojas.vagas} onChange={handleChange} required></input>
+                                <input className={styles.vagas} type='text' name='vagas' value={vagas} onChange={(e)=>setVagas(e.target.value)} required></input>
                             </label>
-                            <button type="submit" className={styles.cadastrar_lj} disabled={loading}>{loading ? 'Cadastrando...' : 'Cadastrar'}</button>
+                            <button type="submit" className={styles.cadastrar_lj} onClick={()=>setLoading} disabled={loading}>{loading ? 'Cadastrando...' : 'Cadastrar'}</button>
                         </form>
                     </div>
                 </div>
