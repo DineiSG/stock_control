@@ -15,9 +15,28 @@ const CadLoja = () => {
 
 
     const handleSubmit = async (e)=>{
+         /*Função que trata da inserção de data de forma automática */
+         const formatTimestamp = (date) => {
+            const pad = (num, size) => ('000' + num).slice(size * -1);
+            const offset = -date.getTimezoneOffset();
+            const sign = offset >= 0 ? '+' : '-';
+            const offsetHours = pad(Math.floor(Math.abs(offset) / 60), 2);
+            const offsetMinutes = pad(Math.abs(offset) % 60, 2);
+            const dateString = date.getFullYear() + '-' +
+                               pad(date.getMonth() + 1, 2) + '-' +
+                               pad(date.getDate(), 2) + 'T' +
+                               pad(date.getHours(), 2) + ':' +
+                               pad(date.getMinutes(), 2) + ':' +
+                               pad(date.getSeconds(), 2) + '.' +
+                               pad(date.getMilliseconds(), 5) +
+                               sign + offsetHours + ':' +  offsetMinutes
+            return dateString;
+        };
+        const dataRegistro = formatTimestamp(new Date());
+
         e.preventDefault()
         const payload ={
-            descricao, box, telefone, email, vagas
+            descricao, box, telefone, email, vagas, dataRegistro
         }
 
         const toUpperCasePayload=(data)=>{

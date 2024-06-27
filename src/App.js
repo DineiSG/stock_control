@@ -8,8 +8,7 @@ import CadLoja from './pages/CadLoja';
 import Acesso from './components/Acesso';
 import Buscas from './pages/Buscas';
 import Search from './pages/Search';
-
-
+import Footer from './components/Footer';
 
 
 function App() {
@@ -27,7 +26,9 @@ function App() {
       <Route path='search' element={<Search/>}/>
       {/*<Route path='/cad_user' element={<CadUser/>}/>*/}
      </Routes>
+     <Footer/>
      </BrowserRouter>
+     
     </div>
   );
 }
