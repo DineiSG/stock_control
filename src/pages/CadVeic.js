@@ -5,7 +5,6 @@ import styles from './CadVeic.module.css'
 const url='http://localhost:8090/api/veiculos'
 
 const CadVeic = () => {
-
     const [unidade, setUnidade]=useState('')
     const [id_unidade, setIdUnidade]=useState('')
     const [marca, setMarca]=useState('')
@@ -21,9 +20,29 @@ const CadVeic = () => {
 
 
     const handleSubmit = async (e)=>{
+
+        /*Função que trata da inserção de data de forma automática */
+        const formatTimestamp = (date) => {
+            const pad = (num, size) => ('000' + num).slice(size * -1);
+            const offset = -date.getTimezoneOffset();
+            const sign = offset >= 0 ? '+' : '-';
+            const offsetHours = pad(Math.floor(Math.abs(offset) / 60), 2);
+            const offsetMinutes = pad(Math.abs(offset) % 60, 2);
+            const dateString = date.getFullYear() + '-' +
+                               pad(date.getMonth() + 1, 2) + '-' +
+                               pad(date.getDate(), 2) + 'T' +
+                               pad(date.getHours(), 2) + ':' +
+                               pad(date.getMinutes(), 2) + ':' +
+                               pad(date.getSeconds(), 2) + '.' +
+                               pad(date.getMilliseconds(), 5) +
+                               sign + offsetHours + ':' +  offsetMinutes
+            return dateString;
+        };
+        const dataRegistro = formatTimestamp(new Date());
+
         e.preventDefault()
         const payload ={
-            unidade,id_unidade, marca, modelo,ano, cor, placa, valor_meio_acesso, veiculo_status, renavan
+            unidade,id_unidade, marca, modelo,ano, cor, placa, valor_meio_acesso, veiculo_status, renavan, dataRegistro
         }
 
         const toUpperCasePayload=(data)=>{
@@ -36,6 +55,7 @@ const CadVeic = () => {
                 }
             }
             return upperCaseData
+            
         }
 
         const upperCasePayload = toUpperCasePayload(payload)
@@ -80,6 +100,7 @@ const CadVeic = () => {
                     <h2>Informe os dados do veículo:</h2>
                     <div className={styles.formulario}>
                         <form className={styles.cadastro}  onSubmit={handleSubmit}>
+                            
                             <label>
                                 <span>Loja:</span>
                                 <input type='text' name='loja' value={unidade} onChange={(e)=>setUnidade(e.target.value)} required ></input>

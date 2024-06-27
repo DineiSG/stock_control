@@ -46,7 +46,7 @@ const SearchLojas = () => {
                     <button className={styles.buscar} type='submit'>Buscar</button>
                     </form>
                 </div>
-               <table className="table table-success" border="1">
+               <table className="table table-success table-striped-columns" border="1">
                   <thead>
                       <tr>
                           <th>Cod. Loja</th>
