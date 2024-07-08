@@ -7,7 +7,7 @@ import Relatorios from './pages/Relatórios';
 import CadLoja from './pages/CadLoja';
 import Acesso from './components/Acesso';
 import Buscas from './pages/Buscas';
-import Search from './pages/Search';
+
 import Footer from './components/Footer';
 
 
@@ -22,11 +22,11 @@ function App() {
       <Route path='/cad_veic' element={<CadVeic/>}/>
       <Route path='/relatorios' element={<Relatorios/>}/>
       <Route path='/cad_loja' element={<CadLoja/>}/>
-      <Route path='/buscas' element={<Buscas/>}/> 
-      <Route path='search' element={<Search/>}/>
+      <Route path='/buscas' element={<Buscas/>}/>
+       
       {/*<Route path='/cad_user' element={<CadUser/>}/>*/}
      </Routes>
-     <Footer/>
+    
      </BrowserRouter>
      
     </div>

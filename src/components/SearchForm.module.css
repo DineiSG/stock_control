@@ -17,10 +17,11 @@ input {
     box-shadow: 1px 1px 8px rgba(89, 3, 110, 0.871);
     border-radius: 3px;
     background-color: rgba(220, 231, 239, 0.871);
-    margin:25px 8%;
+    margin:5% 8% 5% 8%;
 }
 .buscar{
-    
+    height: 40px;
+    width: 80px;
     color: #FFF;
     text-align: center;
     cursor: pointer;
@@ -37,7 +38,29 @@ input {
     box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
 }
 .pesquisa{
-    margin-top: 5px;
+    margin-top: 3px;
     margin-bottom: 3px;
 
+}
+.edit{
+    height: 40px;
+    width: 180px;
+    color: #FFF;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 2px;
+    border:1px solid rgba(89, 3, 110, 0.871);
+    background-color:rgba(89, 3, 110, 0.871);
+    font-weight: bold;
+    margin: 30px;
+
+}
+.edit:hover{
+    background-color: rgba(244, 246, 246, 0.871);
+    border:1px solid rgba(89, 3, 110, 0.871);
+    color:rgba(89, 3, 110, 0.871);
+    box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
+}
+.edit_data{
+    max-width: 100px;
 }

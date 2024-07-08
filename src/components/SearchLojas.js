@@ -4,6 +4,7 @@ import styles from './SearchForm.module.css'
 
 
 const SearchLojas = () => {
+    const [busca, setBusca]=useState(false)
     const [query, setQuery]= useState()
     const [results, setResults]=useState([])
     const [error, setError]= useState('')
@@ -43,9 +44,11 @@ const SearchLojas = () => {
                         <span>Loja:</span>
                        <input type='text' value={query} onChange={(e)=>setQuery(e.target.value)} required/> 
                     </label>
-                    <button className={styles.buscar} type='submit'>Buscar</button>
+                    <button className={styles.buscar} type='submit'onClick={()=>setBusca(!busca)}>
+                    {busca?'Buscar':'Buscar'}</button>
                     </form>
                 </div>
+                {busca?
                <table className="table table-primary table-striped-columns" border="1">
                   <thead>
                       <tr>
@@ -70,7 +73,7 @@ const SearchLojas = () => {
 
                     ))}
                   </tbody>
-                </table>
+                </table>: null}
             </div>
         </div>
     )

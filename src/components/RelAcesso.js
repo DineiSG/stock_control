@@ -1,11 +1,10 @@
 import React from 'react'
-import styles from './FilterDate.module.css'
+import styles from './RelAcesso.module.css'
 import useControlAcces from '../hooks/useControlAcces'
 import * as XLSX from'xlsx'
 
 
-const FilterDate = () => {
-  
+const RelAcesso = () => {
   
   const url='http://localhost:8090/api/acessos'
   const {data}= useControlAcces(url); 
@@ -47,4 +46,4 @@ const FilterDate = () => {
   )
 }
 
-export default FilterDate
+export default RelAcesso

@@ -1,20 +1,21 @@
 
 .filtrar{
     height: 50px;
-    width: 250px;
+    width: 200px;
     border-radius: 3px;
     background-color: rgba(89, 3, 110, 0.871);
     font-size: 18px;
     font-weight: 600;
     color:rgba(254, 253, 255, 0.871);
     display: block;
-    margin: 0 38%
+    margin: 0 80%
 }
 .filtrar:hover{
     color: rgba(89, 3, 110, 0.871);
     background-color:rgba(244, 246, 246, 0.871) ;
     box-shadow: 1px 1px 8px rgba(89, 3, 110, 0.871)
 }
+
 .select{
     margin: 3% ;
     
@@ -26,8 +27,31 @@
     background-color: rgba(220, 231, 239, 0.871);
     margin:25px 0;
 }
+.buscar{
+    height: 40px;
+    width: 80px;
+    color: #FFF;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 2px;
+    border:1px solid rgba(89, 3, 110, 0.871);
+    background-color:rgba(89, 3, 110, 0.871);
+    font-weight: bold;
+    margin-top: 20px;
+}
+.buscar:hover{
+    background-color: rgba(244, 246, 246, 0.871);
+    border:1px solid rgba(89, 3, 110, 0.871);
+    color:rgba(89, 3, 110, 0.871);
+    box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
+}
 
+.pesquisa{
+    margin-top: 2px;
+    margin-bottom: 3px;
+    
 
+}
 
 
 

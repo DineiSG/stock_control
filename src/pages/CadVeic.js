@@ -131,7 +131,7 @@ const CadVeic = () => {
                             </label>
                             <label>
                                 <span>Tag:</span>
-                                <input className={styles.tag}type='text' name='tag' value={valor_meio_acesso} onChange={(e)=>setValorMeioAcesso(e.target.value)} required></input>
+                                <input className={styles.tag}type='text' name='tag' maxLength={6} value={valor_meio_acesso} onChange={(e)=>setValorMeioAcesso(e.target.value)} required></input>
                             </label>
                             <label>
                                 <span>Renavan:</span>

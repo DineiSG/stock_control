@@ -1,6 +1,6 @@
 import React from 'react'
-import Filter from '../components/Filter'
-import FilterDate from '../components/FilterDate'
+import RelEstoqueLoja from '../components/RelEstoqueLoja'
+import RelAcesso from '../components/RelAcesso'
 
 
 const Relatorios = () => {
@@ -12,7 +12,7 @@ const Relatorios = () => {
               </svg></h1>
       <div className="container-md">
           <div >
-              <Filter></Filter>
+              <RelEstoqueLoja></RelEstoqueLoja>
           </div>
       </div>
       <h1>Relatório de Acessos<svg xmlns="http://www.w3.org/2000/svg" width="100" height="40" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
@@ -21,7 +21,7 @@ const Relatorios = () => {
       <i class="bi bi-clipboard-data"></i>
       <div className="container-md">
         <div className="styles acessos">
-          <FilterDate></FilterDate>
+          <RelAcesso></RelAcesso>
         </div>
         
       </div>

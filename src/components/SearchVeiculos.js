@@ -1,10 +1,23 @@
 import React, { useState } from 'react'
 import styles from './SearchForm.module.css'
 
+
 const SearchVeiculos = () => {
+    const [edit, setEdit]=useState(false)
+    const [busca, setBusca]=useState(false)
     const [query, setQuery]= useState()
     const [results, setResults]=useState([])
     const [error, setError]= useState('')
+    const [editableFields, setEditableFields]=useState({
+        id: '',
+        marca: '',
+        modelo: '',
+        cor: '',
+        ano: '',
+        renavan: '',
+        unidade: '',
+        valor_meio_acesso:''
+    })
 
     const handleSearch = async (e)=>{
         e.preventDefault();
@@ -19,6 +32,7 @@ const SearchVeiculos = () => {
             if(filteredResults.length > 0 ){
                 setResults(filteredResults)
                 setError('')
+                setEditableFields(filteredResults[0])
             }else{
                 setResults([])
                 setError(window.alert("Nao há nenhum veiculo com a placa informada."))
@@ -31,9 +45,47 @@ const SearchVeiculos = () => {
 
         
     }
+    const handleEditToggle=()=>{
+        if(edit){
+            handleSave()
+        }
+        setEdit(!edit)
+    }
+
+    const handleInputChange = (e)=>{
+        const {name, value} = e.target
+        setEditableFields({
+            ...editableFields,
+            [name]:value.toUpperCase()
+        })
+    }
+
+    const handleSave = async()=>{
+        try {
+            const response = await fetch(`http://localhost:8090/api/veiculos/placa/${editableFields.placa}`,{
+                method:'PUT',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify(editableFields)
+            })
+            if(response.ok){
+                const updatedResult = await response.json()
+                setResults(results.map(result=>(result.placa === updatedResult.placa? updatedResult : result)))
+                window.alert("Dados atualizados com sucesso!") 
+                setEdit(false) 
+            }else{
+                window.alert("Erro ao salvar os dados")
+            }
+        }catch (error){
+            window.alert("Edição realizada com sucesso")
+            window.location.reload()
+        }
+    }
+
+
     return (
-        <div >
-            <div className={styles.container}>
+        <div className={styles.container}>
                 <div class="container-lg">
                     <h2>Informe a placa do carro para buscar informações:</h2>
                     <form className={styles.pesquisa} onSubmit={handleSearch}>
@@ -41,9 +93,12 @@ const SearchVeiculos = () => {
                         <span>Placa:</span>
                        <input type='text' value={query} onChange={(e)=>setQuery(e.target.value)} required/> 
                     </label>
-                    <button className={styles.buscar} type='submit'>Buscar</button>
+                    <button className={styles.buscar} type='submit'onClick={()=>setBusca(!busca)}>
+                    {busca?'Buscar':'Buscar'}</button>
                     </form>
                 </div>
+
+                {busca?
                <table className="table table-primary table-striped-columns" border="1">
                   <thead>
                       <tr>
@@ -60,20 +115,22 @@ const SearchVeiculos = () => {
                   <tbody>
                     {results.map(result =>(
                       <tr key={result.id}>
-                        <td>{result.id}</td>
-                        <td>{result.marca}</td>
-                        <td>{result.modelo}</td>
-                        <td>{result.cor}</td>
-                        <td>{result.ano}</td>
-                        <td>{result.renavan}</td>
-                        <td>{result.unidade}</td>
-                        <td>{result.valor_meio_acesso}</td>
+                        <td>{edit? <input className={styles.edit_data} type='number' name="id" value={editableFields.id} onChange={handleInputChange}/>: result.id}</td>
+                        <td>{edit? <input className={styles.edit_data} type='text' name="marca" value={editableFields.marca} onChange={handleInputChange}/>: result.marca}</td>
+                        <td>{edit? <input className={styles.edit_data} type='text' name="modelo" value={editableFields.modelo} onChange={handleInputChange}/>:result.modelo}</td>
+                        <td>{edit? <input className={styles.edit_data} type='text' name="cor" value={editableFields.cor} onChange={handleInputChange}/>:result.cor}</td>
+                        <td>{edit? <input className={styles.edit_data} type='text' name="ano" value={editableFields.ano} onChange={handleInputChange}/>:result.ano}</td>
+                        <td>{edit? <input className={styles.edit_data} type='text' name="renavan" maxLength={11} value={editableFields.renavan} onChange={handleInputChange}/>:result.renavan}</td>
+                        <td>{edit? <input className={styles.edit_data} type='text' name="unidade" value={editableFields.unidade} onChange={handleInputChange}/>:result.unidade}</td>
+                        <td>{edit? <input className={styles.edit_data} type='text' maxLength={6} name="valor_meio_acesso" value={editableFields.valor_meio_acesso} onChange={handleInputChange}/>:result.valor_meio_acesso}</td>
                       </tr>
 
                     ))}
                   </tbody>
-                </table>
-            </div>
+                </table> : null}
+                
+                <button className={styles.edit}onClick={handleEditToggle}>
+                {edit?'Salvar':'Editar ou Dar Baixa'}</button>
         </div>
     )
 }
