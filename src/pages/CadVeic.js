@@ -38,11 +38,11 @@ const CadVeic = () => {
                                sign + offsetHours + ':' +  offsetMinutes
             return dateString;
         };
-        const dataRegistro = formatTimestamp(new Date());
+        const data_registro = formatTimestamp(new Date());
 
         e.preventDefault()
         const payload ={
-            unidade,id_unidade, marca, modelo,ano, cor, placa, valor_meio_acesso, veiculo_status, renavan, dataRegistro
+            unidade,id_unidade, marca, modelo,ano, cor, placa, valor_meio_acesso, veiculo_status, renavan, data_registro
         }
 
         const toUpperCasePayload=(data)=>{

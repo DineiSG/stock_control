@@ -39,7 +39,6 @@ input {
 }
 .container{
     border:1px solid rgba(89, 3, 110, 0.871);
-    box-shadow: 1px 1px 8px rgba(89, 3, 110, 0.871);
     border-radius: 3px;
     background-color: rgba(220, 231, 239, 0.871);
     margin:25px 3%;

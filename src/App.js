@@ -8,7 +8,6 @@ import CadLoja from './pages/CadLoja';
 import Acesso from './components/Acesso';
 import Buscas from './pages/Buscas';
 
-import Footer from './components/Footer';
 
 
 function App() {

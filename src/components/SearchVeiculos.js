@@ -19,6 +19,7 @@ const SearchVeiculos = () => {
         valor_meio_acesso:''
     })
 
+    /*Função que busca informações de um veiculo de acordo com a placa */
     const handleSearch = async (e)=>{
         e.preventDefault();
         if(!query) return;
@@ -37,21 +38,28 @@ const SearchVeiculos = () => {
                 setResults([])
                 setError(window.alert("Nao há nenhum veiculo com a placa informada."))
             }
-
-            
         }catch(error){
             window.alert("Erro ao buscar dados: ", error)
         }
+    }
 
+    /*Função para editar os dados encontrados */
+    const handleEditToggle= async ()=>{
+        if(edit){
+            try{
+                await handleSave()
+                setEdit(false)
+            }catch(error){
+                console.error("Erro ao salvar: ", error)
+            }
+           
+        }else{
+            setEdit(true)
+        }
         
     }
-    const handleEditToggle=()=>{
-        if(edit){
-            handleSave()
-        }
-        setEdit(!edit)
-    }
 
+    /*Função que transforma os campos de uma tabela gerada apos a pesquisa em campos editaveis */
     const handleInputChange = (e)=>{
         const {name, value} = e.target
         setEditableFields({
@@ -60,6 +68,7 @@ const SearchVeiculos = () => {
         })
     }
 
+    /*Função que salva os dados */
     const handleSave = async()=>{
         try {
             const response = await fetch(`http://localhost:8090/api/veiculos/placa/${editableFields.placa}`,{
@@ -72,13 +81,15 @@ const SearchVeiculos = () => {
             if(response.ok){
                 const updatedResult = await response.json()
                 setResults(results.map(result=>(result.placa === updatedResult.placa? updatedResult : result)))
-                window.alert("Dados atualizados com sucesso!") 
+                window.alert("Dados editados com sucesso!") 
                 setEdit(false) 
+                
             }else{
                 window.alert("Erro ao salvar os dados")
             }
+            window.location.reload()
         }catch (error){
-            window.alert("Edição realizada com sucesso")
+            window.alert(`Erro ao enviar dados para o servidor`, error)
             window.location.reload()
         }
     }
@@ -97,7 +108,6 @@ const SearchVeiculos = () => {
                     {busca?'Buscar':'Buscar'}</button>
                     </form>
                 </div>
-
                 {busca?
                <table className="table table-primary table-striped-columns" border="1">
                   <thead>
@@ -128,9 +138,8 @@ const SearchVeiculos = () => {
                     ))}
                   </tbody>
                 </table> : null}
-                
                 <button className={styles.edit}onClick={handleEditToggle}>
-                {edit?'Salvar':'Editar ou Dar Baixa'}</button>
+                {edit?'Salvar':'Editar'}</button>
         </div>
     )
 }

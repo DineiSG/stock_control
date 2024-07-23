@@ -10,8 +10,15 @@ const RelEstoqueLoja = () => {
     const [filtroLoja, setFiltroLoja]=useState(false)
     const [query, setQuery]= useState()
     const [results, setResults]=useState([])
-    const [error, setError]= useState('')
+    const [setError]= useState('')
 
+    /*Função que trata do retorno de data */
+    const formatTimestamp = (timestamp) => {
+      const date = new Date(timestamp);
+      return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }); 
+    };
+
+    /*Função que busca o estoque de acordo com a loja */
     const handleSearch = async (e)=>{
         e.preventDefault();
         if(!query) return;
@@ -29,21 +36,17 @@ const RelEstoqueLoja = () => {
                 setResults([])
                 setError(window.alert("Nao há nenhuma loja com o nome informado."))
             }
-
-            
         }catch(error){
-            window.alert("Erro ao buscar dados: ", error)
-            
         }
-
-        
     }
+
+    
 
     /*Funçao para gerar o relatorio do Excel com as colunas que serao exibidas já definidas */
     const generateExcel = ()=>{
       const formattedData = results.map(item => ({
         Loja:item.unidade,
-        Cod_Veiculo:item.id,
+        Data_Cadastro:formatTimestamp(item.data_registro),
         Marca:item.marca,
         Modelo:item.modelo,
         Ano_de_Fabricaçao:item.ano,
@@ -80,7 +83,7 @@ const RelEstoqueLoja = () => {
                   <thead>
                       <tr>
                           <th>Loja</th>
-                          <th>Cod.Veiculo</th>
+                          <th>Data Cadastro</th>
                           <th>Marca</th> 
                           <th>Modelo</th>
                           <th>Cor</th>
@@ -94,7 +97,7 @@ const RelEstoqueLoja = () => {
                     {results.map(result =>(
                       <tr key={result.id}>
                         <td>{result.unidade}</td>
-                        <td>{result.id}</td>
+                        <td>{formatTimestamp(result.data_registro)}</td>
                         <td>{result.marca}</td>
                         <td>{result.modelo}</td>
                         <td>{result.cor}</td>
