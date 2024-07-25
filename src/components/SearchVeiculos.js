@@ -108,6 +108,7 @@ const SearchVeiculos = () => {
                     {busca?'Buscar':'Buscar'}</button>
                     </form>
                 </div>
+                <div className={styles.table}>
                 {busca?
                <table className="table table-primary table-striped-columns" border="1">
                   <thead>
@@ -140,6 +141,7 @@ const SearchVeiculos = () => {
                 </table> : null}
                 <button className={styles.edit}onClick={handleEditToggle}>
                 {edit?'Salvar':'Editar'}</button>
+            </div>
         </div>
     )
 }

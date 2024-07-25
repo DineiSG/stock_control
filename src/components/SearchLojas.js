@@ -99,6 +99,7 @@ const SearchLojas = () => {
                     {busca?'Buscar':'Buscar'}</button>
                     </form>
                 </div>
+                <div className={styles.table}>
                 {busca?
                <table className="table table-primary table-striped-columns" border="1">
                   <thead>
@@ -112,7 +113,7 @@ const SearchLojas = () => {
                        </tr>
                   </thead>
                   <tbody>
-                    {results.map((result, index) =>(
+                    {results.map((result) =>(
                       <tr key={result.id}>
                         <td>{result.id}</td>
 						<td>{edit? <input className={styles.edit_data} type='text' name="descricao" value={editableFields.descricao} onChange={handleInputChange}/>: result.descricao}</td>
@@ -120,13 +121,14 @@ const SearchLojas = () => {
                         <td>{edit? <input className={styles.edit_data} type='text' name="telefone" value={editableFields.telefone} onChange={handleInputChange}/>: result.telefone}</td>
                         <td>{edit? <input className={styles.edit_data} type='text' name="email" value={editableFields.email} onChange={handleInputChange}/>: result.email}</td>
                         <td>{edit? <input className={styles.edit_data} type='text' name="vagas" value={editableFields.vagas} onChange={handleInputChange}/>: result.vagas}</td>
-                        )
+                        
                       </tr>
                     ))}
                   </tbody>
                 </table>: null}
                 <button className={styles.edit}onClick={handleEditToggle}>
                 {edit?'Salvar':'Editar'}</button>
+                </div>
             </div>      
            
     </div>    

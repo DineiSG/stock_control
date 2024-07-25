@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './CadVeic.module.css'
 
 
@@ -16,9 +16,10 @@ const CadVeic = () => {
     const [veiculo_status, setVeiculoStatus]= useState('')
     const [renavan, setRenavan]=useState('')
     const [loading, setLoading]=useState()
+    const [lojas, setLojas]=useState([])
     
 
-
+    //Função para inserir os dados no BD
     const handleSubmit = async (e)=>{
 
         /*Função que trata da inserção de data de forma automática */
@@ -60,7 +61,6 @@ const CadVeic = () => {
 
         const upperCasePayload = toUpperCasePayload(payload)
         console.log('Payload enviado: ', upperCasePayload)
-        
         console.log('Payload enviado: ', payload)
 
         try{
@@ -85,7 +85,35 @@ const CadVeic = () => {
             
         }
     }
-    
+
+    //Buscando lojas para preencher o select do front end
+    useEffect(() =>{
+        const fetchLojas = async ()=>{
+          try{
+            const response = await fetch(`http://localhost:8090/api/lojas`)
+            const data = await response.json()
+            console.log('Dados da API: ', data)
+            if(Array.isArray(data)){
+              setLojas(data)
+            }else{
+              console.error('A resposta da API nao e um array', data)
+            }
+          }catch(error){
+            console.error('Erro ao buscar lojas: ', error)
+          }
+        }
+        fetchLojas()
+    },[])
+
+    //Separando os valores de descrição e id da loja 
+    const handleUnidadeChange = (e) =>{
+    const selectedOption = e.target.selectedOptions[0]
+    const id = Number(selectedOption.value)
+    const descricao=selectedOption.getAttribute('data-descricao')
+
+    setUnidade(descricao)
+    setIdUnidade(id)
+    }
    
 
     return (
@@ -100,14 +128,19 @@ const CadVeic = () => {
                     <h2>Informe os dados do veículo:</h2>
                     <div className={styles.formulario}>
                         <form className={styles.cadastro}  onSubmit={handleSubmit}>
-                            
                             <label>
                                 <span>Loja:</span>
-                                <input type='text' name='loja' value={unidade} onChange={(e)=>setUnidade(e.target.value)} required ></input>
+                                <select type='text'name='loja' value={id_unidade} onChange={handleUnidadeChange} required >
+                                <option value="" >SELECIONE UMA LOJA</option>
+                                    {lojas.map((loja)=>(
+                                        <option key={loja.id} value={loja.id} data-descricao={loja.descricao}>
+                                         {loja.descricao}
+                                        </option>
+                                    ))}
+                                </select>
                             </label>
                             <label>
-                                <span>Cod Loja::</span>
-                                <input className={styles.tag} type='number' name='Cod' value={id_unidade} onChange={(e)=>setIdUnidade(e.target.value)} required></input>
+                                <input className={styles.tag} type='hidden' value={id_unidade}></input>
                             </label>
                             <label>
                                 <span>Marca:</span>

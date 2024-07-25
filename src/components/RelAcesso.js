@@ -15,8 +15,17 @@ const RelAcesso = () => {
     /*Função que trata do retorno de data */
     const formatTimestamp = (timestamp) => {
       const date = new Date(timestamp);
-      return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour:'2-digit', minute:'2-digit' }); 
+      return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric'}); 
     };
+
+    // Função que calcula a quantidade de dias em estoque
+    const calculateDaysInStock = (data_registro)=>{
+      const currentDate = new Date()
+      const registrationDateobject = new Date(data_registro)
+      const differenceInMilliseconds = currentDate -registrationDateobject
+      const differenceInDays = Math.floor(differenceInMilliseconds / (1000*60*60*24))
+      return differenceInDays
+    }
 
     /*Função que busca o estoque de acordo com a loja */
     const handleSearch = async (e)=>{
@@ -81,6 +90,7 @@ const RelAcesso = () => {
                           <th>Modelo: {result.modelo}</th>
                           <th>Cor: {result.cor}</th>
                           <th>Data Cadastro: {formatTimestamp(result.data_registro)}</th>
+                          <th>Dias em Estoque: {calculateDaysInStock(result.data_registro)}</th>
                           <th>Status: {result.veiculo_status}</th>
                        </tr>
                        ))}

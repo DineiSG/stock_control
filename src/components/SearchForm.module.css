@@ -63,3 +63,6 @@ input {
 .edit_data{
     max-width: 100px;
 }
+.table{
+    margin: 0 2%;
+}

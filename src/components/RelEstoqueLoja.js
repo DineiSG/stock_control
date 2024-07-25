@@ -1,5 +1,5 @@
 /*Este componente é responsável por buscar os veiculos e gerar os relatorios em excel */
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styles from './Relatorios.module.css'
 import * as XLSX from'xlsx'
 
@@ -11,12 +11,23 @@ const RelEstoqueLoja = () => {
     const [query, setQuery]= useState()
     const [results, setResults]=useState([])
     const [setError]= useState('')
+    const [lojas, setLojas]=useState([])
 
     /*Função que trata do retorno de data */
     const formatTimestamp = (timestamp) => {
       const date = new Date(timestamp);
       return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }); 
     };
+
+   // Função que calcula a quantidade de dias em estoque
+    const calculateDaysInStock = (data_registro)=>{
+      const currentDate = new Date()
+      const registrationDateobject = new Date(data_registro)
+      const differenceInMilliseconds = currentDate -registrationDateobject
+      const differenceInDays = Math.floor(differenceInMilliseconds / (1000*60*60*24))
+      return differenceInDays
+    }
+
 
     /*Função que busca o estoque de acordo com a loja */
     const handleSearch = async (e)=>{
@@ -34,19 +45,39 @@ const RelEstoqueLoja = () => {
                 setError('')
             }else{
                 setResults([])
-                setError(window.alert("Nao há nenhuma loja com o nome informado."))
+                setError(window.alert("Nao há estoque valido para a loja informada."))
+                window.location.reload()
             }
         }catch(error){
+          console.error('Erro ao conectar ao servidor')
         }
     }
 
-    
+    //Buscando as lojas para o select
+    useEffect(() =>{
+      const fetchLojas = async ()=>{
+        try{
+          const response = await fetch(`http://localhost:8090/api/lojas`)
+          const data = await response.json()
+          console.log('Dados da API: ', data)
+          if(Array.isArray(data)){
+            setLojas(data)
+          }else{
+            console.error('A resposta da API nao e um array', data)
+          }
+        }catch(error){
+          console.error('Erro ao buscar lojas: ', error)
+        }
+      }
+      fetchLojas()
+    },[])
 
     /*Funçao para gerar o relatorio do Excel com as colunas que serao exibidas já definidas */
     const generateExcel = ()=>{
       const formattedData = results.map(item => ({
         Loja:item.unidade,
         Data_Cadastro:formatTimestamp(item.data_registro),
+        Dias_Em_Estoque:calculateDaysInStock(item.data_registro),
         Marca:item.marca,
         Modelo:item.modelo,
         Ano_de_Fabricaçao:item.ano,
@@ -63,28 +94,36 @@ const RelEstoqueLoja = () => {
       XLSX.utils.book_append_sheet(workbook, worksheet, "Data")
       XLSX.writeFile(workbook, "Relatorio de Estoque.xlsx")
     }
-
     
   return (
     <div>
         <div className={styles.container}>
-          <div>
+          <div className={styles.input}>
               <h2>Informe o nome da loja:</h2>
                 <form className={styles.pesquisa} onSubmit={handleSearch}>
                 <label>
-                    <span>Loja:</span>
-                    <input type='text' value={query} onChange={(e)=>setQuery(e.target.value)} required/> 
+                    <span>Selecione uma loja:</span>
+                    <select value={query} onChange={(e)=>setQuery(e.target.value)} required>
+                      <option value=""></option>
+                      {lojas.map((loja)=>(
+                        <option key={loja.id} value={loja.descricao}>
+                          {loja.descricao}
+                        </option>
+                      ))} 
+                    </select>
                 </label>
                 <button className={styles.buscar} type='submit'onClick={()=>setFiltroLoja(!filtroLoja)}>{filtroLoja?'Buscar':'Buscar'}</button>
                 </form>
           </div >
-          <div className={styles.table}>
+        </div>  
+          <div className={styles.table} id='printable'>
             {filtroLoja ? 
                <table className="table table-primary table-striped-columns" border="1">
                   <thead>
                       <tr>
                           <th>Loja</th>
                           <th>Data Cadastro</th>
+                          <th>Dias em Estoque</th>
                           <th>Marca</th> 
                           <th>Modelo</th>
                           <th>Cor</th>
@@ -99,6 +138,7 @@ const RelEstoqueLoja = () => {
                       <tr key={result.id}>
                         <td>{result.unidade}</td>
                         <td>{formatTimestamp(result.data_registro)}</td>
+                        <td>{result.unidade ? calculateDaysInStock(result.data_registro):'-'}</td>
                         <td>{result.marca}</td>
                         <td>{result.modelo}</td>
                         <td>{result.cor}</td>
@@ -113,7 +153,7 @@ const RelEstoqueLoja = () => {
                 </table>: null }
             </div>
           <button className={styles.filtrar}onClick={generateExcel} disabled={results.length === 0}>Gerar Relatorio XLSX</button>
-        </div>
+        
     </div>
   )
 }
