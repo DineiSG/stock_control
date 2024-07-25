@@ -1,6 +1,6 @@
 /*Este componente é responsável por buscar os veiculos e gerar os relatorios em excel */
 import { useState } from 'react'
-import styles from './RelEstoqueLoja.module.css'
+import styles from './Relatorios.module.css'
 import * as XLSX from'xlsx'
 
 
@@ -77,7 +77,8 @@ const RelEstoqueLoja = () => {
                 </label>
                 <button className={styles.buscar} type='submit'onClick={()=>setFiltroLoja(!filtroLoja)}>{filtroLoja?'Buscar':'Buscar'}</button>
                 </form>
-          </div>
+          </div >
+          <div className={styles.table}>
             {filtroLoja ? 
                <table className="table table-primary table-striped-columns" border="1">
                   <thead>
@@ -110,11 +111,8 @@ const RelEstoqueLoja = () => {
                     ))}
                   </tbody>
                 </table>: null }
-          
-          <button className={styles.filtrar}onClick={generateExcel} disabled={results.length === 0}>Gerar Relatorio</button>
-          <div className={styles.select}>
-        </div>
-          
+            </div>
+          <button className={styles.filtrar}onClick={generateExcel} disabled={results.length === 0}>Gerar Relatorio XLSX</button>
         </div>
     </div>
   )
