@@ -1,0 +1,9 @@
+{
+    "administrator":[
+        {
+        "id":1,
+        "login":"administrador",
+        "senha":"Aspa@2024"
+        }
+    ]
+}

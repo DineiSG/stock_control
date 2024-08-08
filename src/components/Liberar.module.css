@@ -1,3 +1,56 @@
+h1{
+    color: rgba(89, 3, 110, 0.871);
+    font-weight: bold;
+    font-style: oblique;
+    margin:3%;
+}
+span{
+    color:rgba(89, 3, 110, 0.871);
+    
+}
+
+input, option {
+    background-color: rgba(252, 252, 252, 0.871);
+}
+.formulario {
+    height: 360px;
+    width: 1100px;
+    margin: 2% 8% 5% 8%;
+}
+/*Botao de input*/
+.cadastrar{
+    background-color:rgba(89, 3, 110, 0.871);
+    color: #FFF;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 2px;
+    border: none;
+    padding: 15px 15px;
+    float:right;
+    margin-top: 50px;
+  }
+.cadastrar:hover{
+    background-color: rgba(244, 246, 246, 0.871);
+    border:1px solid rgba(89, 3, 110, 0.871);
+    color:rgba(89, 3, 110, 0.871);
+    box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
+}
+.cadastro{
+    margin-top:3%
+}
+.container{
+    border:1px solid rgba(89, 3, 110, 0.871);
+    background-color: rgba(220, 231, 239, 0.871);
+    margin:25px 5%;
+}
+.status{
+    width: 50px;
+}
+.tag, .ano, .placa, .cor{
+    width: 100px;
+}
+
+/*Search Liberacoes*/
 
 .filtrar{
     height: 50px;
@@ -20,18 +73,13 @@
     margin: 3% ;
     
 }
-.container{
-    border:1px solid rgba(89, 3, 110, 0.871);
-    background-color: rgba(220, 231, 239, 0.871);
-    margin:25px 0;
-}
+
 .buscar{
     height: 40px;
     width: 80px;
     color: #FFF;
     text-align: center;
     cursor: pointer;
-    border-radius: 2px;
     border:1px solid rgba(89, 3, 110, 0.871);
     background-color:rgba(89, 3, 110, 0.871);
     font-weight: bold;
@@ -45,13 +93,11 @@
 }
 
 .pesquisa{
-    margin-top: 2px;
+    margin-top: 2px ;
     margin-bottom: 3px;
 }
 
-.table{
-    margin: 0 2%;
-}
+
 .head{
  display:grid;
 }
@@ -73,17 +119,14 @@
     top:0
     }
 }
-.liberacoes{
-    margin: 2% 8% 5% 8%;
+.cont{
+    border:1px solid rgba(89, 3, 110, 0.871);
+    background-color: rgba(220, 231, 239, 0.871);
+    margin:25px 5%;
 }
-
-
-
-
-
-
-
-
-
-
-
+.consult{
+    margin:4% -5%
+}
+.table{
+    margin: 0 5%;
+}

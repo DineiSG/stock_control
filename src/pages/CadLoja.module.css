@@ -14,7 +14,6 @@ input {
 .formulario_cad{
     height: 340px;
     width: 1000px;
-    border-radius: 3px;
     margin: 5% 10% 5% 10%;
 }
 .cadastrar_lj{
@@ -54,7 +53,6 @@ input {
 }
 .container{
     border:1px solid rgba(89, 3, 110, 0.871);
-    border-radius: 3px;
     background-color: rgba(220, 231, 239, 0.871);
     margin:25px 8%;
 }

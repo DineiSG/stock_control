@@ -2,6 +2,7 @@ h1{
     color: rgba(89, 3, 110, 0.871);
     font-weight: bold;
     font-style: oblique;
+    margin:3%;
 }
 span{
     color:rgba(89, 3, 110, 0.871)
@@ -14,9 +15,8 @@ input {
 
 .container{
     border:1px solid rgba(89, 3, 110, 0.871);
-    border-radius: 3px;
     background-color: rgba(220, 231, 239, 0.871);
-    margin:5% 8% 5% 8%;
+    margin:3% 8% ;
 }
 .buscar{
     height: 40px;
@@ -64,5 +64,25 @@ input {
     max-width: 100px;
 }
 .table{
-    margin: 0 2%;
+    margin: 0 8%;
+}
+.head{
+    display:grid;
+}
+@media print{
+    .input * {
+        position:absolute;
+        left: -9999px;
+        margin-top: 0;
+        display:inline
+    }
+    
+    #printable, #printable *{
+    visibility: visible;
+    }
+    #printable{
+    position:absolute;
+    left: 0;
+    top:0
+    }
 }

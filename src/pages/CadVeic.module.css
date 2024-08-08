@@ -2,6 +2,7 @@ h1{
     color: rgba(89, 3, 110, 0.871);
     font-weight: bold;
     font-style: oblique;
+    margin:3%;
 }
 span{
     color:rgba(89, 3, 110, 0.871)
@@ -39,7 +40,6 @@ input, option {
 }
 .container{
     border:1px solid rgba(89, 3, 110, 0.871);
-    border-radius: 3px;
     background-color: rgba(220, 231, 239, 0.871);
     margin:25px 3%;
 }

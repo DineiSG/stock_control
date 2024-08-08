@@ -25,13 +25,13 @@ margin-bottom: 10px;
 display: flex;
 align-items: center;
 gap: 32px;
+
 }
 
 .links {
 display: flex;
 gap: 24px;
-border-right: 1px solid #999999;
-padding-inline: 24px;
+padding-inline: 1%;
 }
 
 .links a {
@@ -51,7 +51,7 @@ border-radius: 3px;
 
 }
 .login:hover {
-background-color: #04a117;
+background-color: #00ff1e;
 color: white;
 }
 .logo{
@@ -60,4 +60,72 @@ color: white;
 .menu-btn {
     display: block;
 }
+
+.dropdown:hover{
+    color:#00ff1e;
+}
+/*-------------------------------------------*/
+
+  .navItem {
+    position: relative;
+    margin-bottom: 10px;
+  }
+  
+  .nav {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color:#ffffff;
+    font-weight: 600;
+    background-color: rgba(89, 3, 110, 0.003);
+    margin:auto 5px
+    
+  }
+  
+  .nav:hover {
+    color:#00ff1e;
+  }
+  
+  .dropdownMenu {
+    display: none;
+    position:absolute;
+    background-color: white;
+    border-radius: 3px;
+    top: 100%;
+    padding: 0 15px;
+    list-style:none;
+    color:rgba(89, 3, 110, 0.871) ;
+    font-size: 16px;
+    
+
+  }
+  
+  .navItem:hover .dropdownMenu {
+    display: block;
+    background-color:rgb(255, 249, 249) ;
+    color:rgba(89, 3, 110, 0.871);
+    border: 1px solid;
+    font-weight: 600;
+  }
+  
+  .dropdown {
+    display:list-item;
+    text-decoration: none;
+    color: rgba(89, 3, 110, 0.871);
+  }
+
+  .pesquisar{
+    background: block;
+    border: none;
+    font-size: 18px;
+    padding: 10px;
+    margin-bottom: 10px;
+    color:#ffffff;
+    font-weight: 600;
+    background-color: rgba(89, 3, 110, 0.003);
+  }
+  .pesquisar:hover{
+    color:#00ff1e;
+  }
   

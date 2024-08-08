@@ -1,0 +1,23 @@
+@media print{
+    .liberacoes * {
+        position:absolute;
+        left: -9999px;
+        margin-top: 0;
+        display:inline
+    }
+    .input{
+        position:absolute;
+        left: -9999px;
+        margin-top: 0;
+        display:inline
+    }
+    
+    .printable, .printable *{
+    visibility: visible;
+    }
+    .printable{
+    position:absolute;
+    left: 0;
+    top:0
+    }
+}
