@@ -55,6 +55,19 @@
 .head{
  display:grid;
 }
+
+.quantidade{
+    font-weight: 600;
+    font-weight: bold ;
+    color:rgba(3, 0, 4, 0.871);
+    border:1px solid rgba(114, 117, 245, 0.555);
+    padding:5px;
+    text-align:left;
+    background-color: rgba(180, 181, 244, 0.555);
+    width: 310px;
+}
+
+
 /*Removendo a caixa de pesquisa do impressao*/
 @media print{
     .input * {

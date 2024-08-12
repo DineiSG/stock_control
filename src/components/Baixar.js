@@ -7,17 +7,22 @@ const Baixar = () => {
   const [query, setQuery] = useState()
   const [results, setResults] = useState([])
   const [error, setError] = useState('')
+  const [selectedMotivo, setSelectedMotivo] = useState('')
   const [editableFields, setEditableFields] = useState({
     id: '',
+    placa: '',
     marca: '',
     modelo: '',
     cor: '',
     observacoes: '',
+    renavan: '',
     unidade: '',
     valor_meio_acesso: '',
-    data_alteracao:''
-    
+    motivo: ''
   })
+
+
+
 
   /*Função que busca informações de um veiculo de acordo com a placa */
   const handleSearch = async (e) => {
@@ -70,31 +75,65 @@ const Baixar = () => {
 
   /*Função que salva os dados atualizados */
   const handleSave = async () => {
-    
+
+    const formatTimestamp = (date) => {
+      const pad = (num, size) => ('000' + num).slice(size * -1);
+      const offset = -date.getTimezoneOffset();
+      const sign = offset >= 0 ? '+' : '-';
+      const offsetHours = pad(Math.floor(Math.abs(offset) / 60), 2);
+      const offsetMinutes = pad(Math.abs(offset) % 60, 2);
+      const dateString = date.getFullYear() + '-' +
+        pad(date.getMonth() + 1, 2) + '-' +
+        pad(date.getDate(), 2) + 'T' +
+        pad(date.getHours(), 2) + ':' +
+        pad(date.getMinutes(), 2) + ':' +
+        pad(date.getSeconds(), 2) + '.' +
+        pad(date.getMilliseconds(), 5) +
+        sign + offsetHours + ':' + offsetMinutes
+      return dateString;
+    };
+    const data_registro = formatTimestamp(new Date());
+
     /*Função que adiciona a data atual na hora de atualizar um veiculo */
     const currentDate = new Date().toISOString();
-    const updatedFields = {...editableFields, data_alteracao: currentDate}
-    
+    const updatedFields = { ...editableFields, data_alteracao: currentDate, valor_meio_acesso: '' }
+    const baixaData = { ...editableFields, motivo: selectedMotivo, data_registro };
+
     try {
-      const response = await fetch(`http://localhost:8090/api/veiculos/placa/${editableFields.placa}`, {
+      const baixaResponse = await fetch('http://localhost:8090/api/baixas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(baixaData)
+      });
+
+      if (!baixaResponse.ok) {
+        window.alert("Erro ao mover os dados para a tabela `baixas`", error);
+        return;
+      }
+
+
+
+      const updateResponse = await fetch(`http://localhost:8090/api/veiculos/placa/${editableFields.placa}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(updatedFields)
       })
-      if (response.ok) {
-        const updatedResult = await response.json()
+      if (updateResponse.ok.ok) {
+        const updatedResult = await updateResponse.ok.json()
         setResults(results.map(result => (result.placa === updatedResult.placa ? updatedResult : result)))
         window.alert("Dados editados com sucesso!")
         setEdit(false)
 
       } else {
-        window.alert("Erro ao salvar os dados")
+        window.alert("Baixa realizada com sucesso.") //Averiguar posteriormente por que estava retornando este erro mesmo quando a operaçao estava correta
       }
       window.location.reload()
     } catch (error) {
-      window.alert(`Erro ao enviar dados para o servidor`, error)
+      window.alert(`Erro ao enviar dados para o servidor`)
       window.location.reload()
     }
   }
@@ -124,7 +163,8 @@ const Baixar = () => {
                   <th>Cor</th>
                   <th>Loja</th>
                   <th>Nº Tag</th>
-                  <th>Justificativa</th>
+                  <th>Motivo</th>
+                  <th>Observacoes</th>
                 </tr>
               </thead>
               <tbody>
@@ -133,9 +173,16 @@ const Baixar = () => {
                     <td>{result.marca}</td>
                     <td>{result.modelo}</td>
                     <td>{result.cor}</td>
-                    <td>{edit ? <input className={styles.edit_data} type='text' name="unidade" value={editableFields.unidade} onChange={handleInputChange} /> : result.unidade}</td>
-                    <td>{edit ? <input className={styles.edit_data} type='text' maxLength={6} name="valor_meio_acesso" value={editableFields.valor_meio_acesso} onChange={handleInputChange} /> : result.valor_meio_acesso}</td>
-                    <td>{edit ? <textarea type='text' name="observacoes" maxLength={11} value={editableFields.observacoes} onChange={handleInputChange} /> : result.observacoes}</td>
+                    <td>{result.unidade}</td>
+                    <td>{result.valor_meio_acesso}</td>
+                    <td>{<select type='text' name="motivo" value={selectedMotivo} onChange={(e) => setSelectedMotivo(e.target.value)} required>
+                      <option value="">INFORME O MOTIVO DA BAIXA</option>
+                      <option value="VENDA" >VENDA</option>
+                      <option value="DEVOLUCAO" >DEVOLUCAO</option>
+                      <option value="TRANSFERENCIA" >TRANSFERENCIA</option>
+                    </select>}
+                    </td>
+                    <td>{edit ? <textarea className={styles.edit_data} type='text' name="observacoes" value={editableFields.observacoes} onChange={handleInputChange} /> : result.observacoes}</td>
                   </tr>
 
                 ))}

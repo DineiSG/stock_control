@@ -48,10 +48,10 @@ const RelEstoqueLoja = () => {
 
       let filteredResults
       if (upperCaseQuery==='ESTOQUE GERAL'){
-        filteredResults = data.filter(veiculo => veiculo.unidade && veiculo.unidade.trim()!== '')//Buscando o estoque valido de todas as lojas
+        filteredResults = data.filter(veiculo => veiculo.unidade && veiculo.unidade.trim()!== '' && veiculo.valor_meio_acesso!=='')//Buscando o estoque valido de todas as lojas
         filteredResults.sort((a,b)=>a.unidade.localeCompare(b.unidade)) //Filtrando as lojas de ordem alfabetica
       }else{
-        filteredResults= data.filter(veiculo => veiculo.unidade.toUpperCase() === upperCaseQuery && veiculo.unidade.trim()!== '');//Buscando o estoque valido de uma loja
+        filteredResults= data.filter(veiculo => veiculo.unidade.toUpperCase() === upperCaseQuery && veiculo.unidade.trim()!== '' && veiculo.valor_meio_acesso!=='');//Buscando o estoque valido de uma loja
       }
 
       if (filteredResults.length > 0) {
@@ -73,8 +73,8 @@ const RelEstoqueLoja = () => {
       try {
         const response = await fetch(`http://localhost:8090/api/lojas`)
         const data = await response.json()
-        console.log('Dados da API: ', data)
-        if (Array.isArray(data)) {
+       
+        if (Array.isArray (data)) {
           setLojas(data)
         } else {
           console.error('A resposta da API nao e um array', data)
@@ -111,6 +111,7 @@ const RelEstoqueLoja = () => {
   }
 
 
+//Front End
 
   return (
     <div>
@@ -135,7 +136,9 @@ const RelEstoqueLoja = () => {
         </div >
       </div>
       <div className={styles.table} id='printable'>
-        {filtroLoja ?
+        {filtroLoja ? (
+          <>
+          <p className={styles.quantidade}>TOTAL DE VEICULOS EM ESTOQUE: {results.length}</p>
           <table className="table table-primary table-striped-columns" border="1">
             <thead>
               <tr>
@@ -170,9 +173,11 @@ const RelEstoqueLoja = () => {
 
               ))}
             </tbody>
-          </table> : null}
+          </table> 
+          </>
+        ): null}
       </div>
-      <button className={styles.filtrar} onClick={generateExcel} disabled={results.length === 0}>Gerar Relatorio XLSX</button>
+      
 
     </div>
   )

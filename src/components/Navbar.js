@@ -1,14 +1,10 @@
-import React from 'react'
 import styles from './Navbar.module.css'
-import { Link, useLocation } from 'react-router-dom'
-
-
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 
 const Navbar = () => {
   const location = useLocation()
   const isHome = location.pathname === '/home'
-
 
 
   return (
@@ -27,15 +23,15 @@ const Navbar = () => {
       <div className={styles.navItem}>
         <button className={styles.nav} id="dropdown2">Relatórios</button>
         <ul className={styles.dropdownMenu}>
-          <li><Link to='/relatorio_estoque' className={styles.dropdown}>Rel. de Estoque</Link></li>
+          <li><Link to='/relatorio_estoque' className={styles.dropdown}>Estoque e Baixas</Link></li>
           <li><Link to='/relatorio_acesso' className={styles.dropdown}>Rel. de Acessos</Link></li>
         </ul>
       </div>
       <div className={styles.navItem}>
         <button className={styles.nav} id="dropdown3">Movimentações</button>
         <ul className={styles.dropdownMenu}>
-          <li><Link to='/liberacoes' className={styles.dropdown}>Liberar Veiculo</Link></li>
-          <li><Link to='/baixar_veic' className={styles.dropdown}>Baixar Veiculo</Link></li>
+        <li><Link to='/liberacoes' className={styles.dropdown}>Liberar Veiculo</Link></li>
+        <li><Link to='/baixar_veic' className={styles.dropdown}>Baixar Veiculo</Link></li>
         </ul>
       </div>
       <div className={styles.navItem}>

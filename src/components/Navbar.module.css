@@ -79,7 +79,8 @@ color: white;
     color:#ffffff;
     font-weight: 600;
     background-color: rgba(89, 3, 110, 0.003);
-    margin:auto 5px
+    margin:auto 5px;
+    padding: 2px 40px
     
   }
   
@@ -89,14 +90,14 @@ color: white;
   
   .dropdownMenu {
     display: none;
-    position:absolute;
+    position:static;
     background-color: white;
     border-radius: 3px;
-    top: 100%;
-    padding: 0 15px;
+    padding: 7.5px 15px;
     list-style:none;
     color:rgba(89, 3, 110, 0.871) ;
     font-size: 16px;
+    text-align: center;
     
 
   }

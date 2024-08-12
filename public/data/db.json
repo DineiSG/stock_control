@@ -1,9 +1,10 @@
 {
-    "administrator":[
-        {
-        "id":1,
-        "login":"administrador",
-        "senha":"Aspa@2024"
-        }
-    ]
+  "users": [
+    {
+      "id": "1",
+      "login": "administrador",
+      "password": "Aspa@2024",
+      "type": "administrador"
+    }
+  ]
 }

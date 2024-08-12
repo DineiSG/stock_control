@@ -64,7 +64,6 @@ const SearchHistory = () => {
                                 <thead>
                                     {results.map(result => (
                                         <tr className={styles.head} key={result.id}>
-                                            <th>Cod. Loja: {result.id_unidade}</th>
                                             <th>Loja: {result.unidade}</th>
                                             <th>Placa: {result.placa} </th>
                                             <th>Marca: {result.marca}</th>
@@ -72,7 +71,6 @@ const SearchHistory = () => {
                                             <th>Cor: {result.cor}</th>
                                             <th>Data do Cadastro: {formatTimestamp(result.data_registro)}</th>
                                             <th>Data da Baixa: {result.data_alteracao ? formatTimestamp(result.data_alteracao) : "Carro fora do estoque válido"}</th>
-                                            <th>Motivo: {result.observacoes}</th>
                                         </tr>
                                     ))}
                                 </thead>
