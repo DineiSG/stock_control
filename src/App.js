@@ -1,15 +1,15 @@
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import CadVeic from './pages/CadVeic';
-import RelatorioEstoque from './pages/RelatórioEstoque';
-import CadLoja from './pages/CadLoja';
-import Acesso from './components/Acesso';
-import Buscas from './pages/Buscas';
-import RelatorioAcessos from './pages/RelatorioAcessos';
-import Liberacoes from './pages/Liberacoes'
-import BaixarVeic from './pages/BaixarVeic';
+import Navbar from './components/js/Navbar';
+import Home from './pages/js/Home';
+import CadVeic from './pages/js/CadVeic';
+import RelatorioEstoque from './pages/js/RelatórioEstoque';
+import CadLoja from './pages/js/CadLoja';
+import Acesso from './components/js/Acesso';
+import Buscas from './pages/js/Buscas';
+import RelatorioAcessos from './pages/js/RelatorioAcessos';
+import Liberacoes from './pages/js/Liberacoes'
+import BaixarVeic from './pages/js/BaixarVeic';
 
 
 
