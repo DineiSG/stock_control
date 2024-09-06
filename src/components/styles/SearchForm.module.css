@@ -70,7 +70,7 @@ input {
     display:grid;
 }
 @media print{
-    .input * {
+    .input {
         position:absolute;
         left: -9999px;
         margin-top: 0;

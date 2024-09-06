@@ -145,7 +145,6 @@ const RelEstoqueLoja = () => {
             <table className="table table-primary table-striped-columns" border="1">
               <thead>
                 <tr>
-                  <th>Cod.</th>
                   <th>Loja</th>
                   <th>Data Cadastro</th>
                   <th>Dias em Estoque</th>
@@ -161,7 +160,6 @@ const RelEstoqueLoja = () => {
               <tbody>
                 {results.map(result => (
                   <tr key={result.id}>
-                    <td>{result.id_unidade}</td>
                     <td>{result.unidade}</td>
                     <td>{formatTimestamp(result.data_registro)}</td>
                     <td>{result.unidade ? calculateDaysInStock(result.data_registro) : '-'}</td>

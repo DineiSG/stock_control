@@ -62,7 +62,7 @@ option {
     width: 100px;
 }
 
-.cad_manual {
+.btn_cad_manual {
     background-color: rgba(89, 3, 110, 0.871);
     color: #FFF;
     cursor: pointer;
@@ -74,8 +74,9 @@ option {
     margin-left: 3%;
     margin-top: 3%;
     margin-bottom: 3%;
+    font-style: normal;
 }
-.cad_manual:hover{
+.btn_cad_manual:hover{
     background-color: rgba(244, 246, 246, 0.871);
     border: 1px solid rgba(89, 3, 110, 0.871);
     color: rgba(89, 3, 110, 0.871);
@@ -84,6 +85,6 @@ option {
 }
 
 .title{
-    margin: 8% 2% 3% 3%;
+    margin: 3% 2% 3% 3%;
     
 }

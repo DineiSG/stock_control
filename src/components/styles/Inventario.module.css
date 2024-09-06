@@ -1,0 +1,114 @@
+
+.input{
+    border:1px solid rgba(89, 3, 110, 0.871);
+    background-color: rgba(220, 231, 239, 0.871);
+    margin:25px 0;
+}
+.table{
+    margin: 0 7%;
+}
+.search_table{
+    margin: 0 7%
+}
+.head{
+ display:grid;
+}
+.pesquisa{
+    margin-top: 2px;
+    margin-bottom: 3px;
+}
+.buscar{
+    height: 40px;
+    width: 300pxpx;
+    color: #FFF;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 2px;
+    border:1px solid rgba(89, 3, 110, 0.871);
+    background-color:rgba(89, 3, 110, 0.871);
+    font-weight: bold;
+    margin-top: 20px;
+}
+.buscar:hover{
+    background-color: rgba(244, 246, 246, 0.871);
+    border:1px solid rgba(89, 3, 110, 0.871);
+    color:rgba(89, 3, 110, 0.871);
+    box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
+}
+.savelist{
+    height: 40px;
+    width: 300pxpx;
+    color: #FFF;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 2px;
+    border:1px solid rgba(89, 3, 110, 0.871);
+    background-color:rgba(89, 3, 110, 0.871);
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.savelist:hover{
+    background-color: rgba(244, 246, 246, 0.871);
+    border:1px solid rgba(89, 3, 110, 0.871);
+    color:rgba(89, 3, 110, 0.871);
+    box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
+}
+.result{
+    display:grid;
+       
+}
+.btn_resultado, .btn_salvar{
+    height: 40px;
+    width: 300pxpx;
+    color: #FFF;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 2px;
+    border:1px solid rgba(89, 3, 110, 0.871);
+    background-color:rgba(89, 3, 110, 0.871);
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.btn_resultado:hover{
+    background-color: rgba(244, 246, 246, 0.871);
+    border:1px solid rgba(89, 3, 110, 0.871);
+    color:rgba(89, 3, 110, 0.871);
+    box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
+}
+.btn_salvar:hover{
+    background-color: rgba(244, 246, 246, 0.871);
+    border:1px solid rgba(89, 3, 110, 0.871);
+    color:rgba(89, 3, 110, 0.871);
+    box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
+}
+.p_aviso{
+    font-size: 20px;
+    color:rgba(89, 3, 110, 0.871) ;
+    margin:2%
+}
+@media print{
+    .input * {
+        position:absolute;
+        left: -9999px;
+        margin-top: 0;
+        display:inline
+    }
+    .btn_resultado{
+        position:absolute;
+        left: -9999px;
+        margin-top: 0;
+        display:inline
+    }
+    
+    
+    #printable, #printable *{
+    visibility: visible;
+    }
+    #printable{
+    position:absolute;
+    left: 0;
+    top:0
+    }
+}

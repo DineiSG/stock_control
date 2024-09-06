@@ -113,26 +113,26 @@ const SearchVeiculos = () => {
                     <table className="table table-primary table-striped-columns" border="1">
                         <thead>
                             <tr>
-                                <th>Cod. Veiculo</th>
                                 <th>Marca</th>
                                 <th>Modelo</th>
                                 <th>Cor</th>
                                 <th>Ano</th>
                                 <th>Renavan</th>
                                 <th>Loja</th>
+                                <th>Status</th>
                                 <th>Nº Tag</th>
                             </tr>
                         </thead>
                         <tbody>
                             {results.map(result => (
                                 <tr key={result.id}>
-                                    <td>{edit ? <input className={styles.edit_data} type='number' name="id" value={editableFields.id} onChange={handleInputChange} /> : result.id}</td>
-                                    <td>{edit ? <input className={styles.edit_data} type='text' name="marca" value={editableFields.marca} onChange={handleInputChange} /> : result.marca}</td>
+                                    <td>{result.marca}</td>
                                     <td>{edit ? <input className={styles.edit_data} type='text' name="modelo" value={editableFields.modelo} onChange={handleInputChange} /> : result.modelo}</td>
                                     <td>{edit ? <input className={styles.edit_data} type='text' name="cor" value={editableFields.cor} onChange={handleInputChange} /> : result.cor}</td>
                                     <td>{edit ? <input className={styles.edit_data} type='text' name="ano" value={editableFields.ano} onChange={handleInputChange} /> : result.ano}</td>
                                     <td>{edit ? <input className={styles.edit_data} type='text' name="renavan" maxLength={11} value={editableFields.renavan} onChange={handleInputChange} /> : result.renavan}</td>
                                     <td>{edit ? <input className={styles.edit_data} type='text' name="unidade" value={editableFields.unidade} onChange={handleInputChange} /> : result.unidade}</td>
+                                    <td>{edit ? <input className={styles.edit_data} type='text' name="veiculo_status" value={editableFields.veiculo_status} onChange={handleInputChange} /> : result.veiculo_status}</td>
                                     <td>{edit ? <input className={styles.edit_data} type='text' maxLength={6} name="valor_meio_acesso" value={editableFields.valor_meio_acesso} onChange={handleInputChange} /> : result.valor_meio_acesso}</td>
                                 </tr>
 

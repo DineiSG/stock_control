@@ -118,10 +118,7 @@ const CadVeicManual = () => {
     return (
         <div >
 
-            <h1 className={styles.title}>Cadastro Manual de Veículos<svg xmlns="http://www.w3.org/2000/svg" width="110" height="50" fill="currentColor" class="bi bi-box-arrow-in-down-right" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M6.364 2.5a.5.5 0 0 1 .5-.5H13.5A1.5 1.5 0 0 1 15 3.5v10a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 2 13.5V6.864a.5.5 0 1 1 1 0V13.5a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5v-10a.5.5 0 0 0-.5-.5H6.864a.5.5 0 0 1-.5-.5" />
-                <path fill-rule="evenodd" d="M11 10.5a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1 0-1h3.793L1.146 1.854a.5.5 0 1 1 .708-.708L10 9.293V5.5a.5.5 0 0 1 1 0z" />
-            </svg></h1>
+            <h1 className={styles.title}><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/add.png" alt="add"/> Cadastro Manual de Veículos</h1>
             <div className={styles.container}>
                 <div class="container-lg">
                     <h2>Informe os dados do veículo:</h2>

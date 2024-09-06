@@ -4,9 +4,7 @@ import RelAcesso from '../../components/js/RelAcesso'
 const RelatorioAcessos = () => {
   return (
     <div>
-      <h1>Relatório de Acessos<svg xmlns="http://www.w3.org/2000/svg" width="110" height="50" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5m-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5" />
-      </svg></h1>
+      <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/document.png" alt="document"/>Relatório de Acessos</h1>
       <i class="bi bi-clipboard-data"></i>
       <div className="container-md">
         <div className="styles acessos">
