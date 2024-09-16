@@ -1,0 +1,13 @@
+
+.carrossel{
+    position:absolute;
+    top: 15%;
+    bottom:auto;
+    left: 15%;
+    right: auto;
+
+}
+.conteudo{
+    
+    padding:15px
+}

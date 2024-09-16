@@ -3,30 +3,22 @@ import styles from '../styles/CadVeic.module.css'
 import { Link } from 'react-router-dom'
 
 const CadVeic = () => {
-    const [veiculo, setVeiculo] = useState({
-        unidade: '',
-        id_unidade: '',
-        marca: '',
-        modelo: '',
-        cor: '',
-        placa: '',
-        ano: '',
-        ano_mod: '',
-        valor_meio_acesso: '',
-        veiculo_status: '',
-        renavan: ''
-    })
+    const [veiculo, setVeiculo] = useState({unidade: '',id_unidade: '',marca: '',modelo: '',cor: '',placa: '',
+    ano: '',ano_mod: '',valor_meio_acesso: '',veiculo_status: '', renavan: ''})
     const [unidade, setUnidade] = useState('')
     const [id_unidade, setIdUnidade] = useState('')
     const [placa, setPlaca] = useState('')
-    const [valor_meio_acesso, setValorMeioAcesso] = useState('')
+    const [valorMeioAcesso, setValorMeioAcesso] = useState('')
     const [veiculo_status, setVeiculoStatus] = useState('')
     const [loading, setLoading] = useState()
     const [lojas, setLojas] = useState([])
+
     
 
 
-    //Esta função busca os dados do veículo na BaseBin do Denatran
+    //Esta função busca os dados do veículo na BaseBin do Denatran. 
+    //A placa é enviada para a api e concatenada com as demais informações solicitadas para obtenção dos dados. Essa operaçao deve ser efetuada 
+    //na api pois há o bloqueio de cors por parte do backend da BASE BIN. Essa e uma transação back-to-back.
     const handleBlur = async () => {
         setLoading(true);
 
@@ -70,8 +62,31 @@ const CadVeic = () => {
         }
     };
 
+    //Função de conversao Hexadecimal para Wiegand. Essa função recebe o valor da tag em Hexadecimal e converte para Wiegand,
+    // que e um formato muito utilizado em controle de acessos.
+    function hexToWiegand(hexValue) {
+        // Divide o valor hexadecimal em duas partes
+        const leftPartHex = hexValue.substring(0, 2); // Parte esquerda (2 primeiros caracteres)
+        const rightPartHex = hexValue.substring(2);  // Parte direita (restante dos caracteres)
+
+        // Converte as partes de hexadecimal para decimal
+        const leftPart = parseInt(leftPartHex, 16); // Converte a parte esquerda para decimal
+        const rightPart = parseInt(rightPartHex, 16); // Converte a parte direita para decimal
+
+        // Formata as partes com zeros à esquerda
+        const leftPartFormatted = leftPart.toString().padStart(3, '0'); // Garantir 3 dígitos na parte esquerda
+        const rightPartFormatted = rightPart.toString().padStart(5, '0'); // Garantir 5 dígitos na parte direita
+
+        // Concatena as partes formatadas
+        return leftPartFormatted + rightPartFormatted;
+    }  
+
     //Função para inserir os dados no BD
     const handleSubmit = async (e) => {
+
+        // Converte o valor hexadecimal para o formato Wiegand
+        const convertedValue = hexToWiegand(valorMeioAcesso);
+        const valor_meio_acesso= convertedValue
 
         /*Função que trata da inserção de data de forma automática */
         const formatTimestamp = (date) => {
@@ -222,7 +237,7 @@ const CadVeic = () => {
                             </label>
                             <label>
                                 <span>Tag:</span>
-                                <input className={styles.tag} type='text' name='tag' maxLength={6} value={valor_meio_acesso} onChange={(e) => setValorMeioAcesso(e.target.value)} required></input>
+                                <input className={styles.tag} type='text' name='tag' maxLength={6} value={valorMeioAcesso} onChange={(e) => setValorMeioAcesso(e.target.value)} required></input>
                             </label>
 
                             <label>

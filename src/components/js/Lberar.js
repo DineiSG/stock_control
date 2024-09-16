@@ -113,7 +113,7 @@ const Lberar = () => {
         console.log('Dados enviados com sucesso');
 
         /*Enviando mensagem para um determinado numero pelo wpp web apos a confirmação da liberaçao*/
-        const mensagem = `Prezados, favor realizar a liberação do seguinte veiculo:\nMarca: ${veiculo.marca}\nModelo: ${veiculo.modelo}\nCor: ${veiculo.cor}\nPlaca: ${placa}\nMotivo: ${motivo}\nDesde já agradeço.`;
+        const mensagem = `Prezados, favor realizar a liberação do seguinte veiculo:\nLoja: ${veiculo.unidade}\nMarca: ${veiculo.marca}\nModelo: ${veiculo.modelo}\nCor: ${veiculo.cor}\nPlaca: ${placa}\nMotivo: ${motivo}\nObservação: ${observacoes}\nDesde já agradeço.`;
         const telefone = '5562981230063'
         const urlWhatsApp = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`
       

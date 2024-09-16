@@ -1,5 +1,6 @@
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
+
 import Navbar from './components/js/Navbar';
 import Home from './pages/js/Home';
 import CadVeic from './pages/js/CadVeic';
@@ -12,16 +13,22 @@ import Liberacoes from './pages/js/Liberacoes'
 import BaixarVeic from './pages/js/BaixarVeic';
 import Inventario from './pages/js/Inventario';
 import CadastroManual from './pages/js/CadastroManual';
+import Dashboard from './pages/js/Dashboard';
+import Footer from './components/js/Footer';
+
 
 
 
 function App() {
+
+ 
+
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
+      <Navbar/>
         <Routes>
-          <Route path='/' element={<Acesso />} />
+          <Route path='/' element={<Acesso/>} />
           <Route path='/home' element={<Home />} />
           <Route path='/cad_veic' element={<CadVeic />} />
           <Route path='/relatorio_estoque' element={<RelatorioEstoque />} />
@@ -32,7 +39,8 @@ function App() {
           <Route path='/liberacoes' element={<Liberacoes />}/>
           <Route path='/inventario' element={<Inventario/>}/>
           <Route path='/cadastro_manual' element={<CadastroManual/>}/>
-
+          <Route path='/dashboard' element={<Dashboard/>}/>
+          <Route path='/footer' element={<Footer/>}/>
           {/*<Route path='/cad_user' element={<CadUser/>}/>*/}
         </Routes>
 

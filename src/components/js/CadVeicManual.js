@@ -11,15 +11,40 @@ const CadVeicManual = () => {
     const [cor, setCor] = useState('')
     const [placa, setPlaca] = useState('')
     const [ano, setAno] = useState('')
-    const [valor_meio_acesso, setValorMeioAcesso] = useState('')
+    const [ano_modelo, setAnoModelo]=useState('')
+    const [valorMeioAcesso, setValorMeioAcesso] = useState('')
     const [veiculo_status, setVeiculoStatus] = useState('')
     const [renavan, setRenavan] = useState('')
     const [loading, setLoading] = useState()
     const [lojas, setLojas] = useState([])
 
 
+    //Função de conversao Hexadecimal para Wiegand. Essa função recebe o valor da tag em Hexadecimal e converte para Wiegand,
+    // que e um formato muito utilizado em controle de acessos.
+    function hexToWiegand(hexValue) {
+        // Divide o valor hexadecimal em duas partes
+        const leftPartHex = hexValue.substring(0, 2); // Parte esquerda (2 primeiros caracteres)
+        const rightPartHex = hexValue.substring(2);  // Parte direita (restante dos caracteres)
+
+        // Converte as partes de hexadecimal para decimal
+        const leftPart = parseInt(leftPartHex, 16); // Converte a parte esquerda para decimal
+        const rightPart = parseInt(rightPartHex, 16); // Converte a parte direita para decimal
+
+        // Formata as partes com zeros à esquerda
+        const leftPartFormatted = leftPart.toString().padStart(3, '0'); // Garantir 3 dígitos na parte esquerda
+        const rightPartFormatted = rightPart.toString().padStart(5, '0'); // Garantir 5 dígitos na parte direita
+
+        // Concatena as partes formatadas
+        return leftPartFormatted + rightPartFormatted;
+    }  
+
     //Função para inserir os dados no BD
     const handleSubmit = async (e) => {
+        // Converte o valor decimal (em string) para o formato Wiegand
+        
+        const convertedValue = hexToWiegand(valorMeioAcesso);
+        const valor_meio_acesso= convertedValue
+        
 
         /*Função que trata da inserção de data de forma automática */
         const formatTimestamp = (date) => {
@@ -42,7 +67,7 @@ const CadVeicManual = () => {
 
         e.preventDefault()
         const payload = {
-            unidade, id_unidade, marca, modelo, ano, cor, placa, valor_meio_acesso, veiculo_status, renavan, data_registro
+            unidade, id_unidade, marca, modelo, ano, ano_modelo, cor, placa, valor_meio_acesso, veiculo_status, renavan, data_registro
         }
 
         const toUpperCasePayload = (data) => {
@@ -118,10 +143,10 @@ const CadVeicManual = () => {
     return (
         <div >
 
-            <h1 className={styles.title}><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/add.png" alt="add"/> Cadastro Manual de Veículos</h1>
+            <h1 className={styles.title}><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/add.png" alt="add" /> Cadastro Manual de Veículos</h1>
             <div className={styles.container}>
-                <div class="container-lg">
-                    <h2>Informe os dados do veículo:</h2>
+                <div>
+                    <h2 className={styles.sub_title}>Informe os dados do veículo:</h2>
                     <div className={styles.formulario}>
                         <form className={styles.cadastro} onSubmit={handleSubmit}>
                             <label>
@@ -151,16 +176,21 @@ const CadVeicManual = () => {
                                 <input className={styles.cor} type='text' name='cor' value={cor} onChange={(e) => setCor(e.target.value)} required></input>
                             </label>
                             <label>
-                                <span>Ano:</span>
+                                <span>Ano Fab.:</span>
                                 <input className={styles.ano} type='text' name='ano' value={ano} onChange={(e) => setAno(e.target.value)} required></input>
                             </label>
+                            <label>
+                                <span>Ano Mod.:</span>
+                                <input className={styles.ano} type='text' name='ano_modelo' value={ano_modelo} onChange={(e) => setAnoModelo(e.target.value)} required></input>
+                            </label>
+
                             <label>
                                 <span>Placa:</span>
                                 <input className={styles.placa} type='text' name='placa' value={placa} onChange={(e) => setPlaca(e.target.value)} required></input>
                             </label>
                             <label>
                                 <span>Tag:</span>
-                                <input className={styles.tag} type='text' name='tag' maxLength={6} value={valor_meio_acesso} onChange={(e) => setValorMeioAcesso(e.target.value)} required></input>
+                                <input className={styles.tag} type='text' name='tag' maxLength={6} value={valorMeioAcesso} onChange={(e) => setValorMeioAcesso(e.target.value)} required></input>
                             </label>
                             <label>
                                 <span>Renavan:</span>

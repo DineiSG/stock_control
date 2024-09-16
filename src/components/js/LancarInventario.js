@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useState, useEffect } from 'react'
 import styles from '../styles/Inventario.module.css'
 
@@ -67,7 +67,7 @@ const LancarInventario = () => {
     }
 
     //Calculando o resultado do inventario
-    const calcularResultados = () => {
+    const calcularResultados = useCallback(() => {
         const totalItems = results.length;
 
         const divergencias = results.filter(item => {
@@ -83,14 +83,14 @@ const LancarInventario = () => {
             qtd_divergencias: divergencias,
             acuracidade: acuracidade.toFixed(2) + '%',
         }));
-    };
+    },[editableFields, results]);
 
     // Chamar a função ao exibir resultados
     useEffect(() => {
         if (salvar) {
             calcularResultados();
         }
-    }, [salvar, editableFields, results]);
+    }, [salvar, editableFields, results, calcularResultados]);
 
     const handleSalvar = async () => {
         calcularResultados()

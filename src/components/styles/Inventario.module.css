@@ -101,6 +101,12 @@
         margin-top: 0;
         display:inline
     }
+    .savelist{
+        position:absolute;
+        left: -9999px;
+        margin-top: 0;
+        display:inline
+    }
     
     
     #printable, #printable *{

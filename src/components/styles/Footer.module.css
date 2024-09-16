@@ -1,7 +1,10 @@
 .footer{
-    position: relative;
-    top:500px;
-    text-align:right;
-    margin-top: 3%;
-    padding: 0 2%
+    position: absolute;
+    top:85%;
+    right:2%;
+    text-align:left;
+    
+}
+.api_version{
+    color:rgba(89, 3, 110, 0.871);
 }

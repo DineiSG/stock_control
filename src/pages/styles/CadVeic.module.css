@@ -2,7 +2,7 @@ h1 {
     color: rgba(89, 3, 110, 0.871);
     font-weight: bold;
     font-style: oblique;
-    margin: 3%;
+    
 }
 
 span {
@@ -15,7 +15,7 @@ option {
 }
 
 .formulario {
-    height: 350px;
+    height: 300px;
     width: 1100px;
     border-radius: 3px;
     margin: 2% 8% 8% 8%;
@@ -32,6 +32,7 @@ option {
     padding: 10px 10px;
     float: right;
     margin-top: 20px;
+    margin-right: 2%;
 }
 
 .cadastrar:hover {
@@ -42,7 +43,9 @@ option {
 }
 
 .cadastro {
-    margin-top: 3%
+    width: 1050px;
+    height: 400px;
+    margin: -1% 0% 0% 3%;
 }
 
 .container {
@@ -87,4 +90,7 @@ option {
 .title{
     margin: 3% 2% 3% 3%;
     
+}
+.sub_title{
+    margin-left: 8%;
 }

@@ -165,6 +165,8 @@ const GerarInventario = () => {
                   <th>Cor</th>
                   <th>Renavan</th>
                   <th>Placa</th>
+                  <th>Conferencia</th>
+                  <th>Observação</th>
                 </tr>
               </thead>
               <tbody>
@@ -177,6 +179,8 @@ const GerarInventario = () => {
                     <td>{result.cor}</td>
                     <td>{result.renavan}</td>
                     <td>{result.placa}</td>
+                    <td></td>
+                    <td></td>
                   </tr>
                 ))}
               </tbody>

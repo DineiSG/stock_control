@@ -9,10 +9,12 @@
   position: relative;
 }
 .logo{
-  position:relative;
-  left: 15%;
+  position:absolute;
+  left: 23%;
+  right: inherit;
+  top: 15%;
+  bottom: inherit;
   width: 900px;
-  margin-bottom: -45%;
 }
 
 .form {
@@ -106,4 +108,11 @@
 .submit:hover{
   background-color: #04a117;
   color:#fffbfb
+}
+
+.acessar{
+  position:absolute;
+  left: 92%;
+  top:75%;
+  margin-top: 2%;
 }
