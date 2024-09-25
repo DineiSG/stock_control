@@ -4,11 +4,6 @@ h1{
     font-style: oblique;
     margin:3%;
 }
-span{
-    color:rgba(89, 3, 110, 0.871);
-    
-}
-
 input, option {
     background-color: rgba(252, 252, 252, 0.871);
 }
@@ -24,19 +19,19 @@ input, option {
     margin:3% 1% 4% 1%;
 }
 /*Botao de input*/
-.cadastrar{
+.btn_enviar{
+    height: 40px;
+    width: 80px;
     background-color:rgba(89, 3, 110, 0.871);
     color: #FFF;
-    cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
     border-radius: 2px;
     border: none;
-    padding: 15px 15px;
     float:right;
-    margin-top: 10%;
+    margin-top: 15%;
     margin-right:-2%
   }
-.cadastrar:hover{
+.btn_enviar:hover{
     background-color: #669231;
     color:rgba(255, 255, 255, 0.871);
 }
@@ -53,6 +48,7 @@ input, option {
     box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.2);
     background-color: rgb(255, 255, 255);
     margin:25px 5%;
+    height: 1000px;
 }
 .status{
     width: 50px;
@@ -60,52 +56,23 @@ input, option {
 
 /*Search Liberacoes*/
 
-.filtrar{
-    height: 50px;
-    width: 200px;
+.btn_consultar{
+    height: 40px;
+    width: 150px;
     border-radius: 3px;
     background-color: rgba(89, 3, 110, 0.871);
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     color:rgba(254, 253, 255, 0.871);
     display: block;
-    margin: 3% 80%
-}
-.filtrar:hover{
-    color: rgba(89, 3, 110, 0.871);
-    background-color:rgba(244, 246, 246, 0.871) ;
-    box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.2);
+    margin: 5% 
 }
 
-.select{
-    margin: 3% ;
-    
-}
-
-.buscar{
-    height: 40px;
-    width: 80px;
-    color: #FFF;
-    text-align: center;
-    cursor: pointer;
-    background-color:rgba(89, 3, 110, 0.871);
-    font-weight: bold;
-    margin-top: 20px;
-}
-.buscar:hover{
+.btn_consultar:hover{
     background-color: #669231;
     color:rgba(255, 255, 255, 0.871);
 }
 
-.pesquisa{
-    margin-top: 2px ;
-    margin-bottom: 3px;
-}
-
-
-.head{
- display:grid;
-}
 /*Removendo a caixa de pesquisa do impressao*/
 @media print{
     .input * {
@@ -123,15 +90,4 @@ input, option {
     left: 0;
     top:0
     }
-}
-.cont{
-    box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.2);
-    background-color: rgba(255, 255, 255, 0.871);
-    margin:25px 5%;
-}
-.consult{
-    margin:4% -5%
-}
-.table{
-    margin: 0 5%;
 }

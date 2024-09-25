@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import styles from '../styles/Inventario.module.css'
 
 const GerarInventario = () => {
@@ -9,6 +9,20 @@ const GerarInventario = () => {
   const [setError] = useState('')
   const [lojas, setLojas] = useState([])
   const [randomNumber, setRandomNumber] = useState(null)
+
+      //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
+      const tabelaRef = useRef(null)
+
+      const handleButtonClick = () => {
+          setFiltroLoja(!filtroLoja) //Alterando o estado da tabela
+  
+          setTimeout(() => {
+              if (tabelaRef.current) {
+                  tabelaRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+              }
+          }, 100)//Timeout para garantir que a tabela esteja visivel apos a renderização
+  
+      }
 
 
   /*Função que busca o estoque de acordo com a loja */
@@ -132,10 +146,10 @@ const GerarInventario = () => {
     <div>
       <div class="container-lg">
         <div className={styles.input}>
-          <h2 className={styles.title} >Selecione uma loja para gerar a listagem de inventario:</h2>
+          <h2 className={styles.title} >SELECIONE UMA LOJA PARA GERAR UM LISTAGEM DE INVENTÁRIO</h2>
           <form className={styles.pesquisa} onSubmit={handleSearch}>
             <label>
-              <span>Selecione uma loja:</span>
+              <p>Selecione uma loja:</p>
               <select value={query} onChange={(e) => setQuery(e.target.value)} required>
                 <option value=""></option>
                 {lojas.map((loja) => (
@@ -145,16 +159,16 @@ const GerarInventario = () => {
                 ))}
               </select>
             </label>
-            <button className={styles.buscar} type='submit' onClick={() => setFiltroLoja(!filtroLoja)} >{filtroLoja ? 'Nova Listagem' : 'Gerar Listagem Para Inventario'}</button>
+            <button className={styles.btn_gerar} type='submit' onClick={handleButtonClick} >{filtroLoja ? 'Nova Listagem' : 'Gerar Listagem Para Inventario'}</button>
           </form>
           <br />
-          <p className={styles.p_aviso}>Copie o <strong>Código do Inventário</strong> pois será necessario na hora de buscar a listagem e lançar o resultado. </p>
+         
         </div >
       </div>
-      <div className={styles.table} id='printable'>
+      <div ref={tabelaRef} className={styles.table} id='printable'>
         {filtroLoja && randomNumber !== null ? (
           <>
-            <button className={styles.savelist} type='submit' onClick={handleSubmit}>Salvar Listagem</button>
+            <button className={styles.btn_savelist} type='submit' onClick={handleSubmit}>Salvar Listagem</button>
             <table className="table table-primary table-striped-columns" border="1">
               <thead>
                 <tr>

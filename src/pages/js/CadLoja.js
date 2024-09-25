@@ -85,28 +85,28 @@ const CadLoja = () => {
             <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/add.png" alt="add"/>Cadastro de Loja</h1>
             <div className={styles.container}>
                 <div class="container-lg">
-                    <h2>Informe os dados da loja:</h2>
+                    <h2 className={styles.title}>INFORME OS DADOS DA LOJA:</h2>
                     <div className={styles.formulario_cad}>
                         <form className={styles.cadastro_lj} onSubmit={handleSubmit}>
                             <label>
-                                <span>Nome:</span>
+                                <p>Nome:</p>
                                 <input className={styles.nome} type='text' name='descricao' value={descricao} onChange={(e) => setDescricao(e.target.value)} required></input>
                             </label>
 
                             <label>
-                                <span>Nº Box:</span>
+                                <p>Nº Box:</p>
                                 <input className={styles.box} type='number' name='box' value={box} onChange={(e) => setBox(e.target.value)} required></input>
                             </label>
                             <label>
-                                <span>Tel.:</span>
+                                <p>Tel.:</p>
                                 <input type='text' name='telefone' value={telefone} onChange={(e) => setTelefone(e.target.value)} required></input>
                             </label>
                             <label>
-                                <span>E-mail:</span>
+                                <p>E-mail:</p>
                                 <input className={styles.email} type='text' name='email' value={email} onChange={(e) => setEmail(e.target.value)} required></input>
                             </label>
                             <label >
-                                <span>Qtd Vagas:</span>
+                                <p>Qtd Vagas:</p>
                                 <input className={styles.vagas} type='text' name='vagas' value={vagas} onChange={(e) => setVagas(e.target.value)} required></input>
                             </label>
                             <button type="submit" className={styles.cadastrar_lj} onClick={() => setLoading} disabled={loading}>{loading ? 'Cadastrando...' : 'Cadastrar'}</button>

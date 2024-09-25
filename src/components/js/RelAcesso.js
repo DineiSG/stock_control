@@ -27,13 +27,13 @@ const RelAcesso = () => {
     return differenceInDays
   }
 
-  
+
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!query) return;
 
     const upperCaseQuery = query.toUpperCase();
-    
+
     try {
 
       /*Buscando o veiculo de acordo com a placa*/
@@ -47,7 +47,7 @@ const RelAcesso = () => {
         setResults(filteredResults)
 
         //Capturando o id do resultado da pesquisa e utilizando para buscar
-        const idVeiculoAcessante = filteredResults[0].id 
+        const idVeiculoAcessante = filteredResults[0].id
         const relatedDataResponse = await fetch(`http://localhost:8090/api/acessos/historico/${idVeiculoAcessante}`)
 
         if (!relatedDataResponse.ok) {
@@ -70,57 +70,58 @@ const RelAcesso = () => {
   return (
     <div>
       <div className={styles.container}>
-
-        <div className={styles.input}>
-          <h2>Informe a placa do veiculo:</h2>
-          <form className={styles.pesquisa} onSubmit={handleSearch}>
-            <label>
-              <span>Placa:</span>
-              <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
-            </label>
-            <button className={styles.buscar} type='submit' onClick={() => setFiltroAcesso(!filtroAcesso)}>{filtroAcesso ? 'Buscar' : 'Buscar'}</button>
-          </form>
+        <div class="container-lg" >
+          <div className={styles.input}>
+            <h2 className={styles.title}>INFORME A PLACA DO VEÍCULO</h2>
+            <form className={styles.pesquisa} onSubmit={handleSearch}>
+              <label>
+                <p>Placa:</p>
+                <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
+              </label>
+              <button className={styles.buscar} type='submit' onClick={() => setFiltroAcesso(!filtroAcesso)}>{filtroAcesso ? 'Buscar' : 'Buscar'}</button>
+            </form>
+          </div>
         </div>
-      </div>
-      <div className={styles.table} id='printable'>
-        {filtroAcesso ?
-          <table className="table table-primary table-striped-columns" border="1">
-            <thead>
-              {results.map(result => (
-                <tr className={styles.head} key={result.id}>
-                  <th>Cod. Veiculo: {result.id}</th>
-                  <th>Placa: {result.placa} </th>
-                  <th>Loja: {result.unidade}</th>
-                  <th>Marca: {result.marca}</th>
-                  <th>Modelo: {result.modelo}</th>
-                  <th>Cor: {result.cor}</th>
-                  <th>Data Cadastro: {formatTimestamp(result.data_registro)}</th>
-                  <th>Dias em Estoque: {calculateDaysInStock(result.data_registro)}</th>
-                  <th>Status: {result.veiculo_status}</th>
+      </div>  
+        <div className={styles.table} id='printable'>
+          {filtroAcesso ?
+            <table className="table table-primary table-striped-columns" border="1">
+              <thead>
+                {results.map(result => (
+                  <tr className={styles.head} key={result.id}>
+                    <th>Cod. Veiculo: {result.id}</th>
+                    <th>Placa: {result.placa} </th>
+                    <th>Loja: {result.unidade}</th>
+                    <th>Marca: {result.marca}</th>
+                    <th>Modelo: {result.modelo}</th>
+                    <th>Cor: {result.cor}</th>
+                    <th>Data Cadastro: {formatTimestamp(result.data_registro)}</th>
+                    <th>Dias em Estoque: {calculateDaysInStock(result.data_registro)}</th>
+                    <th>Status: {result.veiculo_status}</th>
+                  </tr>
+                ))}
+              </thead>
+            </table> : null}
+          {filtroAcesso ?
+            <table className="table table-primary table-striped-columns" border="1">
+              <thead>
+                <tr>
+                  <th>Data e Hora da Movimentaçao</th>
+                  <th>Sentido: E = Entrada S = Saída</th>
                 </tr>
-              ))}
-            </thead>
-          </table> : null}
-        {filtroAcesso ?
-          <table className="table table-primary table-striped-columns" border="1">
-            <thead>
-              <tr>
-                <th>Data e Hora da Movimentaçao</th>
-                <th>Sentido: E = Entrada S = Saída</th>
-              </tr>
-            </thead>
-            <tbody>
-              {accessResult.map(result => (
-                <tr key={result.idVeiculoAcessante}>
-                  <td>{formatTimestamp(result.data_movimentacao)}</td>
-                  <td>{result.sentido}</td>
-                </tr>
-              ))}
+              </thead>
+              <tbody>
+                {accessResult.map(result => (
+                  <tr key={result.idVeiculoAcessante}>
+                    <td>{formatTimestamp(result.data_movimentacao)}</td>
+                    <td>{result.sentido}</td>
+                  </tr>
+                ))}
 
-            </tbody>
-          </table> : null}
-      </div>
-
+              </tbody>
+            </table> : null}
+        </div>
+      
     </div>
   )
 

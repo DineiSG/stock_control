@@ -27,12 +27,12 @@ const Navbar = () => {
     if (location.pathname !== '/') {
       setIconVisible(false)// Oculta o ícone quando sair da página "acesso"
       setIsMenuVisible(true);// Garante que o menu permaneça visível após a navegação
-    }else{
+    } else {
       setIconVisible(true)// Exibe o ícone quando estiver na página "acesso"
       setIsMenuVisible(false);// Esconde o menu inicialmente
     }
   }, [location])
-  
+
 
 
   const handleOpenModal = (path) => {
@@ -124,6 +124,12 @@ const Navbar = () => {
       </div>
       {isMenuVisible && (
         <div className={styles.menu}>
+                    <div className={styles.navItem}>
+            <button className={styles.nav} id="dropdown5" >Lojista</button>
+            <ul className={styles.dropdownMenu}>
+              <li><Link to='com_vendas' className={styles.dropdown}>Comunicação de Venda</Link></li>
+            </ul>
+          </div>
           <div className={styles.navItem}>
             <button className={styles.nav} id="dropdown1">Cadastros</button>
             <ul className={styles.dropdownMenu}>
@@ -157,7 +163,6 @@ const Navbar = () => {
             </ul>
           </div>
           <Link to='/buscas' className={styles.pesquisar} i>Pesquisar</Link>
-
           <div className={styles.links} alt='Home' title='Ir para home'>
             <Link to='/dashboard'><img width="50" height="50" src="https://img.icons8.com/3d-fluency/94/home.png" alt="home" /></Link>
           </div>

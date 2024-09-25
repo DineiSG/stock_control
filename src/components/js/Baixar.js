@@ -151,10 +151,10 @@ const Baixar = () => {
     <div className={styles.container}>
       <div>
         <div class="container-lg">
-          <h2>Informe a placa para realizar a baixa do veículo:</h2>
+          <h2 className={styles.title} >INFORME A PLACA DO VEÍCULO</h2>
           <form className={styles.pesquisa} onSubmit={handleSearch}>
             <label>
-              <span>Placa:</span>
+              <p>Placa:</p>
               <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
             </label>
             <button className={styles.buscar} type='submit' onClick={() => setBusca(!busca)}>

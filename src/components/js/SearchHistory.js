@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import styles from '../styles/SearchForm.module.css'
 
 const SearchHistory = () => {
@@ -8,6 +8,19 @@ const SearchHistory = () => {
     const [results, setResults] = useState([])
     const [setError] = useState('')
 
+        //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
+        const tabelaRef = useRef(null)
+
+        const handleButtonClick = () => {
+            setFiltroAcesso(!filtroAcesso) //Alterando o estado da tabela
+    
+            setTimeout(() => {
+                if (tabelaRef.current) {
+                    tabelaRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                }
+            }, 100)//Timeout para garantir que a tabela esteja visivel apos a renderização
+    
+        }
 
 
     /*Função que trata do retorno de data */
@@ -46,19 +59,19 @@ const SearchHistory = () => {
                 <div className={styles.container}>
                     <div class='container-lg'>
                         <div className={styles.input}>
-                            <h2>Informe a placa do veiculo:</h2>
+                            <h2 className={styles.title} >INFORME A PLACA DO VEÍCULO:</h2>
                             <form className={styles.pesquisa} onSubmit={handleSearch}>
                                 <label>
-                                    <span>Placa:</span>
+                                    <p>Placa:</p>
                                     <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
                                 </label>
-                                <button className={styles.buscar} type='submit' onClick={() => setFiltroAcesso(!filtroAcesso)}>{filtroAcesso ? 'Buscar' : 'Buscar'}</button>
+                                <button className={styles.buscar} type='submit' onClick={handleButtonClick}>{filtroAcesso ? 'Buscar' : 'Buscar'}</button>
                             </form>
                         </div>
                     </div>
                     
                 </div>
-                <div className={styles.table} id='printable'>
+                <div ref={tabelaRef} className={styles.table} id='printable'>
                         {filtroAcesso ?
                             <table className="table table-primary table-striped-columns" border="1">
                                 <thead>

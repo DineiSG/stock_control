@@ -89,10 +89,10 @@ const SearchLojas = () => {
         <div >
             <div className={styles.container}>
                 <div class="container-lg">
-                    <h2>Informe o nome da loja para buscar informações:</h2>
+                    <h2 className={styles.title}>INFORME O NOME DA LOJA PARA BUSCAR INFORMAÇÕES:</h2>
                     <form className={styles.pesquisa} onSubmit={handleSearch}>
                         <label>
-                            <span>Nome:</span>
+                            <p>Nome:</p>
                             <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
                         </label>
                         <button className={styles.buscar} type='submit' onClick={() => setBusca(!busca)}>

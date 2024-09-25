@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import styles from '../styles/Relatorios.module.css'
-import * as XLSX from 'xlsx'
+
 
 const RelBaixasLoja = () => {
     const [filtroLoja, setFiltroLoja] = useState(false)
@@ -8,6 +8,21 @@ const RelBaixasLoja = () => {
     const [results, setResults] = useState([])
     const [setError] = useState('')
     const [lojas, setLojas] = useState([])
+
+
+    //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
+    const tabelaRef = useRef(null)
+
+    const handleButtonClick = () => {
+        setFiltroLoja(!filtroLoja) //Alterando o estado da tabela
+
+        setTimeout(() => {
+            if (tabelaRef.current) {
+                tabelaRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }
+        }, 100)//Timeout para garantir que a tabela esteja visivel apos a renderização
+
+    }
 
     /*Função que trata do retorno de data */
     const formatTimestamp = (timestamp) => {
@@ -82,42 +97,16 @@ const RelBaixasLoja = () => {
         fetchLojas()
     }, [])
 
-    /*Funçao para gerar o relatorio do Excel com as colunas que serao exibidas já definidas */
-    /*const generateExcel = () => {
-        const formattedData = results.map(item => ({
-            Cod: item.id_unidade,
-            Loja: item.unidade,
-            Data_Cadastro: formatTimestamp(item.data_registro),
-            Dias_Em_Estoque: calculateDaysInStock(item.data_registro),
-            Marca: item.marca,
-            Modelo: item.modelo,
-            Ano_de_Fabricaçao: item.ano,
-            Cor: item.cor,
-            Renavan: item.renavan,
-            Placa: item.placa,
-            Num_Tag: item.valor_meio_acesso
-
-
-        }))
-
-        const worksheet = XLSX.utils.json_to_sheet(formattedData)
-        const workbook = XLSX.utils.book_new()
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Data")
-        XLSX.writeFile(workbook, "Relatorio de Estoque.xlsx")
-    }*/
-
-
-
     return (
         <div>
             <div className={styles.container}>
                 <div className={styles.input}>
-                    <h2>Por loja:</h2>
+                    <h2 className={styles.title}>POR LOJA:</h2>
                     <form className={styles.pesquisa} onSubmit={handleSearch}>
                         <label>
-                            <span>Selecione uma loja:</span>
+                            <p>Selecione uma loja:</p>
                             <select value={query} onChange={(e) => setQuery(e.target.value)} required>
-                                <option value="">SELECIONE UMA LOJA</option>
+                                <option value=""></option>
                                 <option value='TODAS AS LOJAS'>TODAS AS LOJAS</option>
                                 {lojas.map((loja) => (
                                     <option key={loja.id} value={loja.descricao}>
@@ -126,47 +115,49 @@ const RelBaixasLoja = () => {
                                 ))}
                             </select>
                         </label>
-                        <button className={styles.buscar} type='submit' onClick={() => setFiltroLoja(!filtroLoja)}>{filtroLoja ? 'Buscar' : 'Buscar'}</button>
+                        <button className={styles.buscar} type='submit' onClick={handleButtonClick}>{filtroLoja ? 'Buscar' : 'Buscar'}</button>
                     </form>
                 </div >
             </div>
             <div className={styles.table} id='printable'>
                 {filtroLoja ? (
                     <>
-                        <p className={styles.quantidade}>TOTAL DE VEICULOS BAIXADOS: {results.length}</p>
-                        <table className="table table-primary table-striped-columns" border="1">
-                            <thead>
-                                <tr>
-                                    <th>Loja</th>
-                                    <th>Marca</th>
-                                    <th>Modelo</th>
-                                    <th>Cor</th>
-                                    <th>Renavan</th>
-                                    <th>Placa</th>
-                                    <th>Data Baixa</th>
-                                    <th>Nº Tag</th>
-                                    <th>Motivo</th>
-                                    <th>Observação</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {results.map(result => (
-                                    <tr key={result.id}>
-                                        <td>{result.unidade}</td>
-                                        <td>{result.marca}</td>
-                                        <td>{result.modelo}</td>
-                                        <td>{result.cor}</td>
-                                        <td>{result.renavan}</td>
-                                        <td>{result.placa}</td>
-                                        <td>{formatTimestamp(result.data_registro)}</td>
-                                        <td>{result.valor_meio_acesso}</td>
-                                        <td>{result.motivo}</td>
-                                        <td>{result.observacoes}</td>
+                        <div ref={tabelaRef}>
+                            <p className={styles.quantidade}>TOTAL DE VEICULOS BAIXADOS: {results.length}</p>
+                            <table className="table table-primary table-striped-columns" border="1">
+                                <thead>
+                                    <tr>
+                                        <th>Loja</th>
+                                        <th>Marca</th>
+                                        <th>Modelo</th>
+                                        <th>Cor</th>
+                                        <th>Renavan</th>
+                                        <th>Placa</th>
+                                        <th>Data Baixa</th>
+                                        <th>Nº Tag</th>
+                                        <th>Motivo</th>
+                                        <th>Observação</th>
                                     </tr>
+                                </thead>
+                                <tbody>
+                                    {results.map(result => (
+                                        <tr key={result.id}>
+                                            <td>{result.unidade}</td>
+                                            <td>{result.marca}</td>
+                                            <td>{result.modelo}</td>
+                                            <td>{result.cor}</td>
+                                            <td>{result.renavan}</td>
+                                            <td>{result.placa}</td>
+                                            <td>{formatTimestamp(result.data_registro)}</td>
+                                            <td>{result.valor_meio_acesso}</td>
+                                            <td>{result.motivo}</td>
+                                            <td>{result.observacoes}</td>
+                                        </tr>
 
-                                ))}
-                            </tbody>
-                        </table>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </>
                 ) : null}
             </div>

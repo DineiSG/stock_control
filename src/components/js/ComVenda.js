@@ -1,21 +1,10 @@
-import React, { useState } from 'react'
-import styles from '../styles/Liberar.module.css'
+import { useState } from 'react'
+import styles from '../styles/Lojista.module.css'
 
-const Lberar = () => {
+const ComVenda = () => {
 
   const [placa, setPlaca] = useState('')
-  const [veiculo, setVeiculo] = useState({
-    marca: '',
-    modelo: '',
-    cor: '',
-    loja: '',
-    motivo: '',
-    solicitante: '',
-    observacoes: ''
-
-  })
-  const [motivo, setMotivo] = useState('');
-  const [solicitante, setSolicitante] = useState('');
+  const [veiculo, setVeiculo] = useState({ marca: '', modelo: '', cor: '', loja: '', renavan: '', observacoes: '' })
   const [observacoes, setObservacoes] = useState('');
 
   //Buscando os dados do veiculo de acordo com a placa
@@ -30,7 +19,8 @@ const Lberar = () => {
             marca: data.marca,
             modelo: data.modelo,
             cor: data.cor,
-            unidade: data.unidade
+            unidade: data.unidade,
+            renavan: data.renavan
           });
         } else {
           console.error('Erro ao buscar dados do veículo');
@@ -76,8 +66,7 @@ const Lberar = () => {
       modelo: veiculo.modelo,
       cor: veiculo.cor,
       unidade: veiculo.unidade,
-      motivo,
-      solicitante,
+      renavan: veiculo.renavan,
       observacoes,
       dataRegistro
 
@@ -113,10 +102,10 @@ const Lberar = () => {
         console.log('Dados enviados com sucesso');
 
         /*Enviando mensagem para um determinado numero pelo wpp web apos a confirmação da liberaçao*/
-        const mensagem = `Prezados, favor realizar a liberação do seguinte veiculo:\nLoja: ${veiculo.unidade}\nMarca: ${veiculo.marca}\nModelo: ${veiculo.modelo}\nCor: ${veiculo.cor}\nPlaca: ${placa}\nMotivo: ${motivo}\nObservação: ${observacoes}\nDesde já agradeço.`;
+        const mensagem = `Prezados, favor realizar a liberação do seguinte veiculo:\nLoja: ${veiculo.unidade}\nMarca: ${veiculo.marca}\nModelo: ${veiculo.modelo}\nCor: ${veiculo.cor}\nPlaca: ${placa}\nObservação: ${observacoes}\nDesde já agradeço.`;
         const telefone = '5562981230063'
         const urlWhatsApp = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`
-      
+
         window.open(urlWhatsApp, '_blank')
         window.alert('Liberaçao registrada!');
         window.location.reload();
@@ -134,16 +123,17 @@ const Lberar = () => {
   return (
     <div>
       <div>
-        <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/car.png" alt="car"/> Liberação de Veículos</h1>
+        <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/money.png" alt="money" /> Comunicação de Venda</h1>
         <div className={styles.container}>
           <div class="container-lg">
-            <h2 className={styles.title} >INFORME OS DADOS DO VEÍCULO:</h2>
+            <h2 className={styles.title} >INFORME OS DADOS DA OPERAÇÃO:</h2>
             <div className={styles.formulario}>
               <form className={styles.cadastro} onSubmit={handleSubmit} >
                 <label>
                   <p>Placa:</p>
                   <input className={styles.tag} type='text' value={placa} maxLength='7' onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}></input>
                 </label>
+                <br />
                 <label>
                   <p>Marca:</p>
                   <input type='text' name='marca' value={veiculo.marca} readOnly required></input>
@@ -157,39 +147,77 @@ const Lberar = () => {
                   <input className={styles.cor} type='text' name='cor' value={veiculo.cor} readOnly required></input>
                 </label>
                 <label>
+                  <p>Renavam:</p>
+                  <input type='text' name='renavan' value={veiculo.renavan} readOnly required></input>
+                </label>
+                <label>
                   <p>Loja:</p>
                   <input type='text' name='loja' value={veiculo.unidade} readOnly required></input>
                   <input type='hidden' name='id' value={veiculo.id} readOnly required></input>
                 </label>
-
+                
                 <label>
-                  <p>Motivo:</p>
-                  <select type='text' name='motivo' value={motivo} onChange={(e) => setMotivo(e.target.value)} required >
-                    <option value="" >SELECIONE UMA JUSTIFICATIVA</option>
-                    <option>MANUTENÇÃO</option>
-                    <option>DEVOLUÇÃO</option>
-                    <option>TRANSFERENCIA</option>
-                    <option>VENDA</option>
+                  <p>Vendedor:</p>
+                  <select type='text' name='loja' value={''} onChange={''} required >
+                    <option value="" >SELECIONE UM VENDEDOR</option>
+                    { /*{lojas.map((loja) => (
+                                        <option key={loja.id} value={loja.id} data-descricao={loja.descricao}>
+                                            {loja.descricao}
+                                        </option>
+                                    ))}*/}
                   </select>
                 </label>
                 <label>
-                  <p>Solicitante:</p>
-                  <input type='text' name='solicitante' value={solicitante} onChange={(e) => setSolicitante(e.target.value)} ></input>
+                  <p>Nome Completo do Comprador:</p>
+                  <input className={styles.obs} type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
+                </label>
+                <br />
+                <label>
+                  <p>Valor Anunciado R$:</p>
+                  <input className={styles.tag}  type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
+                </label>
+                <label>
+                  <p>Valor Tabela FIP R$:</p>
+                  <input className={styles.tag}  type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
+                </label>
+                <label>
+                  <p>Valor de Venda R$:</p>
+                  <input className={styles.tag}  type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
+                </label>
+                <label>
+                  <p>Valor Financiado R$:</p>
+                  <input className={styles.tag}  type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
+                </label>
+                <label>
+                  <p>Valor de Entrada R$:</p>
+                  <input className={styles.tag}  type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
+                </label>
+                <label>
+                  <p>Quantidade de Parcelas:</p>
+                  <input className={styles.tag}  type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
+                </label>
+                <label>
+                  <p>Valor da Parcela R$:</p>
+                  <input className={styles.tag}  type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
+                </label>
+                <label>
+                  <p>Financeira / Banco:</p>
+                  <input  type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
                 </label>
                 <label>
                   <p>Observação:</p>
                   <input type='text' className={styles.obs} name='observacoes' value={observacoes} onChange={(e) => setObservacoes(e.target.value)}></input>
                 </label>
-
-                <button type='submit' className={styles.cadastrar}>Cadastrar</button>
+                
+                <button type='submit' className={styles.btn_enviar}>Enviar</button>
               </form>
             </div>
           </div>
         </div>
-
+        <button type='submit' className={styles.btn_consultar}>Consultar Venda</button>
       </div>
     </div>
   )
 }
 
-export default Lberar
+export default ComVenda

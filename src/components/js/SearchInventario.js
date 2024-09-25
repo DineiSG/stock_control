@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import styles from '../styles/Inventario.module.css'
 
 const SearchInventario = () => {
@@ -9,12 +9,25 @@ const SearchInventario = () => {
   const [setError] = useState('')
   const [lojas, setLojas] = useState([])
 
+    //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
+    const tabelaRef = useRef(null)
+
+    const handleButtonClick = () => {
+        setFiltroLoja(!filtroLoja) //Alterando o estado da tabela
+
+        setTimeout(() => {
+            if (tabelaRef.current) {
+                tabelaRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }
+        }, 100)//Timeout para garantir que a tabela esteja visivel apos a renderização
+
+    }
+
   /*Função que trata do retorno de data */
   const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
     return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
   };
-
 
   /*Função que busca o estoque de acordo com a loja */
   const handleSearch = async (e) => {
@@ -80,15 +93,14 @@ const SearchInventario = () => {
 
   return (
     <div>
-      <div class="container-lg">
-        <div className={styles.container}>
-          <div className={styles.input}>
-            <h2>Selecione uma loja para buscar por um resultado de inventário:</h2>
+      <div className={styles.container}>
+        <div class="container-lg">
+            <h2 className={styles.title}>INFORME O NOME DA LOJA PARA BUSCAR O RESULTADO DE UM INVENTÁRIO:</h2>
             <form className={styles.pesquisa} onSubmit={handleSearch}>
               <label>
-                <span>Selecione uma loja:</span>
+                <p>Selecione uma loja:</p>
                 <select value={query} onChange={(e) => setQuery(e.target.value)} required>
-                  <option value="">SELECIONE UMA LOJA</option>
+                  <option value=""></option>
                   <option value='TODOS'>TODOS</option>
                   {lojas.map((loja) => (
                     <option key={loja.id} value={loja.descricao}>
@@ -97,32 +109,32 @@ const SearchInventario = () => {
                   ))}
                 </select>
               </label>
-              <button className={styles.buscar} type='submit' onClick={() => setFiltroLoja(!filtroLoja)}>{filtroLoja ? 'Buscar' : 'Buscar'}</button>
+              <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>{filtroLoja ? 'Buscar' : 'Buscar'}</button>
             </form>
-            <div className={styles.search_table}>
-            {filtroLoja ? (
-              <>
-                <table className="table table-primary table-striped-columns" border="1">
-                  <thead>
-                    {results.map(result => (
-                      <tr key={result.id}>
-                        <th>Cod. Inventário: {result.idInventario} </th>
-                        <th>Loja: {result.unidade}</th>
-                        <th>Data de Abertura: {formatTimestamp(result.data_abertura)}</th>
-                        <th>Data de Fechamento: {formatTimestamp(result.data_fechamento)}</th>
-                        <th>Quantidade de Divergencias: {result.qtd_divergencias}</th>
-                        <th>Acuracidade: {result.acuracidade}</th>
-                        <th>Observaçoes: {result.observacoes}</th>
-                      </tr>))}
-                  </thead>
-                </table>
-              </>
-            ) : null}
+            <div ref={tabelaRef} className={styles.search_table}>
+              {filtroLoja ? (
+                <>
+                  <table className="table table-primary table-striped-columns" border="1">
+                    <thead>
+                      {results.map(result => (
+                        <tr key={result.id}>
+                          <th>Cod. Inventário: {result.idInventario} </th>
+                          <th>Loja: {result.unidade}</th>
+                          <th>Data de Abertura: {formatTimestamp(result.data_abertura)}</th>
+                          <th>Data de Fechamento: {formatTimestamp(result.data_fechamento)}</th>
+                          <th>Quantidade de Divergencias: {result.qtd_divergencias}</th>
+                          <th>Acuracidade: {result.acuracidade}</th>
+                          <th>Observaçoes: {result.observacoes}</th>
+                        </tr>))}
+                    </thead>
+                  </table>
+                </>
+              ) : null}
             </div>
           </div >
         </div>
       </div>
-    </div>
+    
   )
 }
 

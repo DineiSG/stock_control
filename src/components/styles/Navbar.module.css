@@ -13,7 +13,7 @@ cursor: pointer;
 
 .navbar {
   height: 50px;
-  background: linear-gradient(180deg, rgba(83,39,90,1) 30%, rgba(83,39,90,0.756827731092437) 100%, rgba(83,39,90,1) 100%);
+  background: #26ACE2;
   padding: 20px 40px;
   display: flex;
   justify-content: space-between;
@@ -24,7 +24,6 @@ cursor: pointer;
 display: flex;
 align-items: center;
 gap: 32px;
-
 }
 
 .links a {
@@ -82,23 +81,25 @@ color: #1cda02;
   .navItem:hover .dropdownMenu {
     display: block;
     background-color:rgb(255, 249, 249) ;
-    color:rgba(89, 3, 110, 0.871);
+    color:#333333;
     border: 1px solid;
-    font-weight: 600;
+    
     
   }
   
-  /*Conteudo interno do dorpdawn*/
+  /*Conteudo interno do dropdawn*/
   .dropdown {
     display:list-item;
     list-style:none;
-    color: rgba(89, 3, 110, 0.871);
+    color:#333333;
     padding: 12px;
+    text-decoration: none;
   }
 
   .pesquisar{
     background: block;
     border: none;
+    text-decoration: none;
     font-size: 16px;
     padding: 10px;
     margin-bottom: 10px;
@@ -149,12 +150,7 @@ color: #1cda02;
       gap: 16px;
     }
   
-    .links {
-      flex-direction: column;
-      gap: 16px;
-      padding-inline: 0;
-    }
-  
+
     .links a {
       padding: 8px 12px;
       text-align: center;

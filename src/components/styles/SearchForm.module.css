@@ -1,5 +1,5 @@
 h1{
-    color: rgba(89, 3, 110, 0.871);
+    color:#333333;
     font-weight: bold;
     font-style: oblique;
     margin:3%;
@@ -11,30 +11,34 @@ span{
 input {
     background-color: rgba(252, 252, 252, 0.871);
 }
-
+.title{
+    padding: 3% 2% 0 2%;
+    font-size: 16px;
+    font-weight: 600;
+    color:#333333
+}
 
 .container{
-    border:1px solid rgba(89, 3, 110, 0.871);
-    background-color: rgba(220, 231, 239, 0.871);
+    
+    background-color: rgb(255, 255, 255);
     margin:3% 8% ;
+    box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.2);
 }
 .buscar{
     height: 40px;
-    width: 80px;
+    width: 100px;
     color: #FFF;
     text-align: center;
     cursor: pointer;
     border-radius: 2px;
-    border:1px solid rgba(89, 3, 110, 0.871);
     background-color:rgba(89, 3, 110, 0.871);
     font-weight: bold;
     margin-top: 20px;
 }
 .buscar:hover{
-    background-color: rgba(244, 246, 246, 0.871);
-    border:1px solid rgba(89, 3, 110, 0.871);
-    color:rgba(89, 3, 110, 0.871);
-    box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
+    background-color: #669231;
+    color:rgba(255, 255, 255, 0.871);
+    
 }
 .pesquisa{
     margin-top: 3px;
@@ -48,17 +52,14 @@ input {
     text-align: center;
     cursor: pointer;
     border-radius: 2px;
-    border:1px solid rgba(89, 3, 110, 0.871);
     background-color:rgba(89, 3, 110, 0.871);
     font-weight: bold;
     margin: 30px;
 
 }
 .edit:hover{
-    background-color: rgba(244, 246, 246, 0.871);
-    border:1px solid rgba(89, 3, 110, 0.871);
-    color:rgba(89, 3, 110, 0.871);
-    box-shadow: 1px 1px 8px rgba(30, 5, 122, 0.871);
+    background-color: #669231;
+    color:rgba(255, 255, 255, 0.871);
 }
 .edit_data{
     max-width: 100px;

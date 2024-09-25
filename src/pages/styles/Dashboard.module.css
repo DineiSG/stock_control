@@ -1,13 +1,16 @@
 
-.carrossel{
-    position:absolute;
-    top: 15%;
-    bottom:auto;
-    left: 15%;
-    right: auto;
 
-}
 .conteudo{
-    
-    padding:15px
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:5%;
 }
+.imagens{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    position:relative;
+    left: 1%;
+}
+

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { useState, useEffect } from 'react'
 import styles from '../styles/Inventario.module.css'
 
@@ -18,6 +18,34 @@ const LancarInventario = () => {
         acuracidade: 0,
         observacoes: ''
     })
+
+    //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
+    const tabelaRef = useRef(null)
+    
+
+    const handleButtonClick = () => {
+        setBusca(!busca) //Alterando o estado da tabela
+        setTimeout(() => {
+            if (tabelaRef.current) {
+                tabelaRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }
+        }, 100)//Timeout para garantir que a tabela esteja visivel apos a renderização
+
+    }
+
+    const tabelaSaveRef = useRef(null)
+    const handleBtnSaveClick = () => {
+         //Alterando o estado da tabela
+        setSalvar(!salvar)
+        calcularResultados()
+        setTimeout(() => {
+            if (tabelaSaveRef.current) {
+                tabelaSaveRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }
+        }, 100)//Timeout para garantir que a tabela esteja visivel apos a renderização
+
+    }
+
 
 
     /*Função que busca informações de um veiculo de acordo com a placa */
@@ -83,7 +111,7 @@ const LancarInventario = () => {
             qtd_divergencias: divergencias,
             acuracidade: acuracidade.toFixed(2) + '%',
         }));
-    },[editableFields, results]);
+    }, [editableFields, results]);
 
     // Chamar a função ao exibir resultados
     useEffect(() => {
@@ -163,22 +191,22 @@ const LancarInventario = () => {
     return (
         <div class="container-lg">
             <div className={styles.input}>
-                <h2>Informe o codigo do inventário para buscar a listagem e lançar a conferencia:</h2>
+                <h2 className={styles.title}>INFORME O CODIGO DO INVENTARIO PARA BUSCAR A LISTAGEM E LANÇAR A CONFERENCIA:</h2>
                 <form className={styles.pesquisa} onSubmit={handleSearch}>
                     <label>
-                        <span>Codigo do Inventario:</span>
+                        <p>Codigo do Inventario:</p>
                         <input type='number' value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => {
                             // Função que impede que letras e caracteres sejam inseridos
                             if (!/^\d*\.?\d*$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
                                 e.preventDefault();
-                            } 
+                            }
                         }} required />
                     </label>
-                    <button className={styles.buscar} type='submit' onClick={() => setBusca(!busca)}>
+                    <button className={styles.btn_buscar_inv} type='submit' onClick={handleButtonClick}>
                         {busca ? 'Buscar' : 'Buscar'}</button>
                 </form>
             </div>
-            <div className={styles.list} id='list_printable'>
+            <div ref={tabelaRef} className={styles.list} id='list_printable'>
                 {busca ?
                     <table className="table table-primary table-striped-columns" border="1">
                         <thead>
@@ -211,7 +239,7 @@ const LancarInventario = () => {
                                             onChange={(e) => handleInputChange(e, result.id)} />) : (editableFields[result.id]?.conferencia || result.conferencia)}
                                     </td>
                                     <td>
-                                        <button className={styles.edit} onClick={() => {
+                                        <button className={styles.btn_edit} onClick={() => {
                                             if (editMode[result.id] && !confirmacao) {
                                                 handleConfirm(result.id); // Confirma a edição
                                             } else {
@@ -224,10 +252,10 @@ const LancarInventario = () => {
                             ))}
                         </tbody>
                     </table> : null}
-                <button className={styles.btn_resultado} type='submit' onClick={() => { setSalvar(!salvar); calcularResultados(); }}>
+                <button className={styles.btn_resultado} type='submit' onClick={handleBtnSaveClick}>
                     {salvar ? 'Resultado' : 'Exibir Resultado'}
                 </button>
-                <div >
+                <div ref={tabelaSaveRef}>
                     {salvar ?
                         <div>
                             <table className="table table-primary table-striped-columns" border="1">
@@ -237,7 +265,7 @@ const LancarInventario = () => {
                                         <th>Loja: {resultado.loja}</th>
                                         <th>Quantidade de Divergerncias: {resultado.qtd_divergencias}</th>
                                         <th>Acuracidade: {resultado.acuracidade}</th>
-                                        <th>Observações: <textarea type='text' value={resultado.observacoes} onChange={(e) => setResultado({ ...resultado, observacoes: e.target.value })} /></th>
+                                        <th>Observações: <input type='text' className={styles.obs_result} value={resultado.observacoes} onChange={(e) => setResultado({ ...resultado, observacoes: e.target.value })} /></th>
                                     </tr>
                                 </thead>
                             </table>

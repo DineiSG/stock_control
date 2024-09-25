@@ -17,7 +17,6 @@
     "pg": "^8.12.0",
     "pg-hstore": "^2.3.4",
     "react": "^18.2.0",
-    "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "react-paginate": "^8.2.0",
@@ -52,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "@types/bootstrap": "^5.2.10",
     "concurrently": "^8.2.2"
   }
 }

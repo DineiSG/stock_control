@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+    background-color: rgba(3, 43, 53, 0.685); /* Fundo semi-transparente */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -14,9 +14,9 @@
   .modalContent {
     margin-bottom: 10%;
     text-align: center;
-    background-color: rgb(89, 3, 110) ;
+    background-color: #26ACE2;
     padding: 20px;
-    border:1px solid white;
+    
   }
   
   .parameters {
@@ -26,15 +26,16 @@
     padding: 10px;
     font-size: 16px;
     height: 35px;
+    color:#333333;
   }
   
   button {
     background-color: white;
     cursor: pointer;
-    font-weight: 600;
+    
   }
   .title{
-    color:white;
+    color:#ffffff;
     font-size: 30px;
     font-weight: 600;
   }
@@ -42,12 +43,12 @@
     margin: 5px 20px;
     padding: 3px 10px;
     border-radius: 3px;
-    color:rgb(89, 3, 110);
-    background-color: white ;
+    color:rgb(255, 255, 255);
+    background-color: rgb(89, 3, 110);;
   }
   .botao:hover{
-    background-color:rgb(201, 5, 249);
-    color:white
+    background-color: #669231;
+    color:rgba(255, 255, 255, 0.871);
   }
   .alert{
     background-color: white;

@@ -15,6 +15,7 @@ import Inventario from './pages/js/Inventario';
 import CadastroManual from './pages/js/CadastroManual';
 import Dashboard from './pages/js/Dashboard';
 import Footer from './components/js/Footer';
+import ComunicacaoVendas from './components/js/ComVenda';
 
 
 
@@ -41,6 +42,7 @@ function App() {
           <Route path='/cadastro_manual' element={<CadastroManual/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/footer' element={<Footer/>}/>
+          <Route path='/com_vendas' element={<ComunicacaoVendas/>}/>
           {/*<Route path='/cad_user' element={<CadUser/>}/>*/}
         </Routes>
 

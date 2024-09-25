@@ -188,11 +188,11 @@ const CadVeic = () => {
             <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/add.png" alt="add"/> Cadastro de Veículos</h1>
             <div className={styles.container}>
                 <div class="container-lg">
-                    <h2>Informe os dados do veículo:</h2>
+                    <h2 className={styles.title}>INFORME OS DADOS DO VEICULO:</h2>
                     <div className={styles.formulario}>
                         <form className={styles.cadastro} onSubmit={handleSubmit}>
                             <label>
-                                <span>Loja:</span>
+                                <p>Loja:</p>
                                 <select type='text' name='loja' value={id_unidade} onChange={handleUnidadeChange} required >
                                     <option value="" >SELECIONE UMA LOJA</option>
                                     {lojas.map((loja) => (
@@ -206,42 +206,42 @@ const CadVeic = () => {
                                 <input className={styles.tag} type='hidden' value={id_unidade}></input>
                             </label>
                             <label>
-                                <span>Placa:</span>
+                                <p>Placa:</p>
                                 <input className={styles.placa} type='text' name='placa' value={placa} onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur} required></input>
 
                             </label>
                             {loading && <div class="spinner-border spinner-border-sm" role="status" ></div>}
                             <label>
-                                <span>Marca:</span>
+                                <p>Marca:</p>
                                 <input type='text' name='marca' value={veiculo.Fabricante} readOnly required></input>
                             </label>
                             <label>
-                                <span>Modelo:</span>
+                                <p>Modelo:</p>
                                 <input type='text' name='modelo' value={veiculo.MarcaModelo} readOnly required></input>
                             </label>
                             <label>
-                                <span>Cor:</span>
+                                <p>Cor:</p>
                                 <input className={styles.cor} type='text' name='cor' value={veiculo.CorVeiculo} readOnly required></input>
                             </label>
                             <label>
-                                <span>Ano Fab.:</span>
+                                <p>Ano Fab.:</p>
                                 <input className={styles.ano} type='text' name='ano' value={veiculo.AnoFabricacao} readOnly required></input>
                             </label>
                             <label>
-                                <span>Ano Mod:</span>
+                                <p>Ano Mod:</p>
                                 <input className={styles.ano} type='text' name='ano_mod' value={veiculo.AnoModelo} readOnly required></input>
                             </label>
                             <label>
-                                <span>Renavan:</span>
+                                <p>Renavan:</p>
                                 <input type='text' name='renavan' value={veiculo.renavam} readOnly required></input>
                             </label>
                             <label>
-                                <span>Tag:</span>
+                                <p>Tag:</p>
                                 <input className={styles.tag} type='text' name='tag' maxLength={6} value={valorMeioAcesso} onChange={(e) => setValorMeioAcesso(e.target.value)} required></input>
                             </label>
 
                             <label>
-                                <span>Status (D: Dentro/ F:Fora):</span>
+                                <p>Status (D: Dentro/ F:Fora):</p>
                                 <input className={styles.status} type='text' name='status' value={veiculo_status} onChange={(e) => setVeiculoStatus(e.target.value)} required maxLength={1}></input>
                             </label>
                             <button className={styles.cadastrar} onClick={() => setLoading} disabled={loading}>{loading ? 'Buscando Dados...' : 'Cadastrar'}</button>
