@@ -18,17 +18,16 @@ input {
     margin: 1% 10% 5% 10%;
 }
 .cadastrar_lj{
-    background-color:rgba(89, 3, 110, 0.871);
+    position: static;
+    height: 40px;
+    width: 100px;
+    background-color: rgba(89, 3, 110, 0.871);
     color: #FFF;
-    text-align: center;
-    cursor: pointer;
+    font-weight: 600;
     border-radius: 2px;
-    width: 120px;
-    font-weight: bold;
     border: none;
-    padding: 10px 10px;
-    float:right;
-    margin-top: 9%;
+    float: right;
+    margin-top: 10%;
     
   }
 .cadastrar_lj:hover{

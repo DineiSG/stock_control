@@ -32,13 +32,13 @@
 }
 .buscar{
     height: 40px;
-    width: 80px;
+    width: 100px;
     color: #FFF;
     text-align: center;
     cursor: pointer;
     border-radius: 2px;
     background-color:rgba(89, 3, 110, 0.871);
-    font-weight: bold;
+    font-weight: 600;
     margin-top: 20px;
 }
 .buscar:hover{

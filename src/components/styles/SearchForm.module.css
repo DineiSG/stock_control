@@ -31,7 +31,7 @@ input {
     cursor: pointer;
     border-radius: 2px;
     background-color:rgba(89, 3, 110, 0.871);
-    font-weight: bold;
+    font-weight: 600;
     margin-top: 20px;
 }
 .buscar:hover{
@@ -52,7 +52,7 @@ input {
     cursor: pointer;
     border-radius: 2px;
     background-color:rgba(89, 3, 110, 0.871);
-    font-weight: bold;
+    font-weight: 600;
     margin: 30px;
 }
 
