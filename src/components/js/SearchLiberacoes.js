@@ -83,10 +83,11 @@ const SearchLiberacoes = () => {
                 </div>
                 <div   className={styles.table} id='printable'>
                     {filtroAcesso ?
-                        <table ref={tabelaRef} className="table table-primary table-striped-columns" border="1">
+                        <table ref={tabelaRef} className="table table-secondary table-striped-columns" border="1">
                             <thead>
                                 {results.map(result => (
                                     <tr className={styles.head} key={result.id}>
+                                        <th className={styles.table_title} >RELATÓRIO DE LIBERAÇÃO DE VEÍCULO</th>
                                         <th>Cod. Liberaçao: {result.id}</th>
                                         <th>Solicitante: {result.solicitante}</th>
                                         <th>Loja: {result.unidade}</th>

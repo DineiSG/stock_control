@@ -208,7 +208,7 @@ const LancarInventario = () => {
             </div>
             <div ref={tabelaRef} className={styles.list} id='list_printable'>
                 {busca ?
-                    <table className="table table-primary table-striped-columns" border="1">
+                    <table className="table table-secondary table-striped-columns" border="1">
                         <thead>
                             <tr>
                                 <th>Loja</th>
@@ -258,9 +258,10 @@ const LancarInventario = () => {
                 <div ref={tabelaSaveRef}>
                     {salvar ?
                         <div>
-                            <table className="table table-primary table-striped-columns" border="1">
+                            <table className="table table-secondary table-striped-columns" border="1">
                                 <thead>
                                     <tr className={styles.result}>
+                                        <th className={styles.table_title} > RESULTADO DO INVENTÁRIO</th>
                                         <th>Cod. Inventario: {resultado.id_inventario}</th>
                                         <th>Loja: {resultado.loja}</th>
                                         <th>Quantidade de Divergerncias: {resultado.qtd_divergencias}</th>

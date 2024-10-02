@@ -124,7 +124,7 @@ const RelBaixasLoja = () => {
                     <>
                         <div ref={tabelaRef}>
                             <p className={styles.quantidade}>TOTAL DE VEICULOS BAIXADOS: {results.length}</p>
-                            <table className="table table-primary table-striped-columns" border="1">
+                            <table className="table table-secondary table-striped-columns" border="1">
                                 <thead>
                                     <tr>
                                         <th>Loja</th>

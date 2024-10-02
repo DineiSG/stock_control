@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from '../styles/Relatorios.module.css'
-import { useState } from 'react';
+import { useState, useRef  } from 'react';
 
 
 
@@ -11,6 +11,22 @@ const RelAcesso = () => {
   const [results, setResults] = useState([])
   const [accessResult, setAccessResult] = useState([])
   const [setError] = useState('')
+
+
+    //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
+    const tabelaRef = useRef(null)
+
+    const handleButtonClick = () => {
+      setFiltroAcesso(!filtroAcesso) //Alterando o estado da tabela
+  
+      setTimeout(() => {
+        if (tabelaRef.current) {
+          tabelaRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 100)//Timeout para garantir que a tabela esteja visivel apos a renderização
+  
+    }
+  
 
   /*Função que formata a data para exibi-la no frontend*/
   const formatTimestamp = (timestamp) => {
@@ -78,17 +94,18 @@ const RelAcesso = () => {
                 <p>Placa:</p>
                 <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
               </label>
-              <button className={styles.buscar} type='submit' onClick={() => setFiltroAcesso(!filtroAcesso)}>{filtroAcesso ? 'Buscar' : 'Buscar'}</button>
+              <button className={styles.buscar} type='submit' onClick={handleButtonClick}>{filtroAcesso ? 'Buscar' : 'Buscar'}</button>
             </form>
           </div>
         </div>
       </div>  
-        <div className={styles.table} id='printable'>
+        <div ref={tabelaRef}  className={styles.table} id='printable'>
           {filtroAcesso ?
-            <table className="table table-primary table-striped-columns" border="1">
+            <table className="table table-secondary table-striped-columns" border="1">
               <thead>
                 {results.map(result => (
                   <tr className={styles.head} key={result.id}>
+                    <th className={styles.table_title} >RELATORIO DE ACESSO DE VEÍCULO</th>
                     <th>Cod. Veiculo: {result.id}</th>
                     <th>Placa: {result.placa} </th>
                     <th>Loja: {result.unidade}</th>
@@ -103,7 +120,7 @@ const RelAcesso = () => {
               </thead>
             </table> : null}
           {filtroAcesso ?
-            <table className="table table-primary table-striped-columns" border="1">
+            <table className="table table-secondary table-striped-columns" border="1">
               <thead>
                 <tr>
                   <th>Data e Hora da Movimentaçao</th>

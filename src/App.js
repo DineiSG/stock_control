@@ -8,7 +8,6 @@ import RelatorioEstoque from './pages/js/RelatórioEstoque';
 import CadLoja from './pages/js/CadLoja';
 import Acesso from './components/js/Acesso';
 import Buscas from './pages/js/Buscas';
-import RelatorioAcessos from './pages/js/RelatorioAcessos';
 import Liberacoes from './pages/js/Liberacoes'
 import BaixarVeic from './pages/js/BaixarVeic';
 import Inventario from './pages/js/Inventario';
@@ -16,6 +15,9 @@ import CadastroManual from './pages/js/CadastroManual';
 import Dashboard from './pages/js/Dashboard';
 import Footer from './components/js/Footer';
 import ComunicacaoVendas from './components/js/ComVenda';
+import CadVendendor from './pages/js/CadVendendor';
+import ConsVenda from './components/js/ConsVenda';
+import SolicLibVenda from './components/js/SolicLibVenda';
 
 
 
@@ -33,7 +35,6 @@ function App() {
           <Route path='/home' element={<Home />} />
           <Route path='/cad_veic' element={<CadVeic />} />
           <Route path='/relatorio_estoque' element={<RelatorioEstoque />} />
-          <Route path='/relatorio_acesso' element={<RelatorioAcessos />} />
           <Route path='/cad_loja' element={<CadLoja />} />
           <Route path='/buscas' element={<Buscas />} />
           <Route path='/baixar_veic' element={<BaixarVeic/>} />
@@ -43,6 +44,9 @@ function App() {
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/footer' element={<Footer/>}/>
           <Route path='/com_vendas' element={<ComunicacaoVendas/>}/>
+          <Route path='/cad_vendedor' element={<CadVendendor/>}/>
+          <Route path='/cons_venda' element={<ConsVenda/>}/>
+          <Route path='/solic_lib_venda' element={<SolicLibVenda/>}/>
           {/*<Route path='/cad_user' element={<CadUser/>}/>*/}
         </Routes>
 

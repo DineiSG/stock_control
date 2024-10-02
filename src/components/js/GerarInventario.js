@@ -168,8 +168,8 @@ const GerarInventario = () => {
       <div ref={tabelaRef} className={styles.table} id='printable'>
         {filtroLoja && randomNumber !== null ? (
           <>
-            <button className={styles.btn_savelist} type='submit' onClick={handleSubmit}>Salvar Listagem</button>
-            <table className="table table-primary table-striped-columns" border="1">
+            
+            <table className="table table-secondary table-striped-columns" border="1">
               <thead>
                 <tr>
                   <th>ID Inventario</th>
@@ -199,6 +199,7 @@ const GerarInventario = () => {
                 ))}
               </tbody>
             </table>
+            <button className={styles.btn_savelist} type='submit' onClick={handleSubmit}>Salvar Listagem</button>
           </>
         ) : null}
       </div>

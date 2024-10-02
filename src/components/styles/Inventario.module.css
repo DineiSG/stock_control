@@ -132,7 +132,11 @@
 .obs_result{
     width: 500px;
 }
-
+.table_title{
+    font-size: 20px;
+    text-align: center;
+    
+}
 @media print {
     .input * {
         position: absolute;

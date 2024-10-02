@@ -2,13 +2,14 @@ import styles from '../styles/Navbar.module.css'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import LoginModal from '../js/LoginModal'
+import AlertLibModal from './AlertLibModal'
 
 
 
 const Navbar = () => {
   const location = useLocation()
   const isHome = location.pathname === '/home'
-
+  const [alertModalOpen, setAletModalOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [redirectPath, setRedirectPath] = useState('')
   const navigate = useNavigate()
@@ -33,6 +34,13 @@ const Navbar = () => {
     }
   }, [location])
 
+  const handleModalAlertOpen = () => {
+    setAletModalOpen(true)
+  }
+  const handleModalAlertClose = () => {
+    setAletModalOpen(false)
+  }
+
 
 
   const handleOpenModal = (path) => {
@@ -49,119 +57,46 @@ const Navbar = () => {
     navigate(redirectPath); // Redireciona para a página desejada após o login
   };
 
-  const handleAccess = async () => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify({
-      "login": "admin",
-      "password": "admin"
-    });
-
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-
-    fetch("http://192.168.1.100/login.fcgi", requestOptions)
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
-  }
-
-
-
-
-
-  async function handleIn() {
-
-    try {
-      const returnResult = handleAccess()
-
-      if (!returnResult) {
-        console.error('Falha ao obter resultado de hndleAccess')
-        return
-      }
-
-      const response = await fetch(`http://localhost:8090/api/acessos/entrada?${returnResult}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          actions: [
-            {
-              "action": "sec_box",
-              "parameters": "id=65793, reason=3"
-            }
-          ]
-        })
-      });
-      if (response.ok) {
-        try {
-          const data = await response.json(); // Tenta converter a resposta para JSON
-          console.log("Cancela levantada.", data);
-
-        } catch {
-          console.log("Resposta recebida, mas não é JSON ou está vazia.");
-        }
-
-      } else {
-        console.error("Erro ao levantar a cancela")
-      }
-    } catch {
-      console.log("Resposta recebida, mas não é JSON ou está vazia.");
-    }
-
-  }
 
   return (
-    <nav className={styles.navbar}>
+    <nav className={styles.navbar} id="navbar">
       <div className={styles.logo}>
         <img src='/logo2.png' className={styles.logo} alt='Stock Control' title='Stock Control' />
       </div>
       {isMenuVisible && (
         <div className={styles.menu}>
-                    <div className={styles.navItem}>
+          <div className={styles.navItem}>
             <button className={styles.nav} id="dropdown5" >Lojista</button>
             <ul className={styles.dropdownMenu}>
               <li><Link to='com_vendas' className={styles.dropdown}>Comunicação de Venda</Link></li>
+              <li><button onClick={()=>handleModalAlertOpen ('/solic_lib_venda')} className={styles.dropdown}> Solicitar Liberação</button></li>
+              <li><Link to='cad_vendedor' className={styles.dropdown}>Cadastro de Vendedor</Link></li>
+              <li><Link to='cons_venda' className={styles.dropdown}>Consultar Venda</Link></li>
             </ul>
+            {alertModalOpen && <AlertLibModal onClose={handleModalAlertClose} />}
           </div>
-          <div className={styles.navItem}>
-            <button className={styles.nav} id="dropdown1">Cadastros</button>
-            <ul className={styles.dropdownMenu}>
-              <li><Link to='cad_loja' className={styles.dropdown}>Cadastrar Loja</Link></li>
-              <li><Link to='cad_veic' className={styles.dropdown}>Cadastrar Veiculo</Link></li>
-            </ul>
-          </div>
+        
           <div className={styles.navItem}>
             <button className={styles.nav} id="dropdown2">Gestao de Estoque</button>
             <ul className={styles.dropdownMenu} >
-              <li><Link to='/relatorio_estoque' className={styles.dropdown}>Relatorio de Estoque <br />e  Baixas</Link></li>
+              <li><Link to='cad_loja' className={styles.dropdown}>Cadastrar Loja</Link></li>
+              <li><Link to='cad_veic' className={styles.dropdown}>Cadastrar Veiculo</Link></li>
               <li><Link to='/inventario' className={styles.dropdown}>Inventário</Link> </li>
             </ul>
           </div>
           <div className={styles.navItem}>
-            <button className={styles.nav} id="dropdown3">Movimentações</button>
+            <button className={styles.nav} id="dropdown3">Administração</button>
             <ul className={styles.dropdownMenu}>
               <li><button onClick={() => handleOpenModal('/liberacoes')} className={styles.dropdown}>Liberar Veículo</button></li>
               <li><button onClick={() => handleOpenModal('/baixar_veic')} className={styles.dropdown}>Baixar Veículo</button></li>
+              <li><Link to='/relatorio_estoque' className={styles.dropdown}>Relatórios</Link></li>
+
             </ul>
             {isModalOpen && (
               <LoginModal onClose={handleCloseModal} onLogin={handleLoginSuccess} />
             )}
           </div>
-          <div className={styles.navItem}>
-            <button className={styles.nav} id="dropdown4" onMouseEnter={() => handleAccess()}>Acesso</button>
-            <ul className={styles.dropdownMenu}>
-              <li className={styles.dropdown} onClick={() => handleIn()}>Entrada</li>
-              <li className={styles.dropdown}>Saida</li>
-              <li><Link to='/relatorio_acesso' className={styles.dropdown}>Rel. de Acessos</Link></li>
-            </ul>
-          </div>
+          
           <Link to='/buscas' className={styles.pesquisar} i>Pesquisar</Link>
           <div className={styles.links} alt='Home' title='Ir para home'>
             <Link to='/dashboard'><img width="50" height="50" src="https://img.icons8.com/3d-fluency/94/home.png" alt="home" /></Link>

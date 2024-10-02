@@ -73,10 +73,11 @@ const SearchHistory = () => {
                 </div>
                 <div ref={tabelaRef} className={styles.table} id='printable'>
                         {filtroAcesso ?
-                            <table className="table table-primary table-striped-columns" border="1">
+                            <table className="table table-secondary table-striped-columns" border="1">
                                 <thead>
                                     {results.map(result => (
                                         <tr className={styles.head} key={result.id}>
+                                            <th className={styles.table_title} > HISTÓRICO DO VEÍCULO </th>
                                             <th>Loja: {result.unidade}</th>
                                             <th>Placa: {result.placa} </th>
                                             <th>Marca: {result.marca}</th>

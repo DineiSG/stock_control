@@ -116,7 +116,7 @@ const Lberar = () => {
         const mensagem = `Prezados, favor realizar a liberação do seguinte veiculo:\nLoja: ${veiculo.unidade}\nMarca: ${veiculo.marca}\nModelo: ${veiculo.modelo}\nCor: ${veiculo.cor}\nPlaca: ${placa}\nMotivo: ${motivo}\nObservação: ${observacoes}\nDesde já agradeço.`;
         const telefone = '5562981230063'
         const urlWhatsApp = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`
-      
+
         window.open(urlWhatsApp, '_blank')
         window.alert('Liberaçao registrada!');
         window.location.reload();
@@ -134,7 +134,7 @@ const Lberar = () => {
   return (
     <div>
       <div>
-        <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/car.png" alt="car"/> Liberação de Veículos</h1>
+        <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/car.png" alt="car" /> Liberação de Veículos</h1>
         <div className={styles.container}>
           <div class="container-lg">
             <h2 className={styles.title} >INFORME OS DADOS DO VEÍCULO:</h2>
@@ -181,7 +181,7 @@ const Lberar = () => {
                   <input type='text' className={styles.obs} name='observacoes' value={observacoes} onChange={(e) => setObservacoes(e.target.value)}></input>
                 </label>
 
-                <button type='submit' className={styles.cadastrar}>Cadastrar</button>
+                <button type='submit' className={styles.btn_cadastrar}>Cadastrar</button>
               </form>
             </div>
           </div>

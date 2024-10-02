@@ -19,7 +19,6 @@ input {
 }
 
 .container{
-    
     background-color: rgb(255, 255, 255);
     margin:3% 8% ;
     box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.2);
@@ -55,7 +54,12 @@ input {
     background-color:rgba(89, 3, 110, 0.871);
     font-weight: bold;
     margin: 30px;
+}
 
+.table_title{
+    font-size: 20px;
+    text-align: center;
+    
 }
 .edit:hover{
     background-color: #669231;

@@ -135,8 +135,9 @@ const RelEstoqueLoja = () => {
         {filtroLoja ? (
           <>
           <div  ref={tabelaRef} >
-            <p className={styles.quantidade}>TOTAL DE VEICULOS EM ESTOQUE: {results.length}</p>
-            <table className="table table-primary table-striped-columns" border="1">
+            <p className={styles.txt_title} > VEÍCULOS DISPONÍVEIS </p>
+            
+            <table className="table table-secondary table-striped-columns" border="1">
               <thead>
                 <tr>
                   <th>Loja</th>
@@ -170,6 +171,7 @@ const RelEstoqueLoja = () => {
               </tbody>
             </table>
             </div>
+            <p className={styles.quantidade}>TOTAL DE VEICULOS EM ESTOQUE: {results.length}</p>
           </>
         ) : null}
       </div>

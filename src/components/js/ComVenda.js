@@ -1,11 +1,52 @@
 import { useState } from 'react'
 import styles from '../styles/Lojista.module.css'
+import { Link } from 'react-router-dom'
+import SolicLibVenda from './SolicLibVenda'
 
 const ComVenda = () => {
 
-  const [placa, setPlaca] = useState('')
-  const [veiculo, setVeiculo] = useState({ marca: '', modelo: '', cor: '', loja: '', renavan: '', observacoes: '' })
+  const [infoConditions, setInfoConditions] = useState(true)
   const [observacoes, setObservacoes] = useState('');
+  const [comprador, setComprador] = useState('')
+  const [vendedor, setVendedor] = useState('')
+  const [vendedores, setVendedores] = useState([])
+  const [valorFipe, setValorFipe] = useState('')
+  const [valorVenda, setValorVenda] = useState('')
+  const [valorEntrada, setValorEntrada] = useState('')
+  const [valorFinanciamento, setValorFinanciamento] = useState('')
+  const [instituicao, setInstituicao] = useState('')
+  const [tipoVenda, setTipoVenda] = useState('')
+  const [placa, setPlaca] = useState('')
+  const [veiculo, setVeiculo] = useState({
+    marca: '',
+    modelo: '',
+    cor: '',
+    unidade: '',
+    renavam: '',
+    comprador: '',
+    vendendor: '',
+    valorAnunciado: '',
+    valorFipe: '',
+    valorVenda: '',
+    valorEntrada: '',
+    valorFinanciamento: '',
+    financeira: '',
+    tipoVenda: '',
+    banco: '',
+    consorcio: '',
+    observacoes: ''
+  })
+
+  const handleVendaChange = (e) => {
+    setTipoVenda(e.target.value)
+    if (e.target.value === 'aVista') {
+      setInfoConditions(false)
+    } else {
+      setInfoConditions(true)
+    }
+  }
+
+
 
   //Buscando os dados do veiculo de acordo com a placa
   const handleBlur = async () => {
@@ -20,8 +61,9 @@ const ComVenda = () => {
             modelo: data.modelo,
             cor: data.cor,
             unidade: data.unidade,
-            renavan: data.renavan
+            renavam: data.renavan
           });
+          fetchVendedores(data.unidade)
         } else {
           console.error('Erro ao buscar dados do veículo');
         }
@@ -31,10 +73,8 @@ const ComVenda = () => {
     }
   };
 
-
   //Enviando os dados para a tabela liberaçoes
   const handleSubmit = async (e) => {
-
     e.preventDefault()
 
     //Formatando a data para enviar ao banco de dados
@@ -66,9 +106,17 @@ const ComVenda = () => {
       modelo: veiculo.modelo,
       cor: veiculo.cor,
       unidade: veiculo.unidade,
-      renavan: veiculo.renavan,
-      observacoes,
-      dataRegistro
+      renavam: veiculo.renavam,
+      comprador,
+      vendedor,
+      valorVenda,
+      valorFipe,
+      valorFinanciamento,
+      valorEntrada,
+      tipoVenda,
+      instituicao,
+      dataRegistro,
+      observacoes
 
     }
 
@@ -88,9 +136,9 @@ const ComVenda = () => {
     const upperCaseData = toUpperCaseData(dados)
 
 
-    //Enviando os dados da liberaçao para a tabela vaga.liberaçoes
+    //Enviando os dados da venda
     try {
-      const response = await fetch('http://localhost:8090/api/liberacoes', {
+      const response = await fetch('http://localhost:8091/api/v1/vendas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -102,12 +150,12 @@ const ComVenda = () => {
         console.log('Dados enviados com sucesso');
 
         /*Enviando mensagem para um determinado numero pelo wpp web apos a confirmação da liberaçao*/
-        const mensagem = `Prezados, favor realizar a liberação do seguinte veiculo:\nLoja: ${veiculo.unidade}\nMarca: ${veiculo.marca}\nModelo: ${veiculo.modelo}\nCor: ${veiculo.cor}\nPlaca: ${placa}\nObservação: ${observacoes}\nDesde já agradeço.`;
+        const mensagem = `Prezados, favor realizar a liberação do seguinte veiculo:\nLoja: ${veiculo.unidade} Placa: ${placa}\nMotivo: O veículo foi vendido e será retirado pelo comprador.\nDesde já agradeço.`;
         const telefone = '5562981230063'
         const urlWhatsApp = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`
 
         window.open(urlWhatsApp, '_blank')
-        window.alert('Liberaçao registrada!');
+        window.alert('Solicitação de liberaçao registrada!');
         window.location.reload();
         // Limpar o formulário se necessário
       } else {
@@ -120,20 +168,36 @@ const ComVenda = () => {
     }
   };
 
+  const fetchVendedores = async (unidade) => {
+    try {
+      const response = await fetch(`http://localhost:8091/api/v1/vendedor?unidade=${unidade}`)
+      const data = await response.json()
+      if (Array.isArray(data)) {
+        setVendedores(data)
+      } else {
+        setVendedores([])
+      }
+
+    } catch (error) {
+      console.error("Erro ao buscar vendedores: ", error)
+      setVendedores([])
+    }
+  }
+
   return (
     <div>
       <div>
         <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/money.png" alt="money" /> Comunicação de Venda</h1>
         <div className={styles.container}>
           <div class="container-lg">
-            <h2 className={styles.title} >INFORME OS DADOS DA OPERAÇÃO:</h2>
+            <h2 className={styles.title} >DADOS DA OPERAÇÃO</h2>
             <div className={styles.formulario}>
               <form className={styles.cadastro} onSubmit={handleSubmit} >
+                <h2 className={styles.title} >INFORME OS DADOS DO VEÍCULO:</h2>
                 <label>
                   <p>Placa:</p>
                   <input className={styles.tag} type='text' value={placa} maxLength='7' onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}></input>
                 </label>
-                <br />
                 <label>
                   <p>Marca:</p>
                   <input type='text' name='marca' value={veiculo.marca} readOnly required></input>
@@ -148,74 +212,106 @@ const ComVenda = () => {
                 </label>
                 <label>
                   <p>Renavam:</p>
-                  <input type='text' name='renavan' value={veiculo.renavan} readOnly required></input>
+                  <input type='text' className={styles.tag} name='renavam' value={veiculo.renavam} readOnly required></input>
                 </label>
                 <label>
                   <p>Loja:</p>
-                  <input type='text' name='loja' value={veiculo.unidade} readOnly required></input>
-                  <input type='hidden' name='id' value={veiculo.id} readOnly required></input>
+                  <input type='text' name='unidade' value={veiculo.unidade} readOnly required></input>
                 </label>
-                
+                <hr />
+                <h2 className={styles.title} >INFORME OS DADOS DA NEGOCIAÇÃO:</h2>
+
                 <label>
                   <p>Vendedor:</p>
-                  <select type='text' name='loja' value={''} onChange={''} required >
+                  <select type='text' name='vendedor' value={vendedor} onChange={(e) => setVendedor(e.target.value)} required >
                     <option value="" >SELECIONE UM VENDEDOR</option>
-                    { /*{lojas.map((loja) => (
-                                        <option key={loja.id} value={loja.id} data-descricao={loja.descricao}>
-                                            {loja.descricao}
-                                        </option>
-                                    ))}*/}
+                    {vendedores.map((vendedor) => (
+                      <option key={vendedor.id} value={vendedor.nome} >
+                        {vendedor.nome}
+                      </option>
+                    ))}
                   </select>
                 </label>
+
                 <label>
                   <p>Nome Completo do Comprador:</p>
-                  <input className={styles.obs} type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
+                  <input className={styles.obs} type='text' name='comprador' value={comprador} onChange={(e) => setComprador(e.target.value)} required></input>
                 </label>
+
+                <div className={styles.chk_negociacao}>
+                  <p>Forma de Negociação:</p>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value='financeira' checked={tipoVenda === 'financeira'} onClick={(e) => setTipoVenda(e.target.value)} onChange={handleVendaChange} />
+                    <p>Financeira</p>
+                    {tipoVenda === 'financeira' && (
+                      <select type='text' name='financeira' value={instituicao} onChange={(e) => setInstituicao(e.target.value)} required >
+                        <option value="" >SELECIONE UMA FINANCEIRA</option>
+                        <option value="finance">FINANCE</option>
+                      </select>
+                    )}
+                  </div>
+
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value='banco' checked={tipoVenda === 'banco'} onClick={(e) => setTipoVenda(e.target.value)} onChange={handleVendaChange} />
+                    <p>Banco</p>
+                    {tipoVenda === 'banco' && (
+                      <select type='text' name='banco' value={instituicao} onChange={(e) => setInstituicao(e.target.value)} required >
+                        <option value="" >SELECIONE UM BANCO</option>
+                        <option vaue="bank">BANK</option>
+                      </select>
+                    )}
+                  </div>
+
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value='consorcio' checked={tipoVenda === 'consorcio'} onClick={(e) => setTipoVenda(e.target.value)} onChange={handleVendaChange} />
+                    <p>Consorcio</p>
+                    {tipoVenda === 'consorcio' && (
+                      <input type='text' name='consorcio' value={instituicao} onChange={(e) => setInstituicao(e.target.value)} required />
+                    )}
+                  </div>
+
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value='aVista' onClick={(e) => setTipoVenda(e.target.value)} onChange={handleVendaChange} />
+                    <p>À Vista</p>
+                  </div>
+                </div>
+
                 <br />
                 <label>
-                  <p>Valor Anunciado R$:</p>
-                  <input className={styles.tag}  type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
-                </label>
-                <label>
                   <p>Valor Tabela FIP R$:</p>
-                  <input className={styles.tag}  type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
+                  <input className={styles.tag} type='text' value={valorFipe} onChange={(e) => setValorFipe(e.target.value)} ></input>
                 </label>
                 <label>
                   <p>Valor de Venda R$:</p>
-                  <input className={styles.tag}  type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
+                  <input className={styles.tag} type='text' value={valorVenda} onChange={(e) => setValorVenda(e.target.value)} required></input>
                 </label>
-                <label>
-                  <p>Valor Financiado R$:</p>
-                  <input className={styles.tag}  type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
-                </label>
-                <label>
-                  <p>Valor de Entrada R$:</p>
-                  <input className={styles.tag}  type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
-                </label>
-                <label>
-                  <p>Quantidade de Parcelas:</p>
-                  <input className={styles.tag}  type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
-                </label>
-                <label>
-                  <p>Valor da Parcela R$:</p>
-                  <input className={styles.tag}  type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
-                </label>
-                <label>
-                  <p>Financeira / Banco:</p>
-                  <input  type='text' /*onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur}*/ required></input>
-                </label>
+
+                {infoConditions && (
+                  <>
+                    <label>
+                      <p>Valor de Entrada R$:</p>
+                      <input className={styles.tag} type='text' value={valorEntrada} onChange={(e) => setValorEntrada(e.target.value)} ></input>
+                    </label>
+                    <label>
+                      <p>Valor Financiado R$:</p>
+                      <input className={styles.tag} type='text' value={valorFinanciamento} onChange={(e) => setValorFinanciamento(e.target.value)}></input>
+                    </label>
+                  </>
+                )}
+
                 <label>
                   <p>Observação:</p>
                   <input type='text' className={styles.obs} name='observacoes' value={observacoes} onChange={(e) => setObservacoes(e.target.value)}></input>
                 </label>
-                
+
                 <button type='submit' className={styles.btn_enviar}>Enviar</button>
               </form>
             </div>
           </div>
         </div>
-        <button type='submit' className={styles.btn_consultar}>Consultar Venda</button>
+        <Link to='/cons_venda'><button className={styles.btn_consultar}>Consultar Venda</button></Link>
       </div>
+      
     </div>
   )
 }

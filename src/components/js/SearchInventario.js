@@ -114,7 +114,7 @@ const SearchInventario = () => {
             <div ref={tabelaRef} className={styles.search_table}>
               {filtroLoja ? (
                 <>
-                  <table className="table table-primary table-striped-columns" border="1">
+                  <table className="table table-secondary table-striped-columns" border="1">
                     <thead>
                       {results.map(result => (
                         <tr key={result.id}>

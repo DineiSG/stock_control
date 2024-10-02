@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styles from '../styles/LoginModal.module.css'
+import styles from '../styles/StylesModal.module.css'
 
 
 

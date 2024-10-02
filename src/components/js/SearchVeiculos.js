@@ -110,7 +110,7 @@ const SearchVeiculos = () => {
             </div>
             <div className={styles.table}>
                 {busca ?
-                    <table className="table table-primary table-striped-columns" border="1">
+                    <table className="table table-secondary table-striped-columns" border="1">
                         <thead>
                             <tr>
                                 <th>Marca</th>
