@@ -20,9 +20,17 @@ const SolicLibVenda = () => {
   
     //Buscando os dados do veiculo de acordo com a placa
     const handleBlur = async () => {
-      if (placa.length === 7) {
+
+          //Função que converte o texto digitado no input placa em maiusculo
+    function converterParaMaiusculo(texto){
+      return texto.toUpperCase()
+    }
+    let texto=placa
+    let textoMaiusculo=converterParaMaiusculo(texto)
+
+      if (textoMaiusculo.length === 7) {
         try {
-          const response = await fetch(`http://localhost:8090/api/veiculos/placa/${placa}`);
+          const response = await fetch(`http://localhost:8090/api/veiculos/placa/${textoMaiusculo}`);
           if (response.ok) {
             const data = await response.json();
             setVeiculo({

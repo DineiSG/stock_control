@@ -19,6 +19,26 @@ const SearchVeiculos = () => {
         valor_meio_acesso: ''
     })
 
+
+        //Função de conversao Hexadecimal para Wiegand. Essa função recebe o valor da tag em Hexadecimal e converte para Wiegand,
+    // que e um formato muito utilizado em controle de acessos.
+    function hexToWiegand(hexValue) {
+        // Divide o valor hexadecimal em duas partes
+        const leftPartHex = hexValue.substring(0, 2); // Parte esquerda (2 primeiros caracteres)
+        const rightPartHex = hexValue.substring(2);  // Parte direita (restante dos caracteres)
+
+        // Converte as partes de hexadecimal para decimal
+        const leftPart = parseInt(leftPartHex, 16); // Converte a parte esquerda para decimal
+        const rightPart = parseInt(rightPartHex, 16); // Converte a parte direita para decimal
+
+        // Formata as partes com zeros à esquerda
+        const leftPartFormatted = leftPart.toString().padStart(3, '0'); // Garantir 3 dígitos na parte esquerda
+        const rightPartFormatted = rightPart.toString().padStart(5, '0'); // Garantir 5 dígitos na parte direita
+
+        // Concatena as partes formatadas
+        return leftPartFormatted + rightPartFormatted;
+    }  
+
     /*Função que busca informações de um veiculo de acordo com a placa */
     const handleSearch = async (e) => {
         e.preventDefault();
@@ -70,6 +90,7 @@ const SearchVeiculos = () => {
 
     /*Função que salva os dados */
     const handleSave = async () => {
+
         try {
             const response = await fetch(`http://localhost:8090/api/veiculos/placa/${editableFields.placa}`, {
                 method: 'PUT',

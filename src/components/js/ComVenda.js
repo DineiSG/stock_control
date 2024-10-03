@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styles from '../styles/Lojista.module.css'
 import { Link } from 'react-router-dom'
-import SolicLibVenda from './SolicLibVenda'
+
 
 const ComVenda = () => {
 
@@ -50,6 +50,8 @@ const ComVenda = () => {
 
   //Buscando os dados do veiculo de acordo com a placa
   const handleBlur = async () => {
+
+    //Função que converte o texto digitado no input placa em maiusculo
     function converterParaMaiusculo(texto){
       return texto.toUpperCase()
     }
@@ -190,6 +192,8 @@ const ComVenda = () => {
     }
   }
 
+  
+
   return (
     <div>
       <div>
@@ -252,7 +256,14 @@ const ComVenda = () => {
                     {tipoVenda === 'financeira' && (
                       <select type='text' name='financeira' value={instituicao} onChange={(e) => setInstituicao(e.target.value)} required >
                         <option value="" >SELECIONE UMA FINANCEIRA</option>
-                        <option value="finance">FINANCE</option>
+                        <option value="C6 Bank">C6 Bank</option>
+                        <option value="Safra">Safra</option>
+                        <option value="Bradesco">Bradesco</option>
+                        <option value="Santander">Santander</option>
+                        <option value="Pan">Pan</option>
+                        <option value="BV">BV</option>
+                        <option value="BV">BV</option>
+                        <option value="Itaú">Itaú</option>
                       </select>
                     )}
                   </div>
@@ -263,7 +274,15 @@ const ComVenda = () => {
                     {tipoVenda === 'banco' && (
                       <select type='text' name='banco' value={instituicao} onChange={(e) => setInstituicao(e.target.value)} required >
                         <option value="" >SELECIONE UM BANCO</option>
-                        <option vaue="bank">BANK</option>
+                        <option value="C6 Bank">C6 Bank</option>
+                        <option value="Safra">Safra</option>
+                        <option value="Bradesco">Bradesco</option>
+                        <option value="Santander">Santander</option>
+                        <option value="Pan">Pan</option>
+                        <option value="BV">BV</option>
+                        <option value="BV">BV</option>
+                        <option value="Itaú">Itaú</option>
+
                       </select>
                     )}
                   </div>
