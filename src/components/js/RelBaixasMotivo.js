@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react'
 import styles from '../styles/Relatorios.module.css'
-import * as XLSX from 'xlsx'
 
 const RelBaixasMotivo = () => {
 
@@ -79,29 +78,6 @@ const RelBaixasMotivo = () => {
         }
     }
 
-    //Função responsavel por gerar a planilha de excel
-    const generateExcel = () => {
-        const formattedData = results.map(item => ({
-            Cod: item.id_unidade,
-            Loja: item.unidade,
-            Data_Cadastro: formatTimestamp(item.data_registro),
-            Dias_Em_Estoque: calculateDaysInStock(item.data_registro),
-            Marca: item.marca,
-            Modelo: item.modelo,
-            Ano_de_Fabricaçao: item.ano,
-            Cor: item.cor,
-            Renavan: item.renavan,
-            Placa: item.placa,
-            Num_Tag: item.valor_meio_acesso
-
-
-        }))
-
-        const worksheet = XLSX.utils.json_to_sheet(formattedData)
-        const workbook = XLSX.utils.book_new()
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Data")
-        XLSX.writeFile(workbook, "Relatorio de Estoque.xlsx")
-    }
 
     return (
         <div>
@@ -128,7 +104,8 @@ const RelBaixasMotivo = () => {
                 {filtroLoja ? (
                     <>
                         <div ref={tabelaRef}>
-                            <p className={styles.quantidade}>TOTAL DE BAIXAS: {results.length}</p>
+                            
+                            <p className={styles.txt_title} > BAIXAS REALIZADAS </p>
                             <table className="table table-secondary table-striped-columns" border="1">
                                 <thead>
                                     <tr>
@@ -161,6 +138,7 @@ const RelBaixasMotivo = () => {
                                     ))}
                                 </tbody>
                             </table>
+                            <p className={styles.quantidade}>TOTAL DE BAIXAS: {results.length}</p>
                         </div>
                     </>
                 ) : null}

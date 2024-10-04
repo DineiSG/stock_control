@@ -35,12 +35,16 @@ option {
     border: none;
     float: right;
     margin-top: 10%;
-
 }
 
 .btn_enviar:hover {
     background-color: #669231;
     color: rgba(255, 255, 255, 0.871);
+}
+
+.btn_enviar:focus{
+    outline: 1px solid blue;
+    background-color:rgb(199, 48, 236);
 }
 
 .cadastro {
@@ -93,10 +97,13 @@ option {
     margin: 5%;
 }
 
-
 .btn_consultar:hover {
     background-color: #669231;
     color: rgba(255, 255, 255, 0.871);
+}
+.btn_consultar:focus {
+    outline: 1px solid rgb(0, 0, 255);
+    background-color:rgb(199, 48, 236);
 }
 
 /*CSS Cadastro de Vendedor*/
@@ -118,13 +125,16 @@ option {
     border: none;
     float: right;
     margin-top: 9%;
-
 }
 
 .btn_cadastrar:hover {
     background-color: #669231;
     color: rgba(255, 255, 255, 0.871);
+}
 
+.btn_cadastrar:focus{
+    outline: 1px solid blue;
+    background-color:rgb(199, 48, 236);
 }
 
 .cadastro_lj {
@@ -180,6 +190,11 @@ option {
 .btn_buscar:hover {
     background-color: #669231;
     color: rgba(255, 255, 255, 0.871);
+}
+
+.btn_buscar:focus{
+    outline: 1px solid blue;
+    background-color:rgb(199, 48, 236);
 }
 
 .table {

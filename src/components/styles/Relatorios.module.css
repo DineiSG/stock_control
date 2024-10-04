@@ -30,7 +30,7 @@
     background-color: rgb(255, 255, 255);
     margin:25px 0;
 }
-.buscar{
+.btn_buscar{
     height: 40px;
     width: 100px;
     color: #FFF;
@@ -41,7 +41,11 @@
     font-weight: 600;
     margin-top: 20px;
 }
-.buscar:hover{
+.btn_buscar:focus{
+    outline: 1px solid blue;
+    background-color:rgb(199, 48, 236);
+}
+.btn_buscar:hover{
     background-color: #669231;
     color:rgba(255, 255, 255, 0.871);
 }
@@ -52,7 +56,7 @@
 }
 
 .table{
-    margin: 0 2%;
+    margin: 5% 0;
 }
 .head{
  display:grid;
@@ -63,21 +67,20 @@
     text-align: center;
 }
 .quantidade{
-    position: absolute;
-    right:9%;
+    
+    right:7%;
     font-weight: 600;
     color:rgba(3, 0, 4, 0.871);
-    border:1px solid rgba(80, 80, 83, 0.363);
     padding:5px;
-    text-align:center;
     background-color: #D7D8DA;
-    width: 310px;
+    width:auto;
+    margin-top: 1%;
+    margin-bottom: 2%;
 }
 .txt_title{
     font-weight: 600;
     font-weight: bold ;
     color:rgba(3, 0, 4, 0.871);
-    border:1px solid rgba(114, 117, 245, 0.555);
     padding:5px;
     text-align:center;
     background-color: #D7D8DA;
@@ -88,6 +91,12 @@
 /*Removendo a caixa de pesquisa do impressao*/
 @media print{
     .cont * {
+        position:absolute;
+        left: -9999px;
+        margin-top: 0;
+        display:inline
+    }
+    .container *{
         position:absolute;
         left: -9999px;
         margin-top: 0;

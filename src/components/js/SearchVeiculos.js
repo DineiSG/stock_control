@@ -125,7 +125,7 @@ const SearchVeiculos = () => {
                     <p>Placa:</p>
                         <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
                     </label>
-                    <button className={styles.buscar} type='submit' onClick={() => setBusca(!busca)}>
+                    <button className={styles.btn_buscar} type='submit' onClick={() => setBusca(!busca)}>
                         {busca ? 'Buscar' : 'Buscar'}</button>
                 </form>
             </div>
@@ -160,7 +160,7 @@ const SearchVeiculos = () => {
                             ))}
                         </tbody>
                     </table> : null}
-                <button className={styles.edit} onClick={handleEditToggle}>
+                <button className={styles.btn_edit} onClick={handleEditToggle}>
                     {edit ? 'Salvar' : 'Editar'}</button>
             </div>
         </div>

@@ -119,11 +119,13 @@ const RelBaixasLoja = () => {
                     </form>
                 </div >
             </div>
-            <div className={styles.table} id='printable'>
+            
+<div className={styles.table} id='printable'>
                 {filtroLoja ? (
                     <>
                         <div ref={tabelaRef}>
-                            <p className={styles.quantidade}>TOTAL DE VEICULOS BAIXADOS: {results.length}</p>
+                            <p className={styles.txt_title} > BAIXAS REALIZADAS </p>
+                            
                             <table className="table table-secondary table-striped-columns" border="1">
                                 <thead>
                                     <tr>
@@ -153,15 +155,14 @@ const RelBaixasLoja = () => {
                                             <td>{result.motivo}</td>
                                             <td>{result.observacoes}</td>
                                         </tr>
-
                                     ))}
                                 </tbody>
                             </table>
+                            <p className={styles.quantidade}>TOTAL DE VEICULOS BAIXADOS: {results.length}</p>
                         </div>
                     </>
                 ) : null}
             </div>
-
 
         </div>
     )

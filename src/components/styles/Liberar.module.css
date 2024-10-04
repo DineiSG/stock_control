@@ -25,13 +25,15 @@ input, option {
 }
 /*Botao de input*/
 .btn_cadastrar{
+    height: 40px;
+    width: 100px;
     background-color:rgba(89, 3, 110, 0.871);
     color: #FFF;
     cursor: pointer;
     font-weight: 600;
     border-radius: 2px;
     border: none;
-    padding: 15px 15px;
+    
     float:right;
     margin-top: 7%;
     margin-right:5%
@@ -39,6 +41,10 @@ input, option {
 .btn_cadastrar:hover{
     background-color: #669231;
     color:rgba(255, 255, 255, 0.871);
+}
+.btn_cadastrar:focus{
+    outline: 1px solid blue;
+    background-color:rgb(199, 48, 236);
 }
 .cadastro{
     margin-top:3%
@@ -82,19 +88,23 @@ input, option {
     
 }
 
-.buscar{
+.btn_buscar{
     height: 40px;
-    width: 80px;
+    width: 100px;
     color: #FFF;
     text-align: center;
     cursor: pointer;
     background-color:rgba(89, 3, 110, 0.871);
-    font-weight: bold;
+    font-weight:600;
     margin-top: 20px;
 }
-.buscar:hover{
+.btn_buscar:hover{
     background-color: #669231;
     color:rgba(255, 255, 255, 0.871);
+}
+.btn_buscar:focus{
+    outline: 1px solid blue;
+    background-color:rgb(199, 48, 236);
 }
 
 .pesquisa{

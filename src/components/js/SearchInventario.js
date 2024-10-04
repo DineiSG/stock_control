@@ -9,19 +9,19 @@ const SearchInventario = () => {
   const [setError] = useState('')
   const [lojas, setLojas] = useState([])
 
-    //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
-    const tabelaRef = useRef(null)
+  //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
+  const tabelaRef = useRef(null)
 
-    const handleButtonClick = () => {
-        setFiltroLoja(!filtroLoja) //Alterando o estado da tabela
+  const handleButtonClick = () => {
+    setFiltroLoja(!filtroLoja) //Alterando o estado da tabela
 
-        setTimeout(() => {
-            if (tabelaRef.current) {
-                tabelaRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-            }
-        }, 100)//Timeout para garantir que a tabela esteja visivel apos a renderização
+    setTimeout(() => {
+      if (tabelaRef.current) {
+        tabelaRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, 100)//Timeout para garantir que a tabela esteja visivel apos a renderização
 
-    }
+  }
 
   /*Função que trata do retorno de data */
   const formatTimestamp = (timestamp) => {
@@ -95,46 +95,48 @@ const SearchInventario = () => {
     <div>
       <div className={styles.container}>
         <div class="container-lg">
-            <h2 className={styles.title}>INFORME O NOME DA LOJA PARA BUSCAR O RESULTADO DE UM INVENTÁRIO:</h2>
-            <form className={styles.pesquisa} onSubmit={handleSearch}>
-              <label>
-                <p>Selecione uma loja:</p>
-                <select value={query} onChange={(e) => setQuery(e.target.value)} required>
-                  <option value=""></option>
-                  <option value='TODOS'>TODOS</option>
-                  {lojas.map((loja) => (
-                    <option key={loja.id} value={loja.descricao}>
-                      {loja.descricao}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>{filtroLoja ? 'Buscar' : 'Buscar'}</button>
-            </form>
-            <div ref={tabelaRef} className={styles.search_table}>
-              {filtroLoja ? (
-                <>
-                  <table className="table table-secondary table-striped-columns" border="1">
-                    <thead>
-                      {results.map(result => (
-                        <tr key={result.id}>
-                          <th>Cod. Inventário: {result.idInventario} </th>
-                          <th>Loja: {result.unidade}</th>
-                          <th>Data de Abertura: {formatTimestamp(result.data_abertura)}</th>
-                          <th>Data de Fechamento: {formatTimestamp(result.data_fechamento)}</th>
-                          <th>Quantidade de Divergencias: {result.qtd_divergencias}</th>
-                          <th>Acuracidade: {result.acuracidade}</th>
-                          <th>Observaçoes: {result.observacoes}</th>
-                        </tr>))}
-                    </thead>
-                  </table>
-                </>
-              ) : null}
-            </div>
-          </div >
-        </div>
+          <h2 className={styles.title}>INFORME O NOME DA LOJA PARA BUSCAR O RESULTADO DE UM INVENTÁRIO:</h2>
+          <form className={styles.pesquisa} onSubmit={handleSearch}>
+            <label>
+              <p>Selecione uma loja:</p>
+              <select value={query} onChange={(e) => setQuery(e.target.value)} required>
+                <option value=""></option>
+                <option value='TODOS'>TODOS OS INVENTARIOS REALIZADOS</option>
+                {lojas.map((loja) => (
+                  <option key={loja.id} value={loja.descricao}>
+                    {loja.descricao}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>{filtroLoja ? 'Buscar' : 'Buscar'}</button>
+          </form>
+          
+        </div >
       </div>
-    
+      <div ref={tabelaRef} className={styles.search_table} id='printable'>
+            {filtroLoja ? (
+              <>
+                <p className={styles.txt_title} > RELATÓRIO DE INVENTÁRIO </p>
+                <table className="table table-secondary table-striped-columns" border="1">
+                  <thead>
+                    {results.map(result => (
+                      <tr key={result.id}>
+                        <th>Cod. Inventário: {result.idInventario} </th>
+                        <th>Loja: {result.unidade}</th>
+                        <th>Data de Abertura: {formatTimestamp(result.data_abertura)}</th>
+                        <th>Data de Fechamento: {formatTimestamp(result.data_fechamento)}</th>
+                        <th>Quantidade de Divergencias: {result.qtd_divergencias}</th>
+                        <th>Acuracidade: {result.acuracidade}</th>
+                        <th>Observaçoes: {result.observacoes}</th>
+                      </tr>))}
+                  </thead>
+                </table>
+              </>
+            ) : null}
+          </div>
+    </div>
+
   )
 }
 

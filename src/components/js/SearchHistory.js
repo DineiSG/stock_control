@@ -65,7 +65,7 @@ const SearchHistory = () => {
                                     <p>Placa:</p>
                                     <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
                                 </label>
-                                <button className={styles.buscar} type='submit' onClick={handleButtonClick}>{filtroAcesso ? 'Buscar' : 'Buscar'}</button>
+                                <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>{filtroAcesso ? 'Buscar' : 'Buscar'}</button>
                             </form>
                         </div>
                     </div>

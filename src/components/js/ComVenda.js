@@ -52,11 +52,11 @@ const ComVenda = () => {
   const handleBlur = async () => {
 
     //Função que converte o texto digitado no input placa em maiusculo
-    function converterParaMaiusculo(texto){
+    function converterParaMaiusculo(texto) {
       return texto.toUpperCase()
     }
-    let texto=placa
-    let textoMaiusculo=converterParaMaiusculo(texto)
+    let texto = placa
+    let textoMaiusculo = converterParaMaiusculo(texto)
 
     if (textoMaiusculo.length === 7) {
       try {
@@ -157,13 +157,7 @@ const ComVenda = () => {
       if (response.ok) {
         console.log('Dados enviados com sucesso');
 
-        /*Enviando mensagem para um determinado numero pelo wpp web apos a confirmação da liberaçao*/
-        const mensagem = `Prezados, favor realizar a liberação do seguinte veiculo:\nLoja: ${veiculo.unidade} Placa: ${placa}\nMotivo: O veículo foi vendido e será retirado pelo comprador.\nDesde já agradeço.`;
-        const telefone = '5562981230063'
-        const urlWhatsApp = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`
-
-        window.open(urlWhatsApp, '_blank')
-        window.alert('Solicitação de liberaçao registrada!');
+        window.alert('Comunicação de venda registrada!');
         window.location.reload();
         // Limpar o formulário se necessário
       } else {
@@ -192,7 +186,7 @@ const ComVenda = () => {
     }
   }
 
-  
+
 
   return (
     <div>
@@ -328,7 +322,6 @@ const ComVenda = () => {
                   <p>Observação:</p>
                   <input type='text' className={styles.obs} name='observacoes' value={observacoes} onChange={(e) => setObservacoes(e.target.value)}></input>
                 </label>
-
                 <button type='submit' className={styles.btn_enviar}>Enviar</button>
               </form>
             </div>
@@ -336,7 +329,7 @@ const ComVenda = () => {
         </div>
         <Link to='/cons_venda'><button className={styles.btn_consultar}>Consultar Venda</button></Link>
       </div>
-      
+
     </div>
   )
 }

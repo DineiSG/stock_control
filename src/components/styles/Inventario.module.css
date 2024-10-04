@@ -36,6 +36,10 @@
     background-color: #669231;
     color: rgba(255, 255, 255, 0.871);
 }
+.btn_buscar:focus{
+    outline: 1px solid blue;
+    background-color:rgb(199, 48, 236);
+}
 
 
 
@@ -56,15 +60,27 @@
     background-color: #669231;
     color: rgba(255, 255, 255, 0.871);
 }
+.btn_savelist:focus{
+    outline: 1px solid blue;
+    background-color:rgb(199, 48, 236);
+}
 
 .btn_buscar_inv:hover {
     background-color: #669231;
     color: rgba(255, 255, 255, 0.871);
 }
+.btn_buscar_inv:focus{
+    outline: 1px solid blue;
+    background-color:rgb(199, 48, 236);
+}
 
 .btn_gerar:hover {
     background-color: #669231;
     color: rgba(255, 255, 255, 0.871);
+}
+.btn_gerar:focus{
+    outline: 1px solid blue;
+    background-color:rgb(199, 48, 236);
 }
 
 .result {
@@ -89,6 +105,21 @@
     background-color: #669231;
     color: rgba(255, 255, 255, 0.871);
 }
+.btn_edit:focus{
+    outline: 1px solid blue;
+    background-color:rgb(199, 48, 236);
+}
+.txt_title{
+    font-weight: 600;
+    font-weight: bold ;
+    color:rgba(3, 0, 4, 0.871);
+    border:1px solid rgba(114, 117, 245, 0.555);
+    padding:5px;
+    text-align:center;
+    background-color: #D7D8DA;
+    width:100%;
+    font-size: 20px;
+}
 
 .btn_buscar_inv,.btn_buscar,.btn_salvar{
     height: 40px;
@@ -107,10 +138,18 @@
     background-color: #669231;
     color: rgba(255, 255, 255, 0.871);
 }
+.btn_resultado:focus{
+    outline: 1px solid blue;
+    background-color:rgb(199, 48, 236);
+}
 
 .btn_salvar:hover {
     background-color: #669231;
     color: rgba(255, 255, 255, 0.871);
+}
+.btn_salvar:focus{
+    outline: 1px solid blue;
+    background-color:rgb(199, 48, 236);
 }
 
 .p_aviso {
@@ -145,7 +184,7 @@
         display: inline
     }
 
-    .btn_resultado {
+    .btn_resultado, h1 {
         position: absolute;
         left: -9999px;
         margin-top: 0;
@@ -157,6 +196,12 @@
         left: -9999px;
         margin-top: 0;
         display: inline
+    }
+    .container *{
+        position:absolute;
+        left: -9999px;
+        margin-top: 0;
+        display:inline
     }
 
 

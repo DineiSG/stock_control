@@ -23,7 +23,7 @@ input {
     margin:3% 8% ;
     box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.2);
 }
-.buscar{
+.btn_buscar{
     height: 40px;
     width: 100px;
     color: #FFF;
@@ -34,17 +34,21 @@ input {
     font-weight: 600;
     margin-top: 20px;
 }
-.buscar:hover{
+.btn_buscar:hover{
     background-color: #669231;
     color:rgba(255, 255, 255, 0.871);
     
 }
+.btn_buscar:focus{
+    outline: 1px solid blue;
+    background-color:rgb(199, 48, 236);
+}
 .pesquisa{
     margin-top: 3px;
-    margin-bottom: 3px;
+    margin-bottom: 3px; 
 
 }
-.edit{
+.btn_edit{
     height: 40px;
     width: 180px;
     color: #FFF;
@@ -55,16 +59,21 @@ input {
     font-weight: 600;
     margin: 30px;
 }
+.btn_edit:hover{
+    background-color: #669231;
+    color:rgba(255, 255, 255, 0.871);
+}
+.btn_edit:focus{
+    outline: 1px solid blue;
+    background-color:rgb(199, 48, 236);
+}
 
 .table_title{
     font-size: 20px;
     text-align: center;
     
 }
-.edit:hover{
-    background-color: #669231;
-    color:rgba(255, 255, 255, 0.871);
-}
+
 .edit_data{
     max-width: 100px;
 }
