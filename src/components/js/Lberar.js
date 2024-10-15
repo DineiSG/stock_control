@@ -22,7 +22,7 @@ const Lberar = () => {
   const handleBlur = async () => {
     if (placa.length === 7) {
       try {
-        const response = await fetch(`http://localhost:8090/api/veiculos/placa/${placa}`);
+        const response = await fetch(`http://localhost:8090/api/v1/veiculos/placa/${placa}`);
         if (response.ok) {
           const data = await response.json();
           setVeiculo({
@@ -101,7 +101,7 @@ const Lberar = () => {
 
     //Enviando os dados da liberaçao para a tabela vaga.liberaçoes
     try {
-      const response = await fetch('http://localhost:8090/api/liberacoes', {
+      const response = await fetch('http://localhost:8090/api/v1/liberacoes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

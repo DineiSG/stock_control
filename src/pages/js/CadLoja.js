@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from '../styles/CadLoja.module.css'
 
 
-const url = 'http://localhost:8090/api/lojas'
+const url = 'http://localhost:8090/api/v1/lojas'
 const CadLoja = () => {
 
     const [descricao, setDescricao] = useState('')

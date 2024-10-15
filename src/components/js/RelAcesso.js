@@ -53,7 +53,7 @@ const RelAcesso = () => {
     try {
 
       /*Buscando o veiculo de acordo com a placa*/
-      const response = await fetch(`http://localhost:8090/api/veiculos?placa=${upperCaseQuery}`)
+      const response = await fetch(`http://localhost:8090/api/v1/veiculos?placa=${upperCaseQuery}`)
       const data = await response.json()
 
       //Filtro que sera responsável por caso encontrar um veiculo com a placa informada 
@@ -64,7 +64,7 @@ const RelAcesso = () => {
 
         //Capturando o id do resultado da pesquisa e utilizando para buscar
         const idVeiculoAcessante = filteredResults[0].id
-        const relatedDataResponse = await fetch(`http://localhost:8090/api/acessos/historico/${idVeiculoAcessante}`)
+        const relatedDataResponse = await fetch(`http://localhost:8090/api/v1/acessos/historico/${idVeiculoAcessante}`)
 
         if (!relatedDataResponse.ok) {
           throw new Error('Erro ao buscar dados de acesso.')
@@ -94,7 +94,7 @@ const RelAcesso = () => {
                 <p>Placa:</p>
                 <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
               </label>
-              <button className={styles.buscar} type='submit' onClick={handleButtonClick}>{filtroAcesso ? 'Buscar' : 'Buscar'}</button>
+              <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>{filtroAcesso ? 'Buscar' : 'Buscar'}</button>
             </form>
           </div>
         </div>

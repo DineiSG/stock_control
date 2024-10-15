@@ -54,7 +54,7 @@ const LancarInventario = () => {
         if (!query) return;
 
         try {
-            const response = await fetch(`http://localhost:8090/api/inventario?id_inventario=${query}`)
+            const response = await fetch(`http://localhost:8090/api/v1/inventario?id_inventario=${query}`)
             if (!response.ok) {
                 throw new Error('Erro na requisição')
             }
@@ -137,7 +137,7 @@ const LancarInventario = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:8090/api/resultado', {
+            const response = await fetch('http://localhost:8090/api/v1/resultado', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -151,7 +151,7 @@ const LancarInventario = () => {
             window.alert('Resultado do inventario salvo com sucesso!')
 
             // Deletar a listagem existente na tabela inventário
-            const deleteResponse = await fetch(`http://localhost:8090/api/inventario/id_inventario/${resultado.id_inventario}`, {
+            const deleteResponse = await fetch(`http://localhost:8090/api/v1/inventario/id_inventario/${resultado.id_inventario}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -215,8 +215,8 @@ const LancarInventario = () => {
                                 <th>Marca</th>
                                 <th>Modelo</th>
                                 <th>Cor</th>
-                                <th>Placa</th>
                                 <th>Renavan</th>
+                                <th>Placa</th>
                                 <th>Conferencia</th>
                                 <th>Ação</th>
                             </tr>

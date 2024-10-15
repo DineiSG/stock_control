@@ -31,7 +31,7 @@ const CadVeic = () => {
             }, 10000);
 
             try {
-                const response = await fetch(`http://localhost:8090/api/veiculos/dados?placa=${placa}`);
+                const response = await fetch(`http://localhost:8090/api/v1/veiculos/dados?placa=${placa}`);
                 if (response.ok) {
                     const data = await response.json();
                     setVeiculo({
@@ -130,7 +130,7 @@ const CadVeic = () => {
         console.log('Payload enviado: ', payload)
 
         try {
-            const response = await fetch('http://localhost:8090/api/veiculos', {
+            const response = await fetch('http://localhost:8090/api/v1/veiculos', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -156,7 +156,7 @@ const CadVeic = () => {
     useEffect(() => {
         const fetchLojas = async () => {
             try {
-                const response = await fetch(`http://localhost:8090/api/lojas`)
+                const response = await fetch(`http://localhost:8090/api/v1/lojas`)
                 const data = await response.json()
                 //console.log('Dados da API: ', data)
                 if (Array.isArray(data)) {
@@ -244,7 +244,7 @@ const CadVeic = () => {
                                 <p>Status (D: Dentro/ F:Fora):</p>
                                 <input className={styles.status} type='text' name='status' value={veiculo_status} onChange={(e) => setVeiculoStatus(e.target.value)} required maxLength={1}></input>
                             </label>
-                            <button className={styles.cadastrar} onClick={() => setLoading} disabled={loading}>{loading ? 'Buscando Dados...' : 'Cadastrar'}</button>
+                            <button className={styles.cadastrar} onClick={() => setLoading} disabled={loading}>{loading ? 'Buscando...' : 'Cadastrar'}</button>
                         </form>
                     </div>
                 </div>

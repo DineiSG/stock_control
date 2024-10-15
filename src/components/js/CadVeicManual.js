@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styles from '../../pages/styles/CadVeic.module.css'
 
 
-const url = 'http://localhost:8090/api/veiculos'
+const url = 'http://localhost:8090/api/v1/veiculos'
 const CadVeicManual = () => {
     const [unidade, setUnidade] = useState('')
     const [id_unidade, setIdUnidade] = useState('')
@@ -114,7 +114,7 @@ const CadVeicManual = () => {
     useEffect(() => {
         const fetchLojas = async () => {
             try {
-                const response = await fetch(`http://localhost:8090/api/lojas`)
+                const response = await fetch(`http://localhost:8090/api/v1/lojas`)
                 const data = await response.json()
                 console.log('Dados da API: ', data)
                 if (Array.isArray(data)) {

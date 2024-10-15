@@ -39,9 +39,9 @@ const SearchInventario = () => {
       let response
 
       if (upperCaseQuery === 'TODOS') {
-        response = await fetch(`http://localhost:8090/api/resultado`)//Buscando todos os inventarios
+        response = await fetch(`http://localhost:8090/api/v1/resultado`)//Buscando todos os inventarios
       } else {
-        response = await fetch(`http://localhost:8090/api/resultado?unidade=${upperCaseQuery}`)//Buscando o inventario de acordo com a loja selecionada
+        response = await fetch(`http://localhost:8090/api/v1/resultado?unidade=${upperCaseQuery}`)//Buscando o inventario de acordo com a loja selecionada
       }
 
       if (!response.ok) {
@@ -75,7 +75,7 @@ const SearchInventario = () => {
   useEffect(() => {
     const fetchLojas = async () => {
       try {
-        const response = await fetch(`http://localhost:8090/api/lojas`)
+        const response = await fetch(`http://localhost:8090/api/v1/lojas`)
         const data = await response.json()
 
         if (Array.isArray(data)) {

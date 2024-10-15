@@ -20,7 +20,7 @@ const SearchVeiculos = () => {
     })
 
 
-        //Função de conversao Hexadecimal para Wiegand. Essa função recebe o valor da tag em Hexadecimal e converte para Wiegand,
+    //Função de conversao Hexadecimal para Wiegand. Essa função recebe o valor da tag em Hexadecimal e converte para Wiegand,
     // que e um formato muito utilizado em controle de acessos.
     function hexToWiegand(hexValue) {
         // Divide o valor hexadecimal em duas partes
@@ -37,7 +37,7 @@ const SearchVeiculos = () => {
 
         // Concatena as partes formatadas
         return leftPartFormatted + rightPartFormatted;
-    }  
+    }
 
     /*Função que busca informações de um veiculo de acordo com a placa */
     const handleSearch = async (e) => {
@@ -46,7 +46,7 @@ const SearchVeiculos = () => {
 
         const upperCaseQuery = query.toUpperCase();
         try {
-            const response = await fetch(`http://localhost:8090/api/veiculos?placa=${upperCaseQuery}`)
+            const response = await fetch(`http://localhost:8090/api/v1/veiculos?placa=${upperCaseQuery}`)
             const data = await response.json()
             const filteredResults = data.filter(veiculo => veiculo.placa.toUpperCase() === upperCaseQuery);
 
@@ -92,7 +92,7 @@ const SearchVeiculos = () => {
     const handleSave = async () => {
 
         try {
-            const response = await fetch(`http://localhost:8090/api/veiculos/placa/${editableFields.placa}`, {
+            const response = await fetch(`http://localhost:8090/api/v1/veiculos/placa/${editableFields.placa}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -122,15 +122,18 @@ const SearchVeiculos = () => {
                 <h2 className={styles.title}>INFORME A PLACA DE UM VEÍCULO PARA BUSCAR INFORMAÇÕES:</h2>
                 <form className={styles.pesquisa} onSubmit={handleSearch}>
                     <label>
-                    <p>Placa:</p>
+                        <p>Placa:</p>
                         <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
                     </label>
                     <button className={styles.btn_buscar} type='submit' onClick={() => setBusca(!busca)}>
                         {busca ? 'Buscar' : 'Buscar'}</button>
                 </form>
             </div>
-            <div className={styles.table}>
-                {busca ?
+            {busca ?
+                <div className={styles.table}>
+                    <button className={styles.btn_edit} onClick={handleEditToggle}>
+                        {edit ? 'Salvar' : 'Editar'}</button>
+
                     <table className="table table-secondary table-striped-columns" border="1">
                         <thead>
                             <tr>
@@ -159,10 +162,9 @@ const SearchVeiculos = () => {
 
                             ))}
                         </tbody>
-                    </table> : null}
-                <button className={styles.btn_edit} onClick={handleEditToggle}>
-                    {edit ? 'Salvar' : 'Editar'}</button>
-            </div>
+                    </table>
+
+                </div> : null}
         </div>
     )
 }

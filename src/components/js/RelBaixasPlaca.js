@@ -37,7 +37,7 @@ const RelBaixasPlaca = () => {
 
         const upperCaseQuery = query.toUpperCase();
         try {
-            const response = await fetch(`http://localhost:8090/api/baixas?placa=${upperCaseQuery}`)
+            const response = await fetch(`http://localhost:8090/api/v1/baixas?placa=${upperCaseQuery}`)
             const data = await response.json()
             const filteredResults = data.filter(veiculo => veiculo.placa.toUpperCase() === upperCaseQuery);
 
@@ -64,7 +64,7 @@ const RelBaixasPlaca = () => {
                             <p>Placa:</p>
                             <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
                         </label>
-                        <button className={styles.buscar} type='submit' onClick={handleButtonClick}>
+                        <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>
                             {busca ? 'Buscar' : 'Buscar'}</button>
                     </form>
                 </div>

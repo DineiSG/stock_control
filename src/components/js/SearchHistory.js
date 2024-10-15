@@ -36,7 +36,7 @@ const SearchHistory = () => {
 
         const upperCaseQuery = query.toUpperCase();
         try {
-            const response = await fetch(`http://localhost:8090/api/veiculos?placa=${upperCaseQuery}`)
+            const response = await fetch(`http://localhost:8090/api/v1/veiculos?placa=${upperCaseQuery}`)
             const data = await response.json()
             const filteredResults = data.filter(veiculo => veiculo.placa.toUpperCase() === upperCaseQuery);
             if (filteredResults.length > 0) {

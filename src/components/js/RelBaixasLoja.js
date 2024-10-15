@@ -30,15 +30,6 @@ const RelBaixasLoja = () => {
         return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
     };
 
-    // Função que calcula a quantidade de dias em estoque
-    const calculateDaysInStock = (data_registro) => {
-        const currentDate = new Date()
-        const registrationDateobject = new Date(data_registro)
-        const differenceInMilliseconds = currentDate - registrationDateobject
-        const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24))
-        return differenceInDays
-    }
-
 
     /*Função que busca o estoque de acordo com a loja */
     const handleSearch = async (e) => {
@@ -50,9 +41,9 @@ const RelBaixasLoja = () => {
             let response
 
             if (upperCaseQuery === 'TODAS AS LOJAS') {
-                response = await fetch(`http://localhost:8090/api/baixas`)//Buscando o estoque de todas as lojas
+                response = await fetch(`http://localhost:8090/api/v1/baixas`)//Buscando o estoque de todas as lojas
             } else {
-                response = await fetch(`http://localhost:8090/api/baixas?unidade=${upperCaseQuery}`)//Buscando o estoque da loja de acordo com o nome
+                response = await fetch(`http://localhost:8090/api/v1/baixas?unidade=${upperCaseQuery}`)//Buscando o estoque da loja de acordo com o nome
             }
 
             const data = await response.json()
@@ -82,7 +73,7 @@ const RelBaixasLoja = () => {
     useEffect(() => {
         const fetchLojas = async () => {
             try {
-                const response = await fetch(`http://localhost:8090/api/lojas`)
+                const response = await fetch(`http://localhost:8090/api/v1/lojas`)
                 const data = await response.json()
 
                 if (Array.isArray(data)) {
@@ -115,7 +106,7 @@ const RelBaixasLoja = () => {
                                 ))}
                             </select>
                         </label>
-                        <button className={styles.buscar} type='submit' onClick={handleButtonClick}>{filtroLoja ? 'Buscar' : 'Buscar'}</button>
+                        <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>{filtroLoja ? 'Buscar' : 'Buscar'}</button>
                     </form>
                 </div >
             </div>

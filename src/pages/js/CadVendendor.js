@@ -56,7 +56,7 @@ const CadVendendor = () => {
         console.log('Payload enviado: ', payload)
 
         try {
-            const response = await fetch('http://localhost:8091/api/v1/vendedor', {
+            const response = await fetch('http://localhost:8090/api/v1/vendedor', {
                 method: 'POST',
                 headers: {
                     
@@ -83,7 +83,7 @@ const CadVendendor = () => {
     useEffect(() => {
         const fetchLojas = async () => {
             try {
-                const response = await fetch(`http://localhost:8090/api/lojas`)
+                const response = await fetch(`http://localhost:8090/api/v1/lojas`)
                 const data = await response.json()
                 //console.log('Dados da API: ', data)
                 if (Array.isArray(data)) {

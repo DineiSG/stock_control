@@ -22,6 +22,7 @@ input {
     background-color: rgb(255, 255, 255);
     margin:3% 8% ;
     box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.2);
+    padding-bottom:3px
 }
 .btn_buscar{
     height: 40px;
@@ -57,7 +58,7 @@ input {
     border-radius: 2px;
     background-color:rgba(89, 3, 110, 0.871);
     font-weight: 600;
-    margin: 30px;
+    margin-bottom: 25px;
 }
 .btn_edit:hover{
     background-color: #669231;
@@ -76,6 +77,9 @@ input {
 
 .edit_data{
     max-width: 100px;
+}
+.obs_edit{
+    max-width: 300px;
 }
 .table{
     margin: 0 8%;

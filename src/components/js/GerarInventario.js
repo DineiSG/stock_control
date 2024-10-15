@@ -33,8 +33,8 @@ const GerarInventario = () => {
     const upperCaseQuery = query.toUpperCase();
     try {
       let response
-      response = await fetch(`http://localhost:8090/api/veiculos`)//Buscando o estoque de todas as lojas
-      response = await fetch(`http://localhost:8090/api/veiculos/unidade/${upperCaseQuery}`)//Buscando o estoque da loja de acordo com o nome      
+      response = await fetch(`http://localhost:8090/api/v1/veiculos`)//Buscando o estoque de todas as lojas
+      response = await fetch(`http://localhost:8090/api/v1/veiculos/unidade/${upperCaseQuery}`)//Buscando o estoque da loja de acordo com o nome      
 
       if (!response.ok) {
         throw new Error(`Erro na requisição: ${response.status} ${response.statusText}`);
@@ -70,7 +70,7 @@ const GerarInventario = () => {
   useEffect(() => {
     const fetchLojas = async () => {
       try {
-        const response = await fetch(`http://localhost:8090/api/lojas`)
+        const response = await fetch(`http://localhost:8090/api/v1/lojas`)
         const data = await response.json()
 
         if (Array.isArray(data)) {
@@ -119,7 +119,7 @@ const GerarInventario = () => {
 
     
       try {
-        const response = await fetch('http://localhost:8090/api/inventario', {
+        const response = await fetch('http://localhost:8090/api/v1/inventario', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

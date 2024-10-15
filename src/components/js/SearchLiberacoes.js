@@ -45,7 +45,7 @@ const SearchLiberacoes = () => {
 
         const upperCaseQuery = query.toUpperCase();
         try {
-            const response = await fetch(`http://localhost:8090/api/liberacoes?placa=${upperCaseQuery}`)
+            const response = await fetch(`http://localhost:8090/api/v1/liberacoes?placa=${upperCaseQuery}`)
             const data = await response.json()
             const filteredResults = data.filter(veiculo => veiculo.placa.toUpperCase() === upperCaseQuery);
             if (filteredResults.length > 0) {

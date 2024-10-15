@@ -25,7 +25,7 @@ const SearchLojas = () => {
 
         const upperCaseQuery = query.toUpperCase();
         try {
-            const response = await fetch(`http://localhost:8090/api/lojas?descricao=${upperCaseQuery}`)
+            const response = await fetch(`http://localhost:8090/api/v1/lojas?descricao=${upperCaseQuery}`)
             const data = await response.json()
             const filteredResults = data.filter(loja => loja.descricao.toUpperCase() === upperCaseQuery);
 
@@ -62,7 +62,7 @@ const SearchLojas = () => {
     /*Função que salva os dados editados */
     const handleSave = async () => {
         try {
-            const response = await fetch(`http://localhost:8090/api/lojas/${editableFields.id}`, {
+            const response = await fetch(`http://localhost:8090/api/v1/lojas/${editableFields.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -99,8 +99,10 @@ const SearchLojas = () => {
                             {busca ? 'Buscar' : 'Buscar'}</button>
                     </form>
                 </div>
+                {busca ?
                 <div className={styles.table}>
-                    {busca ?
+                                        <button className={styles.btn_edit} onClick={handleEditToggle}>
+                        {edit ? 'Salvar' : 'Editar'}</button>
                         <table className="table table-secondary table-striped-columns" border="1">
                             <thead>
                                 <tr>
@@ -125,10 +127,9 @@ const SearchLojas = () => {
                                     </tr>
                                 ))}
                             </tbody>
-                        </table> : null}
-                    <button className={styles.btn_edit} onClick={handleEditToggle}>
-                        {edit ? 'Salvar' : 'Editar'}</button>
-                </div>
+                        </table> 
+
+                </div>: null}
             </div>
 
         </div>

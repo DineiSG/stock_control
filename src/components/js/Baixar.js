@@ -31,7 +31,7 @@ const Baixar = () => {
 
     const upperCaseQuery = query.toUpperCase();
     try {
-      const response = await fetch(`http://localhost:8090/api/veiculos?placa=${upperCaseQuery}`)
+      const response = await fetch(`http://localhost:8090/api/v1/veiculos?placa=${upperCaseQuery}`)
       const data = await response.json()
       const filteredResults = data.filter(veiculo => veiculo.placa.toUpperCase() === upperCaseQuery);
 
@@ -108,7 +108,7 @@ const Baixar = () => {
 
     //Função que insere os dados na tabela vaga.baixas
     try {
-      const baixaResponse = await fetch('http://localhost:8090/api/baixas', {
+      const baixaResponse = await fetch('http://localhost:8090/api/v1/baixas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -123,7 +123,7 @@ const Baixar = () => {
       }
 
       // Função que atualiza a tabela vaga.veiculo com a data da baixa e sem o numero da tag
-      const updateResponse = await fetch(`http://localhost:8090/api/veiculos/placa/${editableFields.placa}`, {
+      const updateResponse = await fetch(`http://localhost:8090/api/v1/veiculos/placa/${editableFields.placa}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -161,15 +161,17 @@ const Baixar = () => {
               {busca ? 'Buscar' : 'Buscar'}</button>
           </form>
         </div>
-        <div className={styles.table}>
-          {busca ?
+        {busca ?
+          <div className={styles.table}>
+            <button className={styles.btn_edit} onClick={handleEditToggle}>
+              {edit ? 'Salvar Baixa' : 'Baixar'}</button>
             <table className="table table-secondary table-striped-columns" border="1">
               <thead>
                 <tr>
+                  <th>Loja</th>
                   <th>Marca</th>
                   <th>Modelo</th>
                   <th>Cor</th>
-                  <th>Loja</th>
                   <th>Nº Tag</th>
                   <th>Motivo</th>
                   <th>Observacoes</th>
@@ -178,27 +180,26 @@ const Baixar = () => {
               <tbody>
                 {results.map(result => (
                   <tr key={result.id}>
+                    <td>{result.unidade}</td>
                     <td>{result.marca}</td>
                     <td>{result.modelo}</td>
                     <td>{result.cor}</td>
-                    <td>{result.unidade}</td>
                     <td>{result.valor_meio_acesso}</td>
                     <td>{<select type='text' name="motivo" value={selectedMotivo} onChange={(e) => setSelectedMotivo(e.target.value)} required>
-                      <option value="">INFORME O MOTIVO DA BAIXA</option>
+                      <option value="" placeholder="SELECIONE UM MOTIVO" ></option>
                       <option value="VENDA" >VENDA</option>
                       <option value="DEVOLUCAO" >DEVOLUCAO</option>
                       <option value="TRANSFERENCIA" >TRANSFERENCIA</option>
+                      <option value="CORRECAO" >CORREÇÃO DE ESTOQUE</option>
                     </select>}
                     </td>
-                    <td>{edit ? <textarea className={styles.edit_data} type='text' name="observacoes" value={editableFields.observacoes} onChange={handleInputChange} /> : result.observacoes}</td>
+                    <td>{edit ? <input className={styles.obs_edit} type='text' name="observacoes" value={editableFields.observacoes} onChange={handleInputChange} required/> : result.observacoes}</td>
                   </tr>
-
                 ))}
               </tbody>
-            </table> : null}
-          <button className={styles.btn_edit} onClick={handleEditToggle}>
-            {edit ? 'Baixar' : 'Editar'}</button>
-        </div>
+            </table>
+
+          </div> : null}
       </div>
     </div>
   )

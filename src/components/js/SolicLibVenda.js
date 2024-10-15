@@ -30,7 +30,7 @@ const SolicLibVenda = () => {
 
       if (textoMaiusculo.length === 7) {
         try {
-          const response = await fetch(`http://localhost:8090/api/veiculos/placa/${textoMaiusculo}`);
+          const response = await fetch(`http://localhost:8090/api/v1/veiculos/placa/${textoMaiusculo}`);
           if (response.ok) {
             const data = await response.json();
             setVeiculo({
@@ -109,7 +109,7 @@ const SolicLibVenda = () => {
   
       //Enviando os dados da liberaçao para a tabela vaga.liberaçoes
       try {
-        const response = await fetch('http://localhost:8090/api/liberacoes', {
+        const response = await fetch('http://localhost:8090/api/v1/liberacoes', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -170,7 +170,6 @@ const SolicLibVenda = () => {
                   <input type='text' name='loja' value={veiculo.unidade} readOnly required></input>
                   <input type='hidden' name='id' value={veiculo.id} readOnly required></input>
                 </label>
-
                 <label>
                   <input type='hidden' name='motivo' value={motivo} required ></input>
                 </label>
@@ -182,8 +181,7 @@ const SolicLibVenda = () => {
                   <p>Observação:</p>
                   <input type='text' className={styles.obs} name='observacoes' value={observacoes} onChange={(e) => setObservacoes(e.target.value)}></input>
                 </label>
-
-                <button type='submit' className={styles.btn_cadastrar} >Cadastrar</button>
+                <button type='submit' className={styles.btn_cadastrar} >Enviar</button>
               </form>
             </div>
           </div>

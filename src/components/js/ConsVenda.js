@@ -37,7 +37,7 @@ const ConsVenda = () => {
 
     const upperCaseQuery = query.toUpperCase();
     try {
-      const response = await fetch(`http://localhost:8091/api/v1/vendas?placa=${upperCaseQuery}`)
+      const response = await fetch(`http://localhost:8090/api/v1/vendas?placa=${upperCaseQuery}`)
       const data = await response.json()
       const filteredResults = data.filter(veiculo => veiculo.placa.toUpperCase() === upperCaseQuery);
       if (filteredResults.length > 0) {
@@ -78,7 +78,9 @@ const ConsVenda = () => {
         {results && results.map(result => (
 
           <div ref={tabelaRef} key={result.id}>
-
+            <h2 className={styles.title2} >RELATÓRIO DA VENDA</h2>
+            <hr />
+            <br />
             <h2 className={styles.sub_title2} >DADOS DO VEÍCULO:</h2>
             <label className={styles.item}>
               <span>Placa:</span>

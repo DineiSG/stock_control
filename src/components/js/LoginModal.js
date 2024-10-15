@@ -20,7 +20,7 @@ const LoginModal = ({ onClose, onLogin }) => {
     const handleLogin = async () => {
         try {
             //Verificando as credenciais no banco de dados
-            const response = await fetch(`http://192.168.1.114:4000/users`, {
+            const response = await fetch(`http://localhost:4000/users`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'

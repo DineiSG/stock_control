@@ -52,9 +52,9 @@ const RelEstoqueLoja = () => {
       let response
 
       if (upperCaseQuery === 'ESTOQUE GERAL') {
-        response = await fetch(`http://localhost:8090/api/veiculos`)//Buscando o estoque de todas as lojas
+        response = await fetch(`http://localhost:8090/api/v1/veiculos`)//Buscando o estoque de todas as lojas
       } else {
-        response = await fetch(`http://localhost:8090/api/veiculos/unidade/${upperCaseQuery}`)//Buscando o estoque da loja de acordo com o nome
+        response = await fetch(`http://localhost:8090/api/v1/veiculos/unidade/${upperCaseQuery}`)//Buscando o estoque da loja de acordo com o nome
       }
 
       if (!response.ok) {
@@ -87,7 +87,7 @@ const RelEstoqueLoja = () => {
   useEffect(() => {
     const fetchLojas = async () => {
       try {
-        const response = await fetch(`http://localhost:8090/api/lojas`)
+        const response = await fetch(`http://localhost:8090/api/v1/lojas`)
         const data = await response.json()
 
         if (Array.isArray(data)) {

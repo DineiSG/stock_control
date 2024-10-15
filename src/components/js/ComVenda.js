@@ -37,6 +37,7 @@ const ComVenda = () => {
     observacoes: ''
   })
 
+  //Verifica se a venda foi à vista. Caso nao tenha sido, libera os inputs de Valor de Entrada e Valor Financiado 
   const handleVendaChange = (e) => {
     setTipoVenda(e.target.value)
     if (e.target.value === 'aVista') {
@@ -46,10 +47,22 @@ const ComVenda = () => {
     }
   }
 
+  function calcValorFinanciado(venda, entrada) {
+    const valorVendaNumerico = parseFloat(venda)
+    const valorEntradaNumerico = parseFloat(entrada)
+    return (valorVendaNumerico - valorEntradaNumerico).toString()
+  }
+
+
 
 
   //Buscando os dados do veiculo de acordo com a placa
-  const handleBlur = async () => {
+  const handleBlur = async (e) => {
+
+    if (e.target.name === 'entrada') {
+      const valorFinanciamento = calcValorFinanciado(valorVenda, valorEntrada);
+      setValorFinanciamento(valorFinanciamento)
+    }
 
     //Função que converte o texto digitado no input placa em maiusculo
     function converterParaMaiusculo(texto) {
@@ -60,7 +73,7 @@ const ComVenda = () => {
 
     if (textoMaiusculo.length === 7) {
       try {
-        const response = await fetch(`http://localhost:8090/api/veiculos/placa/${textoMaiusculo}`);
+        const response = await fetch(`http://localhost:8090/api/v1/veiculos/placa/${textoMaiusculo}`);
         if (response.ok) {
           const data = await response.json();
           setVeiculo({
@@ -81,7 +94,12 @@ const ComVenda = () => {
     }
   };
 
-  //Enviando os dados para a tabela liberaçoes
+
+
+
+
+
+  //Enviando os dados para a tabela vendas
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -146,7 +164,7 @@ const ComVenda = () => {
 
     //Enviando os dados da venda
     try {
-      const response = await fetch('http://localhost:8091/api/v1/vendas', {
+      const response = await fetch('http://localhost:8090/api/v1/vendas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -172,7 +190,7 @@ const ComVenda = () => {
 
   const fetchVendedores = async (unidade) => {
     try {
-      const response = await fetch(`http://localhost:8091/api/v1/vendedor?unidade=${unidade}`)
+      const response = await fetch(`http://localhost:8090/api/v1/vendedor?unidade=${unidade}`)
       const data = await response.json()
       if (Array.isArray(data)) {
         setVendedores(data)
@@ -302,18 +320,18 @@ const ComVenda = () => {
                 </label>
                 <label>
                   <p>Valor de Venda R$:</p>
-                  <input className={styles.tag} type='text' value={valorVenda} onChange={(e) => setValorVenda(e.target.value)} required></input>
+                  <input className={styles.tag} name='venda' type='number' value={valorVenda} onChange={(e) => setValorVenda(e.target.value)} required></input>
                 </label>
 
                 {infoConditions && (
                   <>
                     <label>
                       <p>Valor de Entrada R$:</p>
-                      <input className={styles.tag} type='text' value={valorEntrada} onChange={(e) => setValorEntrada(e.target.value)} ></input>
+                      <input className={styles.tag} name='entrada' type='number' value={valorEntrada} onBlur={handleBlur} onChange={(e) => setValorEntrada(e.target.value)} ></input>
                     </label>
                     <label>
                       <p>Valor Financiado R$:</p>
-                      <input className={styles.tag} type='text' value={valorFinanciamento} onChange={(e) => setValorFinanciamento(e.target.value)}></input>
+                      <input className={styles.tag} name='valorFinanciado' type='number' value={valorFinanciamento} onChange={(e) => setValorFinanciamento(e.target.value)} readOnly></input>
                     </label>
                   </>
                 )}
