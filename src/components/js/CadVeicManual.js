@@ -37,6 +37,8 @@ const CadVeicManual = () => {
         // Concatena as partes formatadas
         return leftPartFormatted + rightPartFormatted;
     }  
+    
+
 
     //Função para inserir os dados no BD
     const handleSubmit = async (e) => {
@@ -44,6 +46,7 @@ const CadVeicManual = () => {
         
         const convertedValue = hexToWiegand(valorMeioAcesso);
         const valor_meio_acesso= convertedValue
+        
         
 
         /*Função que trata da inserção de data de forma automática */
@@ -110,13 +113,18 @@ const CadVeicManual = () => {
         }
     }
 
+        const handleBlur = async ()=>{
+        if(valorMeioAcesso!==''){
+           window.alert('Nº da tag para leitura: '+hexToWiegand(valorMeioAcesso))
+        }
+    }
+
     //Buscando lojas para preencher o select do front end
     useEffect(() => {
         const fetchLojas = async () => {
             try {
                 const response = await fetch(`http://localhost:8090/api/v1/lojas`)
                 const data = await response.json()
-                console.log('Dados da API: ', data)
                 if (Array.isArray(data)) {
                     setLojas(data)
                 } else {
@@ -143,9 +151,9 @@ const CadVeicManual = () => {
     return (
         <div >
 
-            <h1 ><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/add.png" alt="add" /> Cadastro Manual de Veículos</h1>
+            <h1 ><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/add.png" alt="add" /> Cadastro de Veículos S/ BIN</h1>
             <div className={styles.container}>
-                <div class="container-lg">
+                <div class="container-sm">
                     <h2 className={styles.title}>INFORME OS DADOS DO VEÍCULO:</h2>
                     <div className={styles.formulario}>
                         <form className={styles.cadastro} onSubmit={handleSubmit}>
@@ -189,12 +197,12 @@ const CadVeicManual = () => {
                                 <input className={styles.placa} type='text' name='placa' value={placa} onChange={(e) => setPlaca(e.target.value)} required></input>
                             </label>
                             <label>
-                                <p>Tag:</p>
-                                <input className={styles.tag} type='text' name='tag' maxLength={6} value={valorMeioAcesso} onChange={(e) => setValorMeioAcesso(e.target.value)} required></input>
+                                <p>Renavam:</p>
+                                <input type='text' name='modelo' value={renavan} onChange={(e) => setRenavan(e.target.value)}  required></input>
                             </label>
                             <label>
-                                <p>Renavan:</p>
-                                <input type='text' name='modelo' value={renavan} onChange={(e) => setRenavan(e.target.value)} required></input>
+                                <p>Tag:</p>
+                                <input className={styles.tag} type='text' name='tag' maxLength={6} value={valorMeioAcesso} onChange={(e) => setValorMeioAcesso(e.target.value)} onBlur={handleBlur} required></input>
                             </label>
                             <label>
                                 <p>Status (D: Dentro/ F:Fora):</p>

@@ -143,6 +143,9 @@ const CadVeic = () => {
                 window.location.reload();
             } else {
                 console.log('Erro ao enviar os dados')
+                if(placa!==''){
+                    window.alert('Placa ja registrada. Veículo se encontra fora de estoque por motivo de baixa. Favor relatar ao administrador.')
+                }
                 window.alert('Erro ao realizar o cadastro. Tente novamente.');
             }
         } catch (error) {
@@ -185,9 +188,9 @@ const CadVeic = () => {
     return (
         <div >
 
-            <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/add.png" alt="add"/> Cadastro de Veículos</h1>
+            <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/add.png" alt="add"/> Cadastro de Veículos - BIN</h1>
             <div className={styles.container}>
-                <div class="container-lg">
+                <div class="container-sm">
                     <h2 className={styles.title}>INFORME OS DADOS DO VEICULO:</h2>
                     <div className={styles.formulario}>
                         <form className={styles.cadastro} onSubmit={handleSubmit}>
@@ -251,7 +254,7 @@ const CadVeic = () => {
 
             </div>
             <div>
-                <Link to='/cadastro_manual'><button className={styles.btn_cad_manual} >Cadastro Manual</button></Link>
+                <Link to='/cadastro_manual'><button className={styles.btn_cad_manual} >Cad. S/ Cons. BIN</button></Link>
             </div>
         </div>
     )

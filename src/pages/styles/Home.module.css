@@ -1,46 +1,13 @@
-
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 .conteudo{
-  
-   display:flex;
-   justify-content:space-around;
-   margin: 50px;
-   
-   
-   
-}
-.conteudo :hover{
-  font-size: 25px;
-  font-weight: 600;
-  
-}
-
-
-.card {
-  position:relative;
-  width:200px;
-  height:200px;
-  border-radius: 2px;
-  background-color: rgba(220, 231, 239, 0.871);
-  border:1px solid rgba(89, 3, 110, 0.871);
-  display: flex;
-  align-items: center;
+  display:flex;
   justify-content: center;
-  text-align: center;
-  margin-top: 8%;
+  align-items: center;
+  margin-top:5%;
 }
-.card:hover{
-  box-shadow: 1px 1px 7px rgba(89, 3, 110, 0.871);
-}
-h1{
-  margin-left: 5%;
-}
-
-
-.content p {
-  margin-bottom: 10px;
-  color:rgba(89, 3, 110, 0.871);
-  font-size: 25px;
-  padding: 10px;
-
+.imagens{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  position:relative;
+  left: 1%;
 }

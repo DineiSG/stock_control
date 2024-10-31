@@ -6,7 +6,7 @@ const Footer = () => {
     <div>
       <footer className={styles.footer}>
         <span><p>&copy; 2024 Auto Shopping</p></span>
-        <p className={styles.api_version}>Versao da API: 1.1.3</p>
+        <p className={styles.api_version}>Versao da API: 1.2.0</p>
       </footer>
     </div>
   )

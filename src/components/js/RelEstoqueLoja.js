@@ -64,7 +64,7 @@ const RelEstoqueLoja = () => {
 
       let filteredResults
       if (upperCaseQuery === 'ESTOQUE GERAL') {
-        filteredResults = data.filter(veiculo => veiculo.unidade && veiculo.unidade.trim() !== '' && veiculo.valor_meio_acesso !== '')//Buscando o estoque valido de todas as lojas
+        filteredResults = data.filter(veiculo => veiculo.unidade && veiculo.unidade.trim() !== '' && veiculo.valor_meio_acesso.trim() !== '')//Buscando o estoque valido de todas as lojas
         filteredResults.sort((a, b) => a.unidade.localeCompare(b.unidade)) //Filtrando as lojas de ordem alfabetica
       } else {
         filteredResults = data.filter(veiculo => veiculo.unidade.toUpperCase() === upperCaseQuery && veiculo.unidade.trim() !== '' && veiculo.valor_meio_acesso !== '');//Buscando o estoque valido de uma loja
@@ -146,7 +146,8 @@ const RelEstoqueLoja = () => {
                   <th>Marca</th>
                   <th>Modelo</th>
                   <th>Cor</th>
-                  <th>Ano</th>
+                  <th>Ano Fab.</th>
+                  <th>Ano Mod.</th>
                   <th>Renavan</th>
                   <th>Placa</th>
                   <th>Nº Tag</th>
@@ -162,6 +163,7 @@ const RelEstoqueLoja = () => {
                     <td>{result.modelo}</td>
                     <td>{result.cor}</td>
                     <td>{result.ano}</td>
+                    <td>{result.ano_modelo}</td>
                     <td>{result.renavan}</td>
                     <td>{result.placa}</td>
                     <td>{result.valor_meio_acesso}</td>

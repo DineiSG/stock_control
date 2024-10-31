@@ -84,7 +84,8 @@ const SearchHistory = () => {
                                             <th>Modelo: {result.modelo}</th>
                                             <th>Cor: {result.cor}</th>
                                             <th>Data do Cadastro: {formatTimestamp(result.data_registro)}</th>
-                                            <th>Data da Baixa: {result.data_alteracao ? formatTimestamp(result.data_alteracao) : "Carro fora do estoque válido"}</th>
+                                            <th>Data da Baixa: {result.data_alteracao ? formatTimestamp(result.data_alteracao) : "CARRO AINDA DISPONIVEL PARA VENDA" }</th>
+                                            <th>Observações: {result.observacoes}</th>
                                         </tr>
                                     ))}
                                 </thead>

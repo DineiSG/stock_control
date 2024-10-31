@@ -1,0 +1,28 @@
+/*Estoque Data*/
+.pi{
+    background-color: #ffffff;
+    margin: 1% 8%;
+    padding: 18px
+    
+}
+.title{
+    margin-bottom: 2%;
+    font-size: 20px;
+    font-weight: 600;
+    color:#333333
+}
+.p_txt{
+    margin-left: 5%;
+    margin-bottom: 5%;
+}
+
+/*Veiculos Data*/
+.container{
+    position: absolute;
+    left: 8%;
+    height: 500px;
+    width: 1285px;
+    
+    background-color: #ffffff;
+    padding: 25px
+}

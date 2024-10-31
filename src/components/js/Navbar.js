@@ -59,6 +59,7 @@ const Navbar = () => {
 
 
   return (
+    
     <nav className={styles.navbar} id="navbar">
       <div className={styles.logo}>
         <img src='/logo2.png' className={styles.logo} alt='Stock Control' title='Stock Control' />
@@ -79,8 +80,9 @@ const Navbar = () => {
           <div className={styles.navItem}>
             <button className={styles.nav} id="dropdown2">Gestao de Estoque</button>
             <ul className={styles.dropdownMenu} >
-              <li><Link to='cad_loja' className={styles.dropdown}>Cadastrar Loja</Link></li>
-              <li><Link to='cad_veic' className={styles.dropdown}>Cadastrar Veiculo</Link></li>
+              <li><Link to='cad_veic' className={styles.dropdown}>Cad. Veiculo BIN</Link></li>
+              <li><Link to='cad_loja' className={styles.dropdown}>Cad. Loja</Link></li>
+              <li><Link to='cadastro_manual' className={styles.dropdown}>Cad. Veiculo S/ BIN</Link></li>
               <li><Link to='/inventario' className={styles.dropdown}>Inventário</Link> </li>
             </ul>
           </div>
@@ -89,7 +91,8 @@ const Navbar = () => {
             <ul className={styles.dropdownMenu}>
               <li><button onClick={() => handleOpenModal('/liberacoes')} className={styles.dropdown}>Liberar Veículo</button></li>
               <li><button onClick={() => handleOpenModal('/baixar_veic')} className={styles.dropdown}>Baixar Veículo</button></li>
-              <li><Link to='/relatorio_estoque' className={styles.dropdown}>Relatórios</Link></li>
+              <li><Link to='relatorio_estoque' className={styles.dropdown}>Relatórios</Link></li>
+              <li><Link to='dashboard' className={styles.dropdown}>Dashboard</Link></li>
 
             </ul>
             {isModalOpen && (
@@ -99,18 +102,18 @@ const Navbar = () => {
           
           <Link to='/buscas' className={styles.pesquisar} i>Pesquisar</Link>
           <div className={styles.links} alt='Home' title='Ir para home'>
-            <Link to='/dashboard'><img width="50" height="50" src="https://img.icons8.com/3d-fluency/94/home.png" alt="home" /></Link>
+            <Link to='/home'><img width="50" height="50" src="https://img.icons8.com/3d-fluency/94/home.png" alt="home" /></Link>
           </div>
-          {isHome && (
-            <Link to='/dashboard'><button className={styles.login} ><svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+         {/*} {isHome && (
+            <Link to='/'><button className={styles.login} ><svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
               <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
             </svg>Sair</button></Link>
-          )}
+          )}*/}
         </div>
       )}
       {iconVisible && (
-        <Link to='/dashboard'>
+        <Link to='/home'>
           <img width="50" height="50" src="https://img.icons8.com/3d-fluency/94/door.png" alt="door" title='Acessar' onClick={handleMenu} />
         </Link>
       )}

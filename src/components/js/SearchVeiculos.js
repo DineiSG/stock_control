@@ -19,26 +19,6 @@ const SearchVeiculos = () => {
         valor_meio_acesso: ''
     })
 
-
-    //Função de conversao Hexadecimal para Wiegand. Essa função recebe o valor da tag em Hexadecimal e converte para Wiegand,
-    // que e um formato muito utilizado em controle de acessos.
-    function hexToWiegand(hexValue) {
-        // Divide o valor hexadecimal em duas partes
-        const leftPartHex = hexValue.substring(0, 2); // Parte esquerda (2 primeiros caracteres)
-        const rightPartHex = hexValue.substring(2);  // Parte direita (restante dos caracteres)
-
-        // Converte as partes de hexadecimal para decimal
-        const leftPart = parseInt(leftPartHex, 16); // Converte a parte esquerda para decimal
-        const rightPart = parseInt(rightPartHex, 16); // Converte a parte direita para decimal
-
-        // Formata as partes com zeros à esquerda
-        const leftPartFormatted = leftPart.toString().padStart(3, '0'); // Garantir 3 dígitos na parte esquerda
-        const rightPartFormatted = rightPart.toString().padStart(5, '0'); // Garantir 5 dígitos na parte direita
-
-        // Concatena as partes formatadas
-        return leftPartFormatted + rightPartFormatted;
-    }
-
     /*Função que busca informações de um veiculo de acordo com a placa */
     const handleSearch = async (e) => {
         e.preventDefault();
@@ -144,20 +124,24 @@ const SearchVeiculos = () => {
                                 <th>Renavan</th>
                                 <th>Loja</th>
                                 <th>Status</th>
+                                <th>Ano Fab.</th>
+                                <th>Ano Mod.</th>
                                 <th>Nº Tag</th>
                             </tr>
                         </thead>
                         <tbody>
                             {results.map(result => (
                                 <tr key={result.id}>
-                                    <td>{result.marca}</td>
+                                    <td>{edit ? <input className={styles.edit_data} type='text' name="marca" value={editableFields.marca} onChange={handleInputChange} /> : result.marca}</td>
                                     <td>{edit ? <input className={styles.edit_data} type='text' name="modelo" value={editableFields.modelo} onChange={handleInputChange} /> : result.modelo}</td>
                                     <td>{edit ? <input className={styles.edit_data} type='text' name="cor" value={editableFields.cor} onChange={handleInputChange} /> : result.cor}</td>
                                     <td>{edit ? <input className={styles.edit_data} type='text' name="ano" value={editableFields.ano} onChange={handleInputChange} /> : result.ano}</td>
                                     <td>{edit ? <input className={styles.edit_data} type='text' name="renavan" maxLength={11} value={editableFields.renavan} onChange={handleInputChange} /> : result.renavan}</td>
                                     <td>{edit ? <input className={styles.edit_data} type='text' name="unidade" value={editableFields.unidade} onChange={handleInputChange} /> : result.unidade}</td>
                                     <td>{edit ? <input className={styles.edit_data} type='text' name="veiculo_status" value={editableFields.veiculo_status} onChange={handleInputChange} /> : result.veiculo_status}</td>
-                                    <td>{edit ? <input className={styles.edit_data} type='text' maxLength={6} name="valor_meio_acesso" value={editableFields.valor_meio_acesso} onChange={handleInputChange} /> : result.valor_meio_acesso}</td>
+                                    <td>{edit ? <input className={styles.edit_data} type='text' name="ano" value={editableFields.ano} onChange={handleInputChange} /> : result.ano}</td>
+                                    <td>{edit ? <input className={styles.edit_data} type='text' name="ano_modelo" value={editableFields.ano_modelo} onChange={handleInputChange} /> : result.ano_modelo}</td>
+                                    <td>{result.valor_meio_acesso}</td>
                                 </tr>
 
                             ))}
