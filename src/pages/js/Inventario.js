@@ -1,6 +1,6 @@
 import React from 'react'
-import GerarInventario from '../../components/js/GerarInventario'
-import LancarInventario from '../../components/js/LancarInventario'
+import GerarInventario from '../../components/acoes/GerarInventario'
+import LancarInventario from '../../components/acoes/LancarInventario'
 
 
 

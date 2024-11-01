@@ -1,7 +1,7 @@
 import React from 'react'
-import SearchLojas from '../../components/js/SearchLojas'
-import SearchVeiculos from '../../components/js/SearchVeiculos'
-import SearchModelo from '../../components/js/SearchModelo'
+import SearchLojas from '../../components/buscas/SearchLojas'
+import SearchVeiculos from '../../components/buscas/SearchVeiculos'
+import SearchModelo from '../../components/buscas/SearchModelo'
 
 const Buscas = () => {
   return (

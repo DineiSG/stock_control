@@ -1,7 +1,7 @@
 import styles from '../styles/Navbar.module.css'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import LoginModal from '../js/LoginModal'
+import LoginModal from '../outros/LoginModal'
 import AlertLibModal from './AlertLibModal'
 
 

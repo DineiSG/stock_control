@@ -1,4 +1,4 @@
-import Acesso from '../../components/js/Acesso'
+import Acesso from '../../components/outros/Acesso'
 import styles from '../styles/Login.module.css'
 
 const Login = () => {

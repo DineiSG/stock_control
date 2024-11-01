@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import EstoqueData from '../../components/js/EstoqueData';
-import VeiculosData from '../../components/js/VeiculosData';
-import AnoMod from '../../components/js/AnoMod';
+import EstoqueData from '../../components/graficos/EstoqueData';
+import VeiculosData from '../../components/graficos/VeiculosData';
+import AnoMod from '../../components/graficos/AnoMod';
 
 
 const Dashboard = () => {

@@ -1,11 +1,11 @@
 import React from 'react'
-import RelEstoqueLoja from '../../components/js/RelEstoqueLoja'
-import RelBaixasMotivo from '../../components/js/RelBaixasMotivo'
-import RelBaixasPlaca from '../../components/js/RelBaixasPlaca'
-import RelBaixasLoja from '../../components/js/RelBaixasLoja'
-import RelAcesso from '../../components/js/RelAcesso'
-import SearchHistory from '../../components/js/SearchHistory'
-import SearchInventario from '../../components/js/SearchInventario'
+import RelEstoqueLoja from '../../components/relatorios/RelEstoqueLoja'
+import RelBaixasMotivo from '../../components/relatorios/RelBaixasMotivo'
+import RelBaixasPlaca from '../../components/relatorios/RelBaixasPlaca'
+import RelBaixasLoja from '../../components/relatorios/RelBaixasLoja'
+import RelAcesso from '../../components/relatorios/RelAcesso'
+import SearchHistory from '../../components/buscas/SearchHistory'
+import SearchInventario from '../../components/buscas/SearchInventario'
 
 const RelatorioEstoque = () => {
   return (

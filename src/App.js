@@ -1,23 +1,23 @@
 
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
 
-import Navbar from './components/js/Navbar';
+import Navbar from './components/outros/Navbar';
 import Home from './pages/js/Home';
 import CadVeic from './pages/js/CadVeic';
 import RelatorioEstoque from './pages/js/RelatórioEstoque';
 import CadLoja from './pages/js/CadLoja';
-import Acesso from './components/js/Acesso';
+import Acesso from './components/outros/Acesso';
 import Buscas from './pages/js/Buscas';
 import Liberacoes from './pages/js/Liberacoes'
 import BaixarVeic from './pages/js/BaixarVeic';
 import Inventario from './pages/js/Inventario';
 import CadastroManual from './pages/js/CadastroManual';
 import Dashboard from './pages/js/Dashboard';
-import Footer from './components/js/Footer';
-import ComunicacaoVendas from './components/js/ComVenda';
+import Footer from './components/outros/Footer';
+import ComunicacaoVendas from './components/acoes/ComVenda';
 import CadVendendor from './pages/js/CadVendendor';
-import ConsVenda from './components/js/ConsVenda';
-import SolicLibVenda from './components/js/SolicLibVenda';
+import ConsVenda from './components/buscas/ConsVenda';
+import SolicLibVenda from './components/acoes/SolicLibVenda';
 
 
 
