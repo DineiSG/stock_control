@@ -100,9 +100,9 @@ const SearchLojas = () => {
                     </form>
                 </div>
                 {busca ?
-                <div className={styles.table}>
-                                        <button className={styles.btn_edit} onClick={handleEditToggle}>
-                        {edit ? 'Salvar' : 'Editar'}</button>
+                    <div className={styles.table}>
+                        <button className={styles.btn_edit} onClick={handleEditToggle}>
+                            {edit ? 'Salvar' : 'Editar'}</button>
                         <table className="table table-secondary table-striped-columns" border="1">
                             <thead>
                                 <tr>
@@ -122,14 +122,14 @@ const SearchLojas = () => {
                                         <td>{edit ? <input className={styles.edit_data} type='number' name="box" value={editableFields.box} onChange={handleInputChange} /> : result.box}</td>
                                         <td>{edit ? <input className={styles.edit_data} type='text' name="telefone" value={editableFields.telefone} onChange={handleInputChange} /> : result.telefone}</td>
                                         <td>{edit ? <input className={styles.edit_data} type='text' name="email" value={editableFields.email} onChange={handleInputChange} /> : result.email}</td>
-                                        <td>{edit ? <input className={styles.edit_data} type='text' name="vagas" value={editableFields.vagas} onChange={handleInputChange} /> : result.vagas}</td>
+                                        <td>{result.vagas}</td>
 
                                     </tr>
                                 ))}
                             </tbody>
-                        </table> 
+                        </table>
 
-                </div>: null}
+                    </div> : null}
             </div>
 
         </div>

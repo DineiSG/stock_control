@@ -36,6 +36,22 @@ const Baixar = () => {
       const filteredResults = data.filter(veiculo => veiculo.placa.toUpperCase() === upperCaseQuery);
 
       if (filteredResults.length > 0) {
+
+        const id_veiculo_acessante = filteredResults[0].id
+
+        // Deletar os acessos do veiculo 
+        const deleteAcessos = await fetch(`http://localhost:8090/api/v1/acessos/historico/${id_veiculo_acessante}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        if (deleteAcessos.ok) {
+          console.log("Acessos do veículo excluidos do BD");
+        } else {
+          window.alert("Ocorreu um erro ao buscar os dados do veículo. Favor informar ao administrador.")
+          window.location.reload()
+        }
         setResults(filteredResults)
         setError('')
         setEditableFields(filteredResults[0])
@@ -44,8 +60,10 @@ const Baixar = () => {
         setError(window.alert("Nao há nenhum veiculo com a placa informada."))
       }
     } catch (error) {
-      window.alert("Erro ao buscar dados: ", error)
+      window.alert("Erro ao buscar dados.")
     }
+
+
   }
 
   /*Função para editar os dados encontrados */
@@ -96,12 +114,6 @@ const Baixar = () => {
     //Atribuindo a função à coluna data_registro
     const data_registro = formatTimestamp(new Date());
 
-    //Esta função retem a data atual
-    const currentDate = new Date().toISOString();
-
-    //Esta funçao insere a data atual da baixa no campo data_alteraçao e remove o valor_meio_acesso da tabela vaga.veiculo
-    const updatedFields = { ...editableFields, data_alteracao: currentDate, valor_meio_acesso: '' }
-
     //Esta funçao envia para o motivo e a data da baixa (data_registro) para a tabela vaga.baixas
     const baixaData = { ...editableFields, motivo: selectedMotivo, data_registro };
 
@@ -115,94 +127,107 @@ const Baixar = () => {
         },
         body: JSON.stringify(baixaData)
       });
-
-      //Em caso de erro no envio dos dados do veiculo baixado para a tabela vaga.baixas, sera exibido o alerta na janela
-      if (!baixaResponse.ok) {
-        window.alert("Erro ao mover os dados para a tabela `baixas`", error);
-        return;
+      if (baixaResponse.ok) {
+        //buscando a quantidade de vagas da loja à qual o carro pertence utilizando o id da loja
+        const loja = baixaData.idUnidade
+        const lojaResponse = await fetch(`http://localhost:8090/api/v1/lojas/${loja}`)
+        if (lojaResponse.ok) {
+          const lojaData = await lojaResponse.json()
+          //convertendo o valor vagas que está como text em um numero decimal e somando mais 1.
+          const vagasAtual=parseInt(lojaData.vagas, 10)
+          const novaQuantidadeDeVagas = vagasAtual + 1
+          //atualizando a quantidade de vagas disponiveis na loja.
+          const updateLoja = await fetch(`http://localhost:8090/api/v1/lojas/${loja}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ...lojaData, vagas: novaQuantidadeDeVagas })
+          })
+          if (updateLoja.ok) {
+            console.log('Vaga devolvida à loja.')
+          }
+        }
       }
-
-      // Função que atualiza a tabela vaga.veiculo com a data da baixa e sem o numero da tag
-      const updateResponse = await fetch(`http://localhost:8090/api/v1/veiculos/placa/${editableFields.placa}`, {
-        method: 'PUT',
+      //apos a baixa bem sucedida, o veiculo é excluido da tabela vaga.veiculos
+      const veiculo = baixaData.id
+      const deleteVeiculo = await fetch(`http://localhost:8090/api/v1/veiculos/${veiculo}`, {
+        method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updatedFields)
-      })
-      if (updateResponse.ok.ok) {
-        const updatedResult = await updateResponse.ok.json()
-        setResults(results.map(result => (result.placa === updatedResult.placa ? updatedResult : result)))
-        window.alert("Dados editados com sucesso!")
-        setEdit(false)
-
-      } else {
-        window.alert("Baixa realizada com sucesso.") //Averiguar posteriormente por que estava retornando este erro mesmo quando a operaçao estava correta
+      });
+      console.log("Veículo excluido do BD");
+      if(deleteVeiculo.ok){
+        window.alert("Baixa realizada com sucesso.")
+        window.location.reload()
       }
-      window.location.reload()
-    } catch (error) {
-      window.alert(`Erro ao enviar dados para o servidor`)
-      window.location.reload()
-    }
-  }
+    }catch (error) {
+    window.alert('Ocorreu um erro inesperado. Favor informar ao administrador.');
+    window.location.reload()
+  } 
+  
+}
 
 
-  return (
-    <div className={styles.container}>
-      <div>
-        <div class="container-lg">
-          <h2 className={styles.title} >INFORME A PLACA DO VEÍCULO</h2>
-          <form className={styles.pesquisa} onSubmit={handleSearch}>
-            <label>
-              <p>Placa:</p>
-              <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
-            </label>
-            <button className={styles.btn_buscar} type='submit' onClick={() => setBusca(!busca)}>
-              {busca ? 'Buscar' : 'Buscar'}</button>
-          </form>
-        </div>
-        {busca ?
-          <div className={styles.table}>
-            <button className={styles.btn_edit} onClick={handleEditToggle}>
-              {edit ? 'Salvar Baixa' : 'Baixar'}</button>
-            <table className="table table-secondary table-striped-columns" border="1">
-              <thead>
-                <tr>
-                  <th>Loja</th>
-                  <th>Marca</th>
-                  <th>Modelo</th>
-                  <th>Cor</th>
-                  <th>Nº Tag</th>
-                  <th>Motivo</th>
-                  <th>Observacoes</th>
-                </tr>
-              </thead>
-              <tbody>
-                {results.map(result => (
-                  <tr key={result.id}>
-                    <td>{result.unidade}</td>
-                    <td>{result.marca}</td>
-                    <td>{result.modelo}</td>
-                    <td>{result.cor}</td>
-                    <td>{result.valor_meio_acesso}</td>
-                    <td>{<select type='text' name="motivo" value={selectedMotivo} onChange={(e) => setSelectedMotivo(e.target.value)} required>
-                      <option value="" placeholder="SELECIONE UM MOTIVO" ></option>
-                      <option value="VENDA" >VENDA</option>
-                      <option value="DEVOLUCAO" >DEVOLUCAO</option>
-                      <option value="TRANSFERENCIA" >TRANSFERENCIA</option>
-                      <option value="CORRECAO" >CORREÇÃO DE ESTOQUE</option>
-                    </select>}
-                    </td>
-                    <td>{edit ? <input className={styles.obs_edit} type='text' name="observacoes" value={editableFields.observacoes} onChange={handleInputChange} required/> : result.observacoes}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-          </div> : null}
+return (
+  <div className={styles.container}>
+    <div>
+      <div class="container-lg">
+        <h2 className={styles.title} >INFORME A PLACA DO VEÍCULO</h2>
+        <form className={styles.pesquisa} onSubmit={handleSearch}>
+          <label>
+            <p>Placa:</p>
+            <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
+          </label>
+          <button className={styles.btn_buscar} type='submit' onClick={() => setBusca(!busca)}>
+            {busca ? 'Buscar' : 'Buscar'}</button>
+        </form>
       </div>
+      {busca ?
+        <div className={styles.table}>
+          <button className={styles.btn_edit} onClick={handleEditToggle}>
+            {edit ? 'Salvar Baixa' : 'Baixar'}</button>
+          <table className="table table-secondary table-striped-columns" border="1">
+            <thead>
+              <tr>
+                <th>Loja</th>
+                <th>Cod.Loja</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Cor</th>
+                <th>Nº Tag</th>
+                <th>Motivo</th>
+                <th>Observacoes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {results.map(result => (
+                <tr key={result.id}>
+                  <td>{result.unidade}</td>
+                  <td>{result.idUnidade}</td>
+                  <td>{result.marca}</td>
+                  <td>{result.modelo}</td>
+                  <td>{result.cor}</td>
+                  <td>{result.valor_meio_acesso}</td>
+                  <td>{<select type='text' name="motivo" value={selectedMotivo} onChange={(e) => setSelectedMotivo(e.target.value)} required>
+                    <option value="" placeholder="SELECIONE UM MOTIVO" ></option>
+                    <option value="VENDA" >VENDA</option>
+                    <option value="DEVOLUCAO" >DEVOLUCAO</option>
+                    <option value="TRANSFERENCIA" >TRANSFERENCIA</option>
+                    <option value="CORRECAO" >CORREÇÃO DE ESTOQUE</option>
+                  </select>}
+                  </td>
+                  <td>{edit ? <input className={styles.obs_edit} type='text' name="observacoes" value={editableFields.observacoes} onChange={handleInputChange} required /> : result.observacoes}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+        </div> : null}
     </div>
-  )
+  </div>
+)
 }
 
 export default Baixar

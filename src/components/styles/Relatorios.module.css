@@ -1,128 +1,153 @@
-.title{
+.title {
     padding: 3% 2% 0 2%;
     font-size: 16px;
     font-weight: 600;
-    color:#333333
+    color: #333333
 }
-.filtrar{
+
+.filtrar {
     height: 50px;
     width: 200px;
     border-radius: 3px;
     background-color: rgba(89, 3, 110, 0.871);
     font-size: 18px;
     font-weight: 600;
-    color:rgba(254, 253, 255, 0.871);
+    color: rgba(254, 253, 255, 0.871);
     display: block;
     margin: 3% 80%
 }
-.filtrar:hover{
+
+.filtrar:hover {
     color: rgba(89, 3, 110, 0.871);
-    background-color:rgba(244, 246, 246, 0.871) ;
+    background-color: rgba(244, 246, 246, 0.871);
     box-shadow: 1px 1px 8px rgba(89, 3, 110, 0.871)
 }
 
-.select{
-    margin: 3% ;
-    
+.select {
+    margin: 3%;
+
 }
-.container{
-    box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.2);
+
+.container {
+    box-shadow: 2px 2px 3px 3px rgba(0, 0, 0, 0.2);
     background-color: rgb(255, 255, 255);
-    margin:25px 0;
+    margin: 25px 0;
 }
-.btn_buscar{
+
+.btn_buscar {
     height: 40px;
     width: 100px;
     color: #FFF;
     text-align: center;
     cursor: pointer;
     border-radius: 2px;
-    background-color:rgba(89, 3, 110, 0.871);
+    background-color: rgba(89, 3, 110, 0.871);
     font-weight: 600;
     margin-top: 20px;
 }
-.btn_buscar:focus{
+
+.btn_buscar:focus {
     outline: 1px solid blue;
-    background-color:rgb(199, 48, 236);
-}
-.btn_buscar:hover{
-    background-color: #669231;
-    color:rgba(255, 255, 255, 0.871);
+    background-color: rgb(199, 48, 236);
 }
 
-.pesquisa{
+.btn_buscar:hover {
+    background-color: #669231;
+    color: rgba(255, 255, 255, 0.871);
+}
+
+.btn_recad {
+    height: 40px;
+    width: 100px;
+    color: #FFF;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 2px;
+    background-color: rgba(89, 3, 110, 0.871);
+    font-weight: 600;
+    margin-top: 5px;
+    margin-left: 40px;
+}
+
+.btn_recad:hover {
+    background-color: #669231;
+    color: rgba(255, 255, 255, 0.871);
+}
+
+.btn_recad:focus {
+    outline: 1px solid blue;
+    background-color: rgb(199, 48, 236);
+}
+
+.pesquisa {
     margin-top: 2px;
     margin-bottom: 3px;
 }
 
-.table{
+.table {
     margin: 5% 0;
 }
-.head{
- display:grid;
+
+.head {
+    display: grid;
 }
 
-.table_title{
+.table_title {
     font-size: 20px;
     text-align: center;
 }
-.quantidade{
-    
-    right:7%;
+
+.quantidade {
+
+    right: 7%;
     font-weight: 600;
-    color:rgba(3, 0, 4, 0.871);
-    padding:5px;
+    color: rgba(3, 0, 4, 0.871);
+    padding: 5px;
     background-color: #D7D8DA;
-    width:auto;
+    width: auto;
     margin-top: 1%;
     margin-bottom: 2%;
 }
-.txt_title{
+
+.txt_title {
     font-weight: 600;
-    font-weight: bold ;
-    color:rgba(3, 0, 4, 0.871);
-    padding:5px;
-    text-align:center;
+    font-weight: bold;
+    color: rgba(3, 0, 4, 0.871);
+    padding: 5px;
+    text-align: center;
     background-color: #D7D8DA;
-    width:100%;
+    width: 100%;
     font-size: 20px;
 }
 
 /*Removendo a caixa de pesquisa do impressao*/
-@media print{
+@media print {
     .cont * {
-        position:absolute;
+        position: absolute;
         left: -9999px;
         margin-top: 0;
-        display:inline
+        display: inline
     }
-    .container *{
-        position:absolute;
+
+    .container * {
+        position: absolute;
         left: -9999px;
         margin-top: 0;
-        display:inline
+        display: inline
     }
-    
-    #printable, #printable *{
-    visibility: visible;
+
+    #printable,
+    #printable * {
+        visibility: visible;
     }
-    #printable{
-    position:absolute;
-    left: 0;
-    top:0
+
+    #printable {
+        position: absolute;
+        left: 0;
+        top: 0
     }
 }
-.liberacoes{
+
+.liberacoes {
     margin: 2% 8% 5% 8%;
 }
-
-
-
-
-
-
-
-
-
-
-

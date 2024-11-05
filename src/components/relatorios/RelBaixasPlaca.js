@@ -1,5 +1,6 @@
 import React from 'react'
-import { useState, useRef } from 'react'
+import { useState, useRef, } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styles from '../styles/Relatorios.module.css'
 
 
@@ -9,6 +10,11 @@ const RelBaixasPlaca = () => {
     const [query, setQuery] = useState()
     const [results, setResults] = useState([])
     const [error, setError] = useState('')
+    const navigate = useNavigate()
+
+    const handleRecadastrar = (placa) => {
+        navigate('/cad_veic', { state: { placa } })
+    }
 
 
     //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
@@ -69,8 +75,10 @@ const RelBaixasPlaca = () => {
                     </form>
                 </div>
             </div>
-            <div ref={tabelaRef} className={styles.table}>
-                {busca ?
+            {busca ?
+                <div ref={tabelaRef} className={styles.table}>
+
+                    <br />
                     <table className="table table-secondary table-striped-columns" border="1">
                         <thead>
                             <tr>
@@ -81,9 +89,9 @@ const RelBaixasPlaca = () => {
                                 <th>Renavan</th>
                                 <th>Loja</th>
                                 <th>Data Baixa</th>
-                                <th>Nº Tag</th>
                                 <th>Motivo</th>
                                 <th>Observação</th>
+                                <th>Açao</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -96,16 +104,15 @@ const RelBaixasPlaca = () => {
                                     <td>{result.renavan}</td>
                                     <td>{result.unidade}</td>
                                     <td>{formatTimestamp(result.data_registro)}</td>
-                                    <td>{result.valor_meio_acesso}</td>
                                     <td>{result.motivo}</td>
                                     <td>{result.observacoes}</td>
+                                    <td><button className={styles.btn_recad} onClick={() => handleRecadastrar(query)}>Recadastrar</button></td>
                                 </tr>
 
                             ))}
                         </tbody>
-                    </table> : null}
-            </div>
-
+                    </table>
+                </div> : null}
         </div>
     )
 }

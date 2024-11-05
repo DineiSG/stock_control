@@ -35,6 +35,12 @@ input {
     color:rgba(255, 255, 255, 0.871);
     
 }
+
+.cadastrar_lj:focus{
+    outline: 1px solid blue;
+    background-color: rgb(199, 48, 236);
+}
+
 .cadastro_lj{
     margin:1% 15%;
     padding:2px 22px

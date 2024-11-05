@@ -14,6 +14,7 @@ const SearchVeiculos = () => {
         modelo: '',
         cor: '',
         ano: '',
+        ano_modelo:'',
         renavan: '',
         unidade: '',
         valor_meio_acesso: ''

@@ -13,17 +13,17 @@ const RelEstoqueLoja = () => {
 
 
   //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
-  const tabelaRef=useRef(null)
+  const tabelaRef = useRef(null)
 
-  const handleButtonClick = ()=>{
+  const handleButtonClick = () => {
     setFiltroLoja(!filtroLoja) //Alterando o estado da tabela
 
-    setTimeout(()=>{
-      if(tabelaRef.current){
-        tabelaRef.current.scrollIntoView({behavior:'smooth', block:'start'})
+    setTimeout(() => {
+      if (tabelaRef.current) {
+        tabelaRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
-    },100)//Timeout para garantir que a tabela esteja visivel apos a renderização
-    
+    }, 100)//Timeout para garantir que a tabela esteja visivel apos a renderização
+
   }
 
   /*Função que trata do retorno de data */
@@ -102,13 +102,13 @@ const RelEstoqueLoja = () => {
     fetchLojas()
   }, [])
 
-  
+
 
   //Front End
 
   return (
     <div>
-      
+
       <div className={styles.container}>
         <div class="container-lg" >
           <div className={styles.input}>
@@ -134,44 +134,44 @@ const RelEstoqueLoja = () => {
       <div className={styles.table} id='printable'>
         {filtroLoja ? (
           <>
-          <div  ref={tabelaRef} >
-            <p className={styles.txt_title} > VEÍCULOS DISPONÍVEIS </p>
-            
-            <table className="table table-secondary table-striped-columns" border="1">
-              <thead>
-                <tr>
-                  <th>Loja</th>
-                  <th>Data Cadastro</th>
-                  <th>Dias em Estoque</th>
-                  <th>Marca</th>
-                  <th>Modelo</th>
-                  <th>Cor</th>
-                  <th>Ano Fab.</th>
-                  <th>Ano Mod.</th>
-                  <th>Renavan</th>
-                  <th>Placa</th>
-                  <th>Nº Tag</th>
-                </tr>
-              </thead>
-              <tbody>
-                {results.map(result => (
-                  <tr key={result.id}>
-                    <td>{result.unidade}</td>
-                    <td>{formatTimestamp(result.data_registro)}</td>
-                    <td>{result.unidade ? calculateDaysInStock(result.data_registro) : '-'}</td>
-                    <td>{result.marca}</td>
-                    <td>{result.modelo}</td>
-                    <td>{result.cor}</td>
-                    <td>{result.ano}</td>
-                    <td>{result.ano_modelo}</td>
-                    <td>{result.renavan}</td>
-                    <td>{result.placa}</td>
-                    <td>{result.valor_meio_acesso}</td>
-                  </tr>
+            <div ref={tabelaRef} >
+              <p className={styles.txt_title} > VEÍCULOS DISPONÍVEIS </p>
 
-                ))}
-              </tbody>
-            </table>
+              <table className="table table-secondary table-striped-columns" border="1">
+                <thead>
+                  <tr>
+                    <th>Loja</th>
+                    <th>Data Cadastro</th>
+                    <th>Dias em Estoque</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Cor</th>
+                    <th>Ano Fab.</th>
+                    <th>Ano Mod.</th>
+                    <th>Renavan</th>
+                    <th>Placa</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  {results.map(result => (
+                    <tr key={result.id}>
+                      <td>{result.unidade}</td>
+                      <td>{formatTimestamp(result.data_registro)}</td>
+                      <td>{result.unidade ? calculateDaysInStock(result.data_registro) : '-'}</td>
+                      <td>{result.marca}</td>
+                      <td>{result.modelo}</td>
+                      <td>{result.cor}</td>
+                      <td>{result.ano}</td>
+                      <td>{result.ano_modelo}</td>
+                      <td>{result.renavan}</td>
+                      <td>{result.placa}</td>
+
+                    </tr>
+
+                  ))}
+                </tbody>
+              </table>
             </div>
             <p className={styles.quantidade}>TOTAL DE VEICULOS EM ESTOQUE: {results.length}</p>
           </>

@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react'
 import styles from '../../pages/styles/CadVeic.module.css'
 
 
-const url = 'http://localhost:8090/api/v1/veiculos'
+
 const CadVeicManual = () => {
     const [unidade, setUnidade] = useState('')
-    const [id_unidade, setIdUnidade] = useState('')
+    const [idUnidade, setIdUnidade] = useState('')
     const [marca, setMarca] = useState('')
     const [modelo, setModelo] = useState('')
     const [cor, setCor] = useState('')
     const [placa, setPlaca] = useState('')
     const [ano, setAno] = useState('')
-    const [ano_modelo, setAnoModelo]=useState('')
+    const [ano_modelo, setAnoModelo] = useState('')
     const [valorMeioAcesso, setValorMeioAcesso] = useState('')
-    const [veiculo_status, setVeiculoStatus] = useState('')
+    const [veiculo_status, setVeiculoStatus] = useState('F')
     const [renavan, setRenavan] = useState('')
     const [loading, setLoading] = useState()
     const [lojas, setLojas] = useState([])
@@ -36,18 +36,18 @@ const CadVeicManual = () => {
 
         // Concatena as partes formatadas
         return leftPartFormatted + rightPartFormatted;
-    }  
-    
+    }
+
 
 
     //Função para inserir os dados no BD
     const handleSubmit = async (e) => {
         // Converte o valor decimal (em string) para o formato Wiegand
-        
+
         const convertedValue = hexToWiegand(valorMeioAcesso);
-        const valor_meio_acesso= convertedValue
-        
-        
+        const valor_meio_acesso = convertedValue
+
+
 
         /*Função que trata da inserção de data de forma automática */
         const formatTimestamp = (date) => {
@@ -70,7 +70,7 @@ const CadVeicManual = () => {
 
         e.preventDefault()
         const payload = {
-            unidade, id_unidade, marca, modelo, ano, ano_modelo, cor, placa, valor_meio_acesso, veiculo_status, renavan, data_registro
+            unidade, idUnidade, marca, modelo, ano, ano_modelo, cor, placa, valor_meio_acesso, veiculo_status, renavan, data_registro
         }
 
         const toUpperCasePayload = (data) => {
@@ -91,31 +91,58 @@ const CadVeicManual = () => {
         console.log('Payload enviado: ', payload)
 
         try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(upperCasePayload),
-            })
-            if (response.ok) {
-                console.log('Cadastro realizado com sucesso!')
-                window.alert('Veiculo cadastrado com sucesso!');
-                window.location.reload();
+            /*---------------------------Fazendo a verificação das vagas disponiveis */
+            const responseUnidade = await fetch(`http://localhost:8090/api/v1/veiculos/unidade/${unidade}`)
+            const data = await responseUnidade.json()
+            
+            const filteredResults = data.filter(veiculo => veiculo.valor_meio_acesso !== '').length;
+            console.log("Quantidade de veiculos: ",filteredResults.length)
+
+            const responseLoja = await fetch(`http://localhost:8090/api/v1/lojas`)
+            const dataLoja = await responseLoja.json()
+
+            const loja = dataLoja.find(loja => loja.descricao===unidade)
+            const vagasTotais = parseInt(loja.vagas, 10)
+            console.log("Quantidade de vagas informadas no cadastro da loja: ",vagasTotais)
+
+
+            const vagasDisponiveis = vagasTotais - filteredResults
+            console.log("Quantidade de vagas disponiveis: ", vagasDisponiveis)
+            /*------------------------------------------------------------------------------------------------ */
+
+            if (vagasDisponiveis > 0) {
+                const response = await fetch('http://localhost:8090/api/v1/veiculos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(upperCasePayload),
+                })
+                if (response.ok) {
+                    console.log('Cadastro realizado com sucesso!')
+                    window.alert('Veiculo cadastrado com sucesso!');
+                    window.location.reload();
+                } else {
+                    console.log('Erro ao enviar os dados')
+                    if (placa !== '') {
+                        window.alert('Placa ja registrada. Veículo se encontra fora de estoque por motivo de baixa. Favor relatar ao administrador.')
+                    }
+                    window.alert('Erro ao realizar o cadastro. Tente novamente.');
+                }
             } else {
-                console.log('Erro ao enviar os dados')
-                window.alert('Erro ao realizar o cadastro. Tente novamente.');
+                window.alert("Nao há vagas disponíveis para novos cadastros nesta loja. O veículo nao pode ser cadastrado.")
             }
         } catch (error) {
             window.alert('Erro ao realizar o cadastro. Tente novamente.');
         } finally {
-
         }
     }
 
-        const handleBlur = async ()=>{
-        if(valorMeioAcesso!==''){
-           window.alert('Nº da tag para leitura: '+hexToWiegand(valorMeioAcesso))
+
+
+    const handleBlur = async () => {
+        if (valorMeioAcesso !== '') {
+            window.alert('Nº da tag para leitura: ' + hexToWiegand(valorMeioAcesso))
         }
     }
 
@@ -159,7 +186,7 @@ const CadVeicManual = () => {
                         <form className={styles.cadastro} onSubmit={handleSubmit}>
                             <label>
                                 <p>Loja:</p>
-                                <select type='text' name='loja' value={id_unidade} onChange={handleUnidadeChange} required >
+                                <select type='text' name='loja' value={idUnidade} onChange={handleUnidadeChange} required >
                                     <option value="" >SELECIONE UMA LOJA</option>
                                     {lojas.map((loja) => (
                                         <option key={loja.id} value={loja.id} data-descricao={loja.descricao}>
@@ -169,7 +196,7 @@ const CadVeicManual = () => {
                                 </select>
                             </label>
                             <label>
-                                <input className={styles.tag} type='hidden' value={id_unidade}></input>
+                                <input className={styles.tag} type='hidden' value={idUnidade}></input>
                             </label>
                             <label>
                                 <p>Marca:</p>
@@ -198,15 +225,15 @@ const CadVeicManual = () => {
                             </label>
                             <label>
                                 <p>Renavam:</p>
-                                <input type='text' name='modelo' value={renavan} onChange={(e) => setRenavan(e.target.value)}  required></input>
+                                <input type='text' name='modelo' value={renavan} onChange={(e) => setRenavan(e.target.value)} required></input>
                             </label>
                             <label>
                                 <p>Tag:</p>
                                 <input className={styles.tag} type='text' name='tag' maxLength={6} value={valorMeioAcesso} onChange={(e) => setValorMeioAcesso(e.target.value)} onBlur={handleBlur} required></input>
                             </label>
                             <label>
-                                <p>Status (D: Dentro/ F:Fora):</p>
-                                <input className={styles.status} type='text' name='status' value={veiculo_status} onChange={(e) => setVeiculoStatus(e.target.value)} required maxLength={1}></input>
+                                {/*<p>Status (D: Dentro/ F:Fora):</p>*/}
+                                <input className={styles.status} type='hidden' name='status' value={veiculo_status} onChange={(e) => setVeiculoStatus(e.target.value)} required maxLength={1}></input>
                             </label>
                             <button className={styles.cadastrar} onClick={() => setLoading} disabled={loading}>{loading ? 'Cadastrando...' : 'Cadastrar'}</button>
                         </form>

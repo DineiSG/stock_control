@@ -8,19 +8,19 @@ const SearchHistory = () => {
     const [results, setResults] = useState([])
     const [setError] = useState('')
 
-        //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
-        const tabelaRef = useRef(null)
+    //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
+    const tabelaRef = useRef(null)
 
-        const handleButtonClick = () => {
-            setFiltroAcesso(!filtroAcesso) //Alterando o estado da tabela
-    
-            setTimeout(() => {
-                if (tabelaRef.current) {
-                    tabelaRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                }
-            }, 100)//Timeout para garantir que a tabela esteja visivel apos a renderização
-    
-        }
+    const handleButtonClick = () => {
+        setFiltroAcesso(!filtroAcesso) //Alterando o estado da tabela
+
+        setTimeout(() => {
+            if (tabelaRef.current) {
+                tabelaRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }
+        }, 100)//Timeout para garantir que a tabela esteja visivel apos a renderização
+
+    }
 
 
     /*Função que trata do retorno de data */
@@ -36,7 +36,7 @@ const SearchHistory = () => {
 
         const upperCaseQuery = query.toUpperCase();
         try {
-            const response = await fetch(`http://localhost:8090/api/v1/veiculos?placa=${upperCaseQuery}`)
+            const response = await fetch(`http://localhost:8090/api/v1/baixas?placa=${upperCaseQuery}`)
             const data = await response.json()
             const filteredResults = data.filter(veiculo => veiculo.placa.toUpperCase() === upperCaseQuery);
             if (filteredResults.length > 0) {
@@ -44,12 +44,12 @@ const SearchHistory = () => {
                 setError('')
             } else {
                 setResults([])
-                alert('Nao ha nenhum veiculo com a placa informada')
-                setError(window.alert("Nao há nenhum veiculo com a placa informada."))
+                setError(window.alert("Veículo ainda disponível para venda."))
+
             }
         } catch (error) {
             console.error('Erro: ', error)
-
+            window.location.reload()
         }
     }
 
@@ -69,28 +69,27 @@ const SearchHistory = () => {
                             </form>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div ref={tabelaRef} className={styles.table} id='printable'>
-                        {filtroAcesso ?
-                            <table className="table table-secondary table-striped-columns" border="1">
-                                <thead>
-                                    {results.map(result => (
-                                        <tr className={styles.head} key={result.id}>
-                                            <th className={styles.table_title} > HISTÓRICO DO VEÍCULO </th>
-                                            <th>Loja: {result.unidade}</th>
-                                            <th>Placa: {result.placa} </th>
-                                            <th>Marca: {result.marca}</th>
-                                            <th>Modelo: {result.modelo}</th>
-                                            <th>Cor: {result.cor}</th>
-                                            <th>Data do Cadastro: {formatTimestamp(result.data_registro)}</th>
-                                            <th>Data da Baixa: {result.data_alteracao ? formatTimestamp(result.data_alteracao) : "CARRO AINDA DISPONIVEL PARA VENDA" }</th>
-                                            <th>Observações: {result.observacoes}</th>
-                                        </tr>
-                                    ))}
-                                </thead>
-                            </table> : null}
-                    </div>
+                    {filtroAcesso ?
+                        <table className="table table-secondary table-striped-columns" border="1">
+                            <thead>
+                                {results.map(result => (
+                                    <tr className={styles.head} key={result.id}>
+                                        <th className={styles.table_title} > HISTÓRICO DO VEÍCULO </th>
+                                        <th>Loja: {result.unidade}</th>
+                                        <th>Placa: {result.placa} </th>
+                                        <th>Marca: {result.marca}</th>
+                                        <th>Modelo: {result.modelo}</th>
+                                        <th>Cor: {result.cor}</th>
+                                        <th>Data da Baixa: {result.data_registro ? formatTimestamp(result.data_registro) : "CARRO AINDA DISPONIVEL PARA VENDA"}</th>
+                                        <th>Observações: {result.observacoes}</th>
+                                    </tr>
+                                ))}
+                            </thead>
+                        </table> : null}
+                </div>
             </div>
         </div>
     )

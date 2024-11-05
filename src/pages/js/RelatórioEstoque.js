@@ -19,8 +19,8 @@ const RelatorioEstoque = () => {
       </div>
       <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/document.png" alt="document" /> Relatório de Baixas</h1>
       <div className="container-md">
-        <RelBaixasMotivo></RelBaixasMotivo>
         <RelBaixasPlaca></RelBaixasPlaca>
+        <RelBaixasMotivo></RelBaixasMotivo>
         <RelBaixasLoja></RelBaixasLoja>
       </div>
       <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/document.png" alt="document" /> Relatório de Acessos</h1>
