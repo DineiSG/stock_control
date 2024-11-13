@@ -63,7 +63,7 @@ const VendasData = () => {
 
         try {
 
-            const response = await fetch(`http://localhost:8090/api/v1/baixas?motivo=${upperCaseQuery}`)
+            const response = await fetch(`http://192.168.1.114:8099/api/v1/baixas?motivo=${upperCaseQuery}`)
             const data = await response.json()
 
             if (!response.ok) {

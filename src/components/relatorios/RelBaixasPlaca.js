@@ -1,6 +1,5 @@
 import React from 'react'
 import { useState, useRef, } from 'react'
-import { useNavigate } from 'react-router-dom'
 import styles from '../styles/Relatorios.module.css'
 
 
@@ -10,12 +9,6 @@ const RelBaixasPlaca = () => {
     const [query, setQuery] = useState()
     const [results, setResults] = useState([])
     const [error, setError] = useState('')
-    const navigate = useNavigate()
-
-    const handleRecadastrar = (placa) => {
-        navigate('/cad_veic', { state: { placa } })
-    }
-
 
     //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
     const tabelaRef = useRef(null)
@@ -91,7 +84,6 @@ const RelBaixasPlaca = () => {
                                 <th>Data Baixa</th>
                                 <th>Motivo</th>
                                 <th>Observação</th>
-                                <th>Açao</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -106,7 +98,6 @@ const RelBaixasPlaca = () => {
                                     <td>{formatTimestamp(result.data_registro)}</td>
                                     <td>{result.motivo}</td>
                                     <td>{result.observacoes}</td>
-                                    <td><button className={styles.btn_recad} onClick={() => handleRecadastrar(query)}>Recadastrar</button></td>
                                 </tr>
 
                             ))}

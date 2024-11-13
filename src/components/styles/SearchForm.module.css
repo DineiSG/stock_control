@@ -76,7 +76,7 @@ input {
 }
 
 .edit_data{
-    max-width: 100px;
+    max-width: 250px;
 }
 .obs_edit{
     max-width: 300px;
@@ -86,6 +86,11 @@ input {
 }
 .head{
     display:grid;
+}
+
+.table_title {
+    font-size: 20px;
+    text-align: center;
 }
 @media print{
     .input {

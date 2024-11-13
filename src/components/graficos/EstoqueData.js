@@ -37,14 +37,15 @@ const EstoqueData = () => {
   useEffect(() => {
     const fetchVeiculo = async () => {
       try {
-        const response = await fetch(`http://localhost:8090/api/v1/veiculos`)
+        const response = await fetch(`http://192.168.1.114:8099/api/v1/veiculos`)
         const data = await response.json()
+        const filteredResults = data.filter(veiculo => veiculo.unidade !== null);
 
-        if (Array.isArray(data)) {
+        if (Array.isArray(filteredResults)) {
 
-          const dados = contarUnidades(data)
+          const dados = contarUnidades(filteredResults)
           setDadosGrafico(dados)
-          setVeiculo(data)
+          setVeiculo(filteredResults)
           
         } else {
           console.error('A resposta da API nao e um array', data)

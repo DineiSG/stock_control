@@ -79,7 +79,9 @@ const SearchInventario = () => {
         const data = await response.json()
 
         if (Array.isArray(data)) {
-          setLojas(data)
+          const lojasOrdenadas = data.sort((a, b) =>
+            a.descricao.localeCompare(b.descricao));
+          setLojas(lojasOrdenadas)
         } else {
           console.error('A resposta da API nao e um array', data)
         }

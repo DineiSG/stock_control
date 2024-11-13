@@ -31,7 +31,7 @@ const RelAcesso = () => {
   /*Função que formata a data para exibi-la no frontend*/
   const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
-    return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour:'2-digit', minute:'2-digit' });
   };
 
   // Função que calcula a quantidade de dias em estoque
@@ -86,7 +86,7 @@ const RelAcesso = () => {
   return (
     <div>
       <div className={styles.container}>
-        <div class="container-lg" >
+        <div class="container-sm" >
           <div className={styles.input}>
             <h2 className={styles.title}>INFORME A PLACA DO VEÍCULO</h2>
             <form className={styles.pesquisa} onSubmit={handleSearch}>

@@ -19,6 +19,7 @@ const Informacoes = () => {
 
     return (
         <div>
+            <div class='container-sm'>
             <div className={styles.carrossel} >
                 <div id="carouselExampleRide" class="carousel slide" data-bs-ride="carousel" >
                    
@@ -123,7 +124,7 @@ const Informacoes = () => {
                     </div>
                 </div>
 
-            
+            </div>
         </div>
     )
 }

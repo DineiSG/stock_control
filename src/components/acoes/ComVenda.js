@@ -211,7 +211,7 @@ const ComVenda = () => {
       <div>
         <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/money.png" alt="money" /> Comunicação de Venda</h1>
         <div className={styles.container}>
-          <div class="container-lg">
+          <div class="container-sm">
             <h2 className={styles.title} >DADOS DA OPERAÇÃO</h2>
             <div className={styles.formulario}>
               <form className={styles.cadastro} onSubmit={handleSubmit} >

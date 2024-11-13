@@ -110,7 +110,6 @@ const RelBaixasMotivo = () => {
                                         <th>Renavan</th>
                                         <th>Placa</th>
                                         <th>Data Baixa</th>
-                                        <th>Nº Tag</th>
                                         <th>Observação</th>
                                     </tr>
                                 </thead>
@@ -125,7 +124,6 @@ const RelBaixasMotivo = () => {
                                             <td>{result.renavan}</td>
                                             <td>{result.placa}</td>
                                             <td>{formatTimestamp(result.data_registro)}</td>
-                                            <td>{result.valor_meio_acesso}</td>
                                             <td>{result.observacoes}</td>
                                         </tr>
                                     ))}

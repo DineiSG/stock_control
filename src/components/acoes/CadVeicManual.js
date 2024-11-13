@@ -12,9 +12,10 @@ const CadVeicManual = () => {
     const [placa, setPlaca] = useState('')
     const [ano, setAno] = useState('')
     const [ano_modelo, setAnoModelo] = useState('')
-    const [valorMeioAcesso, setValorMeioAcesso] = useState('')
+    const [tag, setTag] = useState('')
     const [veiculo_status, setVeiculoStatus] = useState('F')
     const [renavan, setRenavan] = useState('')
+    const [fipe, setFipe]=useState('')
     const [loading, setLoading] = useState()
     const [lojas, setLojas] = useState([])
 
@@ -44,7 +45,7 @@ const CadVeicManual = () => {
     const handleSubmit = async (e) => {
         // Converte o valor decimal (em string) para o formato Wiegand
 
-        const convertedValue = hexToWiegand(valorMeioAcesso);
+        const convertedValue = hexToWiegand(tag);
         const valor_meio_acesso = convertedValue
 
 
@@ -70,9 +71,9 @@ const CadVeicManual = () => {
 
         e.preventDefault()
         const payload = {
-            unidade, idUnidade, marca, modelo, ano, ano_modelo, cor, placa, valor_meio_acesso, veiculo_status, renavan, data_registro
+            unidade, idUnidade, marca, modelo, ano, ano_modelo, cor, placa, tag, veiculo_status, renavan, data_registro, valor_meio_acesso, fipe
         }
-
+        //Alterando os valores informados no input para lertas maiusculas
         const toUpperCasePayload = (data) => {
             const upperCaseData = {};
             for (const key in data) {
@@ -94,20 +95,19 @@ const CadVeicManual = () => {
             /*---------------------------Fazendo a verificação das vagas disponiveis */
             const responseUnidade = await fetch(`http://localhost:8090/api/v1/veiculos/unidade/${unidade}`)
             const data = await responseUnidade.json()
-            
+
             const filteredResults = data.filter(veiculo => veiculo.valor_meio_acesso !== '').length;
-            console.log("Quantidade de veiculos: ",filteredResults.length)
+            console.log("Quantidade de veiculos: ", filteredResults.length)
 
             const responseLoja = await fetch(`http://localhost:8090/api/v1/lojas`)
             const dataLoja = await responseLoja.json()
 
-            const loja = dataLoja.find(loja => loja.descricao===unidade)
+            const loja = dataLoja.find(loja => loja.descricao === unidade)
             const vagasTotais = parseInt(loja.vagas, 10)
-            console.log("Quantidade de vagas informadas no cadastro da loja: ",vagasTotais)
-
+            console.log("Quantidade de vagas informadas no cadastro da loja: ", vagasTotais)
 
             const vagasDisponiveis = vagasTotais - filteredResults
-            console.log("Quantidade de vagas disponiveis: ", vagasDisponiveis)
+            console.log("Quantidade de vagas disponiveis antes do cadastro do veiculo: ", vagasDisponiveis)
             /*------------------------------------------------------------------------------------------------ */
 
             if (vagasDisponiveis > 0) {
@@ -119,13 +119,31 @@ const CadVeicManual = () => {
                     body: JSON.stringify(upperCasePayload),
                 })
                 if (response.ok) {
+                    /*---------------------------Fazendo a verificação das vagas disponiveis */
+                    const responseUnidade = await fetch(`http://localhost:8090/api/v1/veiculos/unidade/${unidade}`)
+                    const data = await responseUnidade.json()
+
+                    const filteredResults = data.filter(veiculo => veiculo.valor_meio_acesso !== '').length;
+                    console.log("Quantidade de veiculos: ", filteredResults.length)
+
+                    const responseLoja = await fetch(`http://localhost:8090/api/v1/lojas`)
+                    const dataLoja = await responseLoja.json()
+
+                    const loja = dataLoja.find(loja => loja.descricao === unidade)
+                    const vagasTotais = parseInt(loja.vagas, 10)
+
+                    const vagasDisponiveis = vagasTotais - filteredResults
+                    console.log("Quantidade de vagas disponiveis após o cadastro do veículo: ", vagasDisponiveis)
+                    
+                    /*------------------------------------------------------------------------------------------------ */
+
                     console.log('Cadastro realizado com sucesso!')
                     window.alert('Veiculo cadastrado com sucesso!');
                     window.location.reload();
                 } else {
                     console.log('Erro ao enviar os dados')
                     if (placa !== '') {
-                        window.alert('Placa ja registrada. Veículo se encontra fora de estoque por motivo de baixa. Favor relatar ao administrador.')
+                        window.alert('Erro ao realizar o cadastro. Este veículo ja fez parte do estoque. Para recadastra-lo vá em Pesquisa, insira a placa do veículo, clique em Editar e informe os dados do veículo novamente.')
                     }
                     window.alert('Erro ao realizar o cadastro. Tente novamente.');
                 }
@@ -133,7 +151,7 @@ const CadVeicManual = () => {
                 window.alert("Nao há vagas disponíveis para novos cadastros nesta loja. O veículo nao pode ser cadastrado.")
             }
         } catch (error) {
-            window.alert('Erro ao realizar o cadastro. Tente novamente.');
+            console.log('Erro ao realizar o cadastro. Tente novamente.', error);
         } finally {
         }
     }
@@ -141,8 +159,8 @@ const CadVeicManual = () => {
 
 
     const handleBlur = async () => {
-        if (valorMeioAcesso !== '') {
-            window.alert('Nº da tag para leitura: ' + hexToWiegand(valorMeioAcesso))
+        if (tag !== '') {
+            console.log('Nº da tag para leitura: ' + hexToWiegand(tag))
         }
     }
 
@@ -153,7 +171,8 @@ const CadVeicManual = () => {
                 const response = await fetch(`http://localhost:8090/api/v1/lojas`)
                 const data = await response.json()
                 if (Array.isArray(data)) {
-                    setLojas(data)
+                    const lojasOrdenadas = data.sort((a,b)=> a.descricao.localeCompare(b.descricao))
+                    setLojas(lojasOrdenadas);
                 } else {
                     console.error('A resposta da API nao e um array', data)
                 }
@@ -221,15 +240,19 @@ const CadVeicManual = () => {
 
                             <label>
                                 <p>Placa:</p>
-                                <input className={styles.placa} type='text' name='placa' value={placa} onChange={(e) => setPlaca(e.target.value)} required></input>
+                                <input className={styles.placa} type='text' name='placa' value={placa} maxLength={7} onChange={(e) => setPlaca(e.target.value)} required></input>
                             </label>
                             <label>
                                 <p>Renavam:</p>
                                 <input type='text' name='modelo' value={renavan} onChange={(e) => setRenavan(e.target.value)} required></input>
                             </label>
                             <label>
+                                <p>Valor FIPE R$:</p>
+                                <input type='text' name='fipe' value={fipe} onChange={(e) => setFipe(e.target.value)} required></input>
+                            </label>
+                            <label>
                                 <p>Tag:</p>
-                                <input className={styles.tag} type='text' name='tag' maxLength={6} value={valorMeioAcesso} onChange={(e) => setValorMeioAcesso(e.target.value)} onBlur={handleBlur} required></input>
+                                <input className={styles.tag} type='text' name='tag' maxLength={6} value={tag} onChange={(e) => setTag(e.target.value)} onBlur={handleBlur} required></input>
                             </label>
                             <label>
                                 {/*<p>Status (D: Dentro/ F:Fora):</p>*/}

@@ -17,8 +17,13 @@ const SearchVeiculos = () => {
         ano_modelo:'',
         renavan: '',
         unidade: '',
-        valor_meio_acesso: ''
+        tag: '',
+        fipe:'',
+        observacoes:'',
+        valor_meio_acesso:''
     })
+
+
 
     /*Função que busca informações de um veiculo de acordo com a placa */
     const handleSearch = async (e) => {
@@ -44,6 +49,43 @@ const SearchVeiculos = () => {
         }
     }
 
+
+
+    //Função de conversao Hexadecimal para Wiegand. Essa função recebe o valor da tag em Hexadecimal e converte para Wiegand,
+    // que e um formato muito utilizado em controle de acessos.
+    function hexToWiegand(hexValue) {
+        if (!hexValue) {
+            console.error("hexValue está indefinido ou nulo:", hexValue);
+            return '';
+        }
+
+        hexValue = String(hexValue);
+        // Divide o valor hexadecimal em duas partes
+        const leftPartHex = hexValue.substring(0, 2); // Parte esquerda (2 primeiros caracteres)
+        const rightPartHex = hexValue.substring(2); // Parte direita (restante dos caracteres)
+
+        // Converte as partes de hexadecimal para decimal
+        const leftPart = parseInt(leftPartHex, 16); // Converte a parte esquerda para decimal
+        const rightPart = parseInt(rightPartHex, 16); // Converte a parte direita para decimal
+
+        // Formata as partes com zeros à esquerda
+        const leftPartFormatted = leftPart.toString().padStart(3, "0"); // Garantir 3 dígitos na parte esquerda
+        const rightPartFormatted = rightPart.toString().padStart(5, "0"); // Garantir 5 dígitos na parte direita
+
+        // Concatena as partes formatadas
+        return leftPartFormatted + rightPartFormatted;
+    }
+    
+    /*Função que transforma os campos de uma tabela gerada apos a pesquisa em campos editaveis */
+    const handleInputChange = (e) => {
+        const { name, value } = e.target
+        
+        setEditableFields({
+            ...editableFields,
+            [name]: value.toUpperCase()
+        })
+    }
+
     /*Função para editar os dados encontrados */
     const handleEditToggle = async () => {
         if (edit) {
@@ -60,18 +102,15 @@ const SearchVeiculos = () => {
 
     }
 
-    /*Função que transforma os campos de uma tabela gerada apos a pesquisa em campos editaveis */
-    const handleInputChange = (e) => {
-        const { name, value } = e.target
-        setEditableFields({
-            ...editableFields,
-            [name]: value.toUpperCase()
-        })
-    }
-
+    
+    const tag = editableFields.tag;
     /*Função que salva os dados */
     const handleSave = async () => {
-
+        
+        const convertedValue = hexToWiegand(tag);
+        editableFields.valor_meio_acesso = convertedValue;
+        console.log(convertedValue)
+        
         try {
             const response = await fetch(`http://localhost:8090/api/v1/veiculos/placa/${editableFields.placa}`, {
                 method: 'PUT',
@@ -91,15 +130,15 @@ const SearchVeiculos = () => {
             }
             window.location.reload()
         } catch (error) {
-            window.alert(`Erro ao enviar dados para o servidor`, error)
-            window.location.reload()
+            console.log(`Erro ao enviar dados para o servidor`, error)
+            
         }
     }
 
 
     return (
         <div className={styles.container}>
-            <div class="container-lg">
+            <div class="container-sm">
                 <h2 className={styles.title}>INFORME A PLACA DE UM VEÍCULO PARA BUSCAR INFORMAÇÕES:</h2>
                 <form className={styles.pesquisa} onSubmit={handleSearch}>
                     <label>
@@ -117,36 +156,24 @@ const SearchVeiculos = () => {
 
                     <table className="table table-secondary table-striped-columns" border="1">
                         <thead>
-                            <tr>
-                                <th>Marca</th>
-                                <th>Modelo</th>
-                                <th>Cor</th>
-                                <th>Ano</th>
-                                <th>Renavan</th>
-                                <th>Loja</th>
-                                <th>Status</th>
-                                <th>Ano Fab.</th>
-                                <th>Ano Mod.</th>
-                                <th>Nº Tag</th>
-                            </tr>
-                        </thead>
-                        <tbody>
                             {results.map(result => (
-                                <tr key={result.id}>
-                                    <td>{edit ? <input className={styles.edit_data} type='text' name="marca" value={editableFields.marca} onChange={handleInputChange} /> : result.marca}</td>
-                                    <td>{edit ? <input className={styles.edit_data} type='text' name="modelo" value={editableFields.modelo} onChange={handleInputChange} /> : result.modelo}</td>
-                                    <td>{edit ? <input className={styles.edit_data} type='text' name="cor" value={editableFields.cor} onChange={handleInputChange} /> : result.cor}</td>
-                                    <td>{edit ? <input className={styles.edit_data} type='text' name="ano" value={editableFields.ano} onChange={handleInputChange} /> : result.ano}</td>
-                                    <td>{edit ? <input className={styles.edit_data} type='text' name="renavan" maxLength={11} value={editableFields.renavan} onChange={handleInputChange} /> : result.renavan}</td>
-                                    <td>{edit ? <input className={styles.edit_data} type='text' name="unidade" value={editableFields.unidade} onChange={handleInputChange} /> : result.unidade}</td>
-                                    <td>{edit ? <input className={styles.edit_data} type='text' name="veiculo_status" value={editableFields.veiculo_status} onChange={handleInputChange} /> : result.veiculo_status}</td>
-                                    <td>{edit ? <input className={styles.edit_data} type='text' name="ano" value={editableFields.ano} onChange={handleInputChange} /> : result.ano}</td>
-                                    <td>{edit ? <input className={styles.edit_data} type='text' name="ano_modelo" value={editableFields.ano_modelo} onChange={handleInputChange} /> : result.ano_modelo}</td>
-                                    <td>{result.valor_meio_acesso}</td>
-                                </tr>
-
+                            <tr className={styles.head} key={result.id}>
+                                <th className={styles.table_title} >DADOS DO VEÍCULO</th>
+                                <th>Marca: {result.marca}</th>
+                                <th>Modelo: {result.modelo}</th>
+                                <th>Cor: {result.cor}</th>
+                                <th>Renavan: {result.renavan}</th>
+                                <th>Loja: {edit ? <input className={styles.edit_data} type='text' name="unidade" value={editableFields.unidade} onChange={handleInputChange} /> : result.unidade}</th>
+                                <th>Status: {edit ? <input className={styles.edit_data} type='text' name="veiculo_status" value={editableFields.veiculo_status} onChange={handleInputChange} /> : result.veiculo_status}</th>
+                                <th>Ano de Fabricação: {result.ano}</th>
+                                <th>Ano Modelo: {result.ano_modelo}</th>
+                                <th>Nº Tag: {edit ? <input className={styles.edit_data} type='text' name="tag" value={editableFields.tag} onChange={handleInputChange} /> :result.tag}</th>
+                                <th>Valor FIPE: {result.fipe}</th>
+                                <th>Observaçoes: {edit ? <input className={styles.edit_data} type='text' name="observacoes" value={editableFields.observacoes} onChange={handleInputChange} /> :result.observacoes}</th>
+                                <th>Numero de Registro: {result.valor_meio_acesso}</th>
+                            </tr>
                             ))}
-                        </tbody>
+                        </thead>
                     </table>
 
                 </div> : null}

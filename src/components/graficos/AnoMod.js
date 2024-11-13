@@ -35,7 +35,7 @@ const AnoMod = () => {
     useEffect(() => {
       const fetchVeiculo = async () => {
         try {
-          const response = await fetch(`http://localhost:8090/api/v1/veiculos`)
+          const response = await fetch(`http://192.168.1.114:8099/api/v1/veiculos`)
           const data = await response.json()
   
           if (Array.isArray(data)) {

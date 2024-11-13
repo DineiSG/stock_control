@@ -104,29 +104,19 @@ const SearchLojas = () => {
                         <button className={styles.btn_edit} onClick={handleEditToggle}>
                             {edit ? 'Salvar' : 'Editar'}</button>
                         <table className="table table-secondary table-striped-columns" border="1">
-                            <thead>
-                                <tr>
-                                    <th>Cod. Loja</th>
-                                    <th>Nome</th>
-                                    <th>Box</th>
-                                    <th>Telefone</th>
-                                    <th>Email</th>
-                                    <th>Qtd Vagas</th>
+                            <thead >
+                                {results.map((result) => ( 
+                                <tr className={styles.head} key={result.id}>
+                                    <th className={styles.table_title} >DADOS DA LOJA</th>
+                                    <th>Cod. Loja: {result.id}</th>
+                                    <th>Nome: {edit ? <input className={styles.edit_data} type='text' name="descricao" value={editableFields.descricao} onChange={handleInputChange} /> : result.descricao}</th>
+                                    <th>Box: {edit ? <input className={styles.edit_data} type='number' name="box" value={editableFields.box} onChange={handleInputChange} /> : result.box}</th>
+                                    <th>Telefone: {edit ? <input className={styles.edit_data} type='text' name="telefone" value={editableFields.telefone} onChange={handleInputChange} /> : result.telefone}</th>
+                                    <th>Email: {edit ? <input className={styles.edit_data} type='text' name="email" value={editableFields.email} onChange={handleInputChange} /> : result.email}</th>
+                                    <th>Qtd Vagas: {result.vagas}</th>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {results.map((result) => (
-                                    <tr key={result.id}>
-                                        <td>{result.id}</td>
-                                        <td>{edit ? <input className={styles.edit_data} type='text' name="descricao" value={editableFields.descricao} onChange={handleInputChange} /> : result.descricao}</td>
-                                        <td>{edit ? <input className={styles.edit_data} type='number' name="box" value={editableFields.box} onChange={handleInputChange} /> : result.box}</td>
-                                        <td>{edit ? <input className={styles.edit_data} type='text' name="telefone" value={editableFields.telefone} onChange={handleInputChange} /> : result.telefone}</td>
-                                        <td>{edit ? <input className={styles.edit_data} type='text' name="email" value={editableFields.email} onChange={handleInputChange} /> : result.email}</td>
-                                        <td>{result.vagas}</td>
-
-                                    </tr>
                                 ))}
-                            </tbody>
+                            </thead>
                         </table>
 
                     </div> : null}
