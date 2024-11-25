@@ -1,15 +1,6 @@
 import styles from "../styles/Data.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, } from "recharts";
 
 const VeiculosData = () => {
   const [veiculo, setVeiculo] = useState([]);
@@ -41,12 +32,15 @@ const VeiculosData = () => {
   useEffect(() => {
     const fetchVeiculo = async () => {
       try {
-        const response = await fetch(`http://192.168.1.114:8099/api/v1/veiculos`);
+        const response = await fetch(
+          `http://localhost:8090/api/v1/veiculos`
+        );
         const data = await response.json();
         const filteredResults = data.filter(
           (veiculo) =>
             veiculo.unidade !== "" && veiculo.valor_meio_acesso !== ""
-        ); //Filtrando os dados obtidos. As coluna unidade e valor_meio_acesso devem conter dados
+        );
+        //Filtrando os dados obtidos. As coluna unidade e valor_meio_acesso devem conter dados
 
         if (filteredResults.length > 0) {
           const dados = contarMarcas(filteredResults);

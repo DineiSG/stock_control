@@ -55,8 +55,6 @@ const ConsVenda = () => {
     }
   }
 
-
-
   return (
     <div>
       <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/money.png" alt="search" /> Relatório de Venda</h1>

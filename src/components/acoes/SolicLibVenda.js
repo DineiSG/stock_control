@@ -164,89 +164,35 @@ const SolicLibVenda = () => {
               <form className={styles.cadastro} onSubmit={handleSubmit}>
                 <label>
                   <p>Placa:</p>
-                  <input
-                    className={styles.tag}
-                    type="text"
-                    value={placa}
-                    maxLength="7"
-                    onChange={(e) => setPlaca(e.target.value)}
-                    onBlur={handleBlur}
-                  ></input>
+                  <input className={styles.tag} type="text" value={placa} maxLength="7" onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur} ></input>
                 </label>
                 <label>
                   <p>Marca:</p>
-                  <input
-                    type="text"
-                    name="marca"
-                    value={veiculo.marca}
-                    readOnly
-                    required
-                  ></input>
+                  <input type="text" name="marca" value={veiculo.marca} readOnly required ></input>
                 </label>
                 <label>
                   <p>Modelo:</p>
-                  <input
-                    type="text"
-                    name="modelo"
-                    value={veiculo.modelo}
-                    readOnly
-                    required
-                  ></input>
+                  <input type="text" name="modelo" value={veiculo.modelo} readOnly required ></input>
                 </label>
                 <label>
                   <p>Cor:</p>
-                  <input
-                    className={styles.cor}
-                    type="text"
-                    name="cor"
-                    value={veiculo.cor}
-                    readOnly
-                    required
-                  ></input>
+                  <input className={styles.cor} type="text" name="cor" value={veiculo.cor} readOnly required ></input>
                 </label>
                 <label>
                   <p>Loja:</p>
-                  <input
-                    type="text"
-                    name="loja"
-                    value={veiculo.unidade}
-                    readOnly
-                    required
-                  ></input>
-                  <input
-                    type="hidden"
-                    name="id"
-                    value={veiculo.id}
-                    readOnly
-                    required
-                  ></input>
+                  <input type="text" name="loja" value={veiculo.unidade} readOnly required ></input>
+                  <input type="hidden" name="id" value={veiculo.id} readOnly required ></input>
                 </label>
                 <label>
-                  <input
-                    type="hidden"
-                    name="motivo"
-                    value={motivo}
-                    required
-                  ></input>
+                  <input type="hidden" name="motivo" value={motivo} required ></input>
                 </label>
                 <label>
                   <p>Solicitante:</p>
-                  <input
-                    type="text"
-                    name="solicitante"
-                    value={solicitante}
-                    onChange={(e) => setSolicitante(e.target.value)}
-                  ></input>
+                  <input type="text" name="solicitante" value={solicitante} onChange={(e) => setSolicitante(e.target.value)} ></input>
                 </label>
                 <label>
                   <p>Observação:</p>
-                  <input
-                    type="text"
-                    className={styles.obs}
-                    name="observacoes"
-                    value={observacoes}
-                    onChange={(e) => setObservacoes(e.target.value)}
-                  ></input>
+                  <input type="text" className={styles.obs} name="observacoes" value={observacoes} onChange={(e) => setObservacoes(e.target.value)} ></input>
                 </label>
                 <button type="submit" className={styles.btn_cadastrar}>
                   Enviar

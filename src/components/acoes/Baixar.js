@@ -37,7 +37,7 @@ const Baixar = () => {
       const filteredResults = data.filter(veiculo => veiculo.placa.toUpperCase() === upperCaseQuery && veiculo.unidade !== null);
 
       if (filteredResults.length > 0) {
-        const id_veiculo_acessante=filteredResults[0].id
+        const id_veiculo_acessante = filteredResults[0].id
         const deleteAcessos = await fetch(`http://localhost:8090/api/v1/acessos/historico/${id_veiculo_acessante}`, {
           method: 'DELETE',
           headers: {
@@ -142,11 +142,11 @@ const Baixar = () => {
           },
         });
         console.log("Veículo excluido do BD");
-        if(deleteVeiculo.ok){
+        if (deleteVeiculo.ok) {
           window.alert("Baixa realizada com sucesso.")
           window.location.reload()
         }
-         else {
+        else {
           console.log('Erro ao buscar dados da loja.');
         }
       } else {

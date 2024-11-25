@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import styles from '../styles/Lojista.module.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 const ComVenda = () => {
@@ -8,34 +8,36 @@ const ComVenda = () => {
   const [infoConditions, setInfoConditions] = useState(true)
   const [observacoes, setObservacoes] = useState('');
   const [comprador, setComprador] = useState('')
+  const [nascimento, setNascimento] = useState('')
+  const [telefone, setTelefone] = useState('')
+  const [cep, setCep] = useState('')
+  const [local, setLocal] = useState('')
+  const [rua, setRua] = useState('')
+  const [endereco, setEndereco] = useState('')
+  const [bairro, setBairro] = useState('')
+  const [cidade, setCidade] = useState('')
+  const [estado, setEstado] = useState('')
+  const [email, setEmail] = useState('')
+  const [cpf, setCpf] = useState('')
+  const [rg, setRg] = useState('')
   const [vendedor, setVendedor] = useState('')
   const [vendedores, setVendedores] = useState([])
-  const [valorFipe, setValorFipe] = useState('')
-  const [valorVenda, setValorVenda] = useState('')
-  const [valorEntrada, setValorEntrada] = useState('')
+  const [valorFipe, setValorFipe] = useState(',00')
+  const [valorVenda, setValorVenda] = useState('.00')
+  const [valorEntrada, setValorEntrada] = useState('.00')
   const [valorFinanciamento, setValorFinanciamento] = useState('')
   const [instituicao, setInstituicao] = useState('')
   const [tipoVenda, setTipoVenda] = useState('')
+
   const [placa, setPlaca] = useState('')
   const [veiculo, setVeiculo] = useState({
-    marca: '',
-    modelo: '',
-    cor: '',
-    unidade: '',
-    renavam: '',
-    comprador: '',
-    vendendor: '',
-    valorAnunciado: '',
-    valorFipe: '',
-    valorVenda: '',
-    valorEntrada: '',
-    valorFinanciamento: '',
-    financeira: '',
-    tipoVenda: '',
-    banco: '',
-    consorcio: '',
-    observacoes: ''
+    marca: '', modelo: '', cor: '', unidade: '', renavam: '', comprador: '', vendendor: '', nascimento: '', rg: '', cpf: '', telefone: '',
+    email: '', cep: '', rua: '', endereco: '', bairro: '', cidade: '', estado: '', valorAnunciado: '', valorFipe: '', valorVenda: '',
+    valorEntrada: '', valorFinanciamento: '', financeira: '', tipoVenda: '', banco: '', consorcio: '', observacoes: ''
   })
+  const navigate = useNavigate()
+
+
 
   //Verifica se a venda foi à vista. Caso nao tenha sido, libera os inputs de Valor de Entrada e Valor Financiado 
   const handleVendaChange = (e) => {
@@ -50,11 +52,14 @@ const ComVenda = () => {
   function calcValorFinanciado(venda, entrada) {
     const valorVendaNumerico = parseFloat(venda)
     const valorEntradaNumerico = parseFloat(entrada)
-    return (valorVendaNumerico - valorEntradaNumerico).toString()
+    const resultado=valorVendaNumerico - valorEntradaNumerico
+    return (resultado).toString()
   }
 
-
-
+  //redireciona para a pagina de contrato 
+  const handleContrato = (placa) => {
+    navigate('/contrato', { state: { placa } })
+  }
 
   //Buscando os dados do veiculo de acordo com a placa
   const handleBlur = async (e) => {
@@ -68,6 +73,8 @@ const ComVenda = () => {
     function converterParaMaiusculo(texto) {
       return texto.toUpperCase()
     }
+
+    let endereco = cep
     let texto = placa
     let textoMaiusculo = converterParaMaiusculo(texto)
 
@@ -91,6 +98,26 @@ const ComVenda = () => {
       } catch (error) {
         console.error('Erro na requisição', error);
       }
+    }
+
+    try {
+      const response = await fetch(`https://brasilapi.com.br/api/cep/v1/${endereco}`)
+      if (response.ok) {
+        const data = await response.json()
+        setLocal({
+          ...local,
+          cep:data.cep,
+          rua: data.street,
+          cidade: data.city,
+          estado: data.state,
+          bairro: data.neighborhood,
+        })
+      } else {
+        window.alert("Endereço nao encontrado ou CEP incorreto.")
+      }
+
+    } catch {
+
     }
   };
 
@@ -126,24 +153,9 @@ const ComVenda = () => {
 
     //Dados que serao obtidos da tabela vaga.veiculo (retornando como veiculo.dado), e serao enviados à tabela vaga.liberaçoes
     const dados = {
-      placa,
-      id: veiculo.id,
-      marca: veiculo.marca,
-      modelo: veiculo.modelo,
-      cor: veiculo.cor,
-      unidade: veiculo.unidade,
-      renavam: veiculo.renavam,
-      comprador,
-      vendedor,
-      valorVenda,
-      valorFipe,
-      valorFinanciamento,
-      valorEntrada,
-      tipoVenda,
-      instituicao,
-      dataRegistro,
-      observacoes
-
+      placa, id: veiculo.id, marca: veiculo.marca, modelo: veiculo.modelo, cor: veiculo.cor, unidade: veiculo.unidade,
+      renavam: veiculo.renavam, comprador, vendedor, nascimento, rg, cpf, telefone, email, cep:local.cep, rua:local.rua, endereco, bairro:local.bairro, cidade:local.cidade, estado:local.estado,
+      valorVenda, valorFipe, valorFinanciamento, valorEntrada, tipoVenda, instituicao, dataRegistro, observacoes
     }
 
     //Os dados informados mesmo em letra minuscula tem a fonte alterada para maiuscula antes de serem enviados para o bd
@@ -174,9 +186,8 @@ const ComVenda = () => {
 
       if (response.ok) {
         console.log('Dados enviados com sucesso');
-
         window.alert('Comunicação de venda registrada!');
-        window.location.reload();
+        handleContrato(placa)
         // Limpar o formulário se necessário
       } else {
         console.error('Erro ao enviar dados');
@@ -211,7 +222,7 @@ const ComVenda = () => {
       <div>
         <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/money.png" alt="money" /> Comunicação de Venda</h1>
         <div className={styles.container}>
-          <div class="container-sm">
+          <div class="container-md">
             <h2 className={styles.title} >DADOS DA OPERAÇÃO</h2>
             <div className={styles.formulario}>
               <form className={styles.cadastro} onSubmit={handleSubmit} >
@@ -254,10 +265,53 @@ const ComVenda = () => {
                     ))}
                   </select>
                 </label>
-
                 <label>
                   <p>Nome Completo do Comprador:</p>
                   <input className={styles.obs} type='text' name='comprador' value={comprador} onChange={(e) => setComprador(e.target.value)} required></input>
+                </label>
+                <label>
+                  <p>Nascimento:</p>
+                  <input type='text' name='nascimento' value={nascimento} onChange={(e) => setNascimento(e.target.value)} placeholder='mm/dd/YY' required></input>
+                </label>
+                <label>
+                  <p>RG:</p>
+                  <input type='text' name='rg' value={rg} onChange={(e) => setRg(e.target.value)} required></input>
+                </label>
+                <label>
+                  <p>CPF:</p>
+                  <input type='text' name='cpf' value={cpf} onChange={(e) => setCpf(e.target.value)} required placeholder='XXX.XXX.XXX-XX' ></input>
+                </label>
+                <label>
+                  <p>Telefone:</p>
+                  <input type='text' name='telefone' value={telefone} onChange={(e) => setTelefone(e.target.value)} required placeholder='(00) 9 9999-9999' ></input>
+                </label>
+                <label>
+                  <p>E-mail:</p>
+                  <input className={styles.email} type='text' name='email' value={email} onChange={(e) => setEmail(e.target.value)} required></input>
+                </label>
+                <label>
+                  <p>CEP:</p>
+                  <input type='text' name='cep' value={local.cep} onChange={(e) => setCep(e.target.value)} required placeholder='XXXXXXXX' onBlur={handleBlur}></input>
+                </label>
+                <label>
+                  <p>Logradouro:</p>
+                  <input className={styles.email} type='text' name='rua' value={local.rua || ''} onChange={(e)=> setLocal({...local, rua:e.target.value})} required ></input>
+                </label>
+                <label>
+                  <p>Complemento:</p>
+                  <input className={styles.obs} type='text' name='endereco' value={endereco} onChange={(e) => setEndereco(e.target.value)} required  ></input>
+                </label>
+                <label>
+                  <p>Bairro:</p>
+                  <input className={styles.email} type='text' name='bairro' value={local.bairro} onChange={(e)=> setLocal({...local, bairro:e.target.value})} required  ></input>
+                </label>
+                <label>
+                  <p>Cidade:</p>
+                  <input type='text' name='cidade' value={local.cidade} onChange={(e)=> setLocal({...local, cidade:e.target.value})} required ></input>
+                </label>
+                <label>
+                  <p>UF:</p>
+                  <input className={styles.box} type='text' name='estado' value={local.estado} onChange={(e)=> setLocal({...local, estado:e.target.value})} required ></input>
                 </label>
 
                 <div className={styles.chk_negociacao}>
@@ -273,7 +327,6 @@ const ComVenda = () => {
                         <option value="Bradesco">Bradesco</option>
                         <option value="Santander">Santander</option>
                         <option value="Pan">Pan</option>
-                        <option value="BV">BV</option>
                         <option value="BV">BV</option>
                         <option value="Itaú">Itaú</option>
                       </select>
@@ -291,7 +344,6 @@ const ComVenda = () => {
                         <option value="Bradesco">Bradesco</option>
                         <option value="Santander">Santander</option>
                         <option value="Pan">Pan</option>
-                        <option value="BV">BV</option>
                         <option value="BV">BV</option>
                         <option value="Itaú">Itaú</option>
 
@@ -316,31 +368,31 @@ const ComVenda = () => {
                 <br />
                 <label>
                   <p>Valor Tabela FIP R$:</p>
-                  <input className={styles.tag} type='text' value={valorFipe} onChange={(e) => setValorFipe(e.target.value)} ></input>
+                  <input className={styles.valor} type='text' value={valorFipe} onChange={(e) => setValorFipe(e.target.value)} ></input>
                 </label>
                 <label>
                   <p>Valor de Venda R$:</p>
-                  <input className={styles.tag} name='venda' type='number' value={valorVenda} onChange={(e) => setValorVenda(e.target.value)} required></input>
+                  <input className={styles.valor} name='venda' type='number' value={valorVenda} onChange={(e) => setValorVenda(e.target.value)} required></input>
                 </label>
 
                 {infoConditions && (
                   <>
                     <label>
                       <p>Valor de Entrada R$:</p>
-                      <input className={styles.tag} name='entrada' type='number' value={valorEntrada} onBlur={handleBlur} onChange={(e) => setValorEntrada(e.target.value)} ></input>
+                      <input className={styles.valor} name='entrada' type='number' value={valorEntrada} onBlur={handleBlur} onChange={(e) => setValorEntrada(e.target.value)} />
                     </label>
                     <label>
                       <p>Valor Financiado R$:</p>
-                      <input className={styles.tag} name='valorFinanciado' type='number' value={valorFinanciamento} onChange={(e) => setValorFinanciamento(e.target.value)} readOnly></input>
+                      <input className={styles.valor} name='valorFinanciado' type='number' value={valorFinanciamento} onChange={(e) => setValorFinanciamento(e.target.value)} readOnly />
                     </label>
                   </>
                 )}
 
                 <label>
-                  <p>Observação:</p>
-                  <input type='text' className={styles.obs} name='observacoes' value={observacoes} onChange={(e) => setObservacoes(e.target.value)}></input>
+                  <p>Data do Contrato:</p>
+                  <input type='text' className={styles.obs} name='observacoes' value={observacoes} onChange={(e) => setObservacoes(e.target.value)} placeholder='Cidade, dia de mes de XXXX'/>
                 </label>
-                <button type='submit' className={styles.btn_enviar}>Enviar</button>
+                <button type='submit' className={styles.btn_enviar} >Enviar</button>
               </form>
             </div>
           </div>

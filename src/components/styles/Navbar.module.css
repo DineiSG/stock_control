@@ -77,12 +77,13 @@ color: #1cda02;
     z-index: 999; 
     list-style:circle ;
     text-align:left;
+    
   }
   
   /*hover dos titulos do menu*/
   .navItem:hover .dropdownMenu {
     display: block;
-    background-color:rgb(255, 249, 249) ;
+    background-color:rgb(255, 255, 255) ;
     color:#333333;
     border: 1px solid;
     

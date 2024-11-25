@@ -22,7 +22,27 @@
     left: 8%;
     height: 500px;
     width: 1285px;
-    
     background-color: #ffffff;
     padding: 25px
+}
+.btn_buscar {
+    height: 40px;
+    width: 100px;
+    color: #FFF;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 2px;
+    background-color: rgba(89, 3, 110, 0.871);
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+.btn_buscar:focus {
+    outline: 1px solid blue;
+    background-color: rgb(199, 48, 236);
+}
+
+.btn_buscar:hover {
+    background-color: #669231;
+    color: rgba(255, 255, 255, 0.871);
 }

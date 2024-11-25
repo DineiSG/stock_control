@@ -160,7 +160,7 @@ const RelEstoqueLoja = () => {
         {filtroLoja ? (
           <>
             <div ref={tabelaRef}>
-              <p className={styles.txt_title}> VEÍCULOS DISPONÍVEIS </p>
+              <p className={styles.txt_title}> RELATORIO DE ESTOQUE<br/> {query} </p>
 
               <table
                 className="table table-secondary table-striped-columns"

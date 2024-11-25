@@ -122,14 +122,9 @@
 
 /*Removendo a caixa de pesquisa do impressao*/
 @media print {
-    .cont * {
-        position: absolute;
-        left: -9999px;
-        margin-top: 0;
-        display: inline
-    }
 
-    .container * {
+
+    .container * { 
         position: absolute;
         left: -9999px;
         margin-top: 0;

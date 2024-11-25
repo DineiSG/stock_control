@@ -58,7 +58,7 @@ const CadVeic = () => {
         );
         if (response.ok) {
           const dataVeiculo = await response.json();
-          console.log("Dados do veiculo: ",dataVeiculo)
+          console.log("Dados do veiculo: ", dataVeiculo)
           setVeiculo({
             ...veiculo,
             Fabricante: dataVeiculo.Fabricante,
@@ -99,7 +99,6 @@ const CadVeic = () => {
         console.error("Erro na requisição", error);
       } finally {
         clearTimeout(timeoutId);
-
         setLoading(false); // Desativa o spinner
       }
     }
@@ -255,11 +254,11 @@ const CadVeic = () => {
       try {
         const response = await fetch(`http://localhost:8090/api/v1/lojas`);
         const data = await response.json();
-        
+
 
         //console.log('Dados da API: ', data)
         if (Array.isArray(data)) {
-          const lojasOrdenadas = data.sort((a,b)=> a.descricao.localeCompare(b.descricao))
+          const lojasOrdenadas = data.sort((a, b) => a.descricao.localeCompare(b.descricao))
           setLojas(lojasOrdenadas);
         } else {
           console.error("A resposta da API nao e um array", data);
@@ -299,144 +298,59 @@ const CadVeic = () => {
             <form className={styles.cadastro} onSubmit={handleSubmit}>
               <label>
                 <p>Loja:</p>
-                <select
-                  type="text"
-                  name="loja"
-                  value={idUnidade}
-                  onChange={handleUnidadeChange}
-                  required>
-                  <option value="">SELECIONE UMA LOJA</option>
+                <select type="text" name="loja" value={idUnidade} onChange={handleUnidadeChange} required> <option value="">SELECIONE UMA LOJA</option>
                   {lojas.map((loja) => (
-                    <option
-                      key={loja.id}
-                      value={loja.id}
-                      data-descricao={loja.descricao}>
-                      {loja.descricao}
-                    </option>
-                  ))}
+                    <option key={loja.id} value={loja.id} data-descricao={loja.descricao}>
+                      {loja.descricao} </option>))}
                 </select>
               </label>
               <label>
-                <input
-                  className={styles.tag}
-                  type="hidden"
-                  value={idUnidade}></input>
+                <input className={styles.tag} type="hidden" value={idUnidade}></input>
               </label>
               <label>
                 <p>Placa:</p>
-                <input
-                  className={styles.placa}
-                  type="text"
-                  name="placa"
-                  value={placa}
-                  onChange={(e) => setPlaca(e.target.value)}
-                  onBlur={handleBlur}
-                  required></input>
+                <input className={styles.placa} type="text" name="placa" value={placa} onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur} required></input>
               </label>
               {loading && (
-                <div
-                  class="spinner-border spinner-border-sm"
-                  role="status"></div>
+                <div class="spinner-border spinner-border-sm" role="status"></div>
               )}
               <label>
                 <p>Marca:</p>
-                <input
-                  type="text"
-                  name="marca"
-                  value={veiculo.Fabricante}
-                  onChange={(e) =>
-                    setVeiculo({ ...veiculo, Fabricante: e.target.value })
-                  }
-                  required></input>
+                <input type="text" name="marca" value={veiculo.Fabricante} onChange={(e) => setVeiculo({ ...veiculo, Fabricante: e.target.value })} required></input>
               </label>
               <label>
                 <p>Modelo:</p>
-                <input
-                  type="text"
-                  name="modelo"
-                  value={veiculo.MarcaModelo}
-                  onChange={(e) =>
-                    setVeiculo({ ...veiculo, MarcaModelo: e.target.value })
-                  }
-                  required></input>
+                <input type="text" name="modelo" value={veiculo.MarcaModelo} onChange={(e) => setVeiculo({ ...veiculo, MarcaModelo: e.target.value })} required></input>
               </label>
               <label>
                 <p>Cor:</p>
-                <input
-                  className={styles.cor}
-                  type="text"
-                  name="cor"
-                  value={veiculo.CorVeiculo}
-                  readOnly
-                  required></input>
+                <input className={styles.cor} type="text" name="cor" value={veiculo.CorVeiculo} readOnly required></input>
               </label>
               <label>
                 <p>Ano Fab.:</p>
-                <input
-                  className={styles.ano}
-                  type="text"
-                  name="ano"
-                  value={veiculo.AnoFabricacao}
-                  readOnly
-                  required></input>
+                <input className={styles.ano} type="text" name="ano" value={veiculo.AnoFabricacao} readOnly required></input>
               </label>
               <label>
                 <p>Ano Mod:</p>
-                <input
-                  className={styles.ano}
-                  type="text"
-                  name="ano_modelo"
-                  value={veiculo.AnoModelo}
-                  readOnly
-                  required></input>
+                <input className={styles.ano} type="text" name="ano_modelo" value={veiculo.AnoModelo} readOnly required></input>
               </label>
               <label>
                 <p>Renavan:</p>
-                <input
-                  type="text"
-                  name="renavan"
-                  value={veiculo.renavam}
-                  readOnly
-                  required></input>
+                <input type="text" name="renavan" value={veiculo.renavam} readOnly required></input>
               </label>
               <label>
                 <p>Valor FIPE:</p>
-                <input
-                  type="text"
-                  name="fipe"
-                  value={fipe.fipe}
-                  readOnly
-                  disabled
-                  required></input>
+                <input type="text" name="fipe" value={fipe.fipe} readOnly disabled required></input>
               </label>
               <label>
                 <p>Tag:</p>
-                <input
-                  className={styles.tag}
-                  type="text"
-                  name="tag"
-                  maxLength={6}
-                  value={tag}
-                  onChange={(e) => setTag(e.target.value)}
-                  required></input>
+                <input className={styles.tag} type="text" name="tag" maxLength={6} value={tag} onChange={(e) => setTag(e.target.value)} required></input>
               </label>
 
               <label>
-                <input
-                  className={styles.status}
-                  type="hidden"
-                  name="status"
-                  value={veiculo_status}
-                  onChange={(e) => setVeiculoStatus(e.target.value)}
-                  required
-                  maxLength={1}></input>
+                <input className={styles.status} type="hidden" name="status" value={veiculo_status} onChange={(e) => setVeiculoStatus(e.target.value)} required maxLength={1}></input>
               </label>
-              <button
-                className={styles.cadastrar}
-                onClick={() => setLoading}
-                disabled={loading}>
-                {loading ? "Buscando..." : "Cadastrar"}
-              </button>
+              <button className={styles.cadastrar} onClick={() => setLoading} disabled={loading}> {loading ? "Buscando..." : "Cadastrar"} </button>
             </form>
           </div>
         </div>

@@ -1,138 +1,121 @@
 import React, { useState, useEffect } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, } from "recharts";
 import styles from '../styles/Data.module.css'
 
 const AnoMod = () => {
-    const [veiculo, setVeiculo] = useState([])
-    const [dadosGraficos, setDadosGrafico] = useState([])
-  
-  
-    //Função que conta as unidades e retorna a quantidade de veiculos que ela possui
-    const quantAnoModelo = (veiculos) => {
-      const contagemAnoModelo = {};
-  
-      veiculos.forEach(veiculo => {
-        const ano_modelo = veiculo.ano_modelo
-  
-        if (contagemAnoModelo[ano_modelo]) {
-            contagemAnoModelo[ano_modelo]++
-        } else {
-            contagemAnoModelo[ano_modelo] = 1
-        }
-      });
-  
-      //Função que prepara os dados para o grafico
-      const dadosParaGrafico = Object.keys(contagemAnoModelo).map(anoModelo => ({
-        name: anoModelo,
-        value: contagemAnoModelo[anoModelo]
-      }))
-  
-      return dadosParaGrafico
-  
-    }
-  
-    //Função que busca os dados na tabela veículos
-    useEffect(() => {
-      const fetchVeiculo = async () => {
-        try {
-          const response = await fetch(`http://192.168.1.114:8099/api/v1/veiculos`)
-          const data = await response.json()
-  
-          if (Array.isArray(data)) {
-  
-            const dados = quantAnoModelo(data)
-            setDadosGrafico(dados)
-            setVeiculo(data)
-            
-          } else {
-            console.error('A resposta da API nao e um array', data)
-          }
-        } catch (error) {
-          console.error('Erro ao buscar lojas: ', error)
-        }
+  const [veiculo, setVeiculo] = useState([]);
+  const [dadosGrafico, setDadosGrafico] = useState([]);
+
+  const contarAnoModelo = (veiculo) => {
+    const contagemAnoModelo = {};
+
+    veiculo.forEach((veiculo) => {
+      const anoModelo = veiculo.ano_modelo;
+
+      if (contagemAnoModelo[anoModelo]) {
+        contagemAnoModelo[anoModelo]++;
+      } else {
+        contagemAnoModelo[anoModelo] = 1;
       }
-      fetchVeiculo()
-    }, [])
-  
-  
-    //Função que disponibiliza as cores para cada fatia do gráfico
-    const COLORS = ['#0088AA', '#00C480', '#f14b09', '#FF8150', '#7A0890', '#fba500'];
-  
-  
-    //Função que configura os rótulos do gráfico
-    const renderRotulos = ({
-      cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-      const RADIAN = Math.PI / 180
-      const radius = outerRadius + 100
-      const x = cx + radius * Math.cos(-midAngle * RADIAN)
-      const y = cy + radius * Math.sin(-midAngle * RADIAN)
-      const xLine = cx + (outerRadius + 20) * Math.cos(-midAngle * RADIAN)
-      const yLine = cy + (outerRadius + 20) * Math.sin(-midAngle * RADIAN)
-  
+    });
+
+    //Função que prepara os dados para o grafico
+    const dadosParaGrafico = Object.keys(contagemAnoModelo).map((ano_modelo) => ({
+      name: ano_modelo,
+      QUANTIDADE: contagemAnoModelo[ano_modelo],
+    }));
+
+    return dadosParaGrafico;
+  };
+
+  //Função que busca os dados na tabela veículos
+  useEffect(() => {
+    const fetchVeiculo = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8090/api/v1/veiculos`
+        );
+        const data = await response.json();
+        const filteredResults = data.filter(veiculo => veiculo.ano_modelo !== null);
+        //Filtrando os dados obtidos. As coluna unidade e valor_meio_acesso devem conter dados
+
+        if (filteredResults.length > 0) {
+          const dados = contarAnoModelo(filteredResults);
+          setDadosGrafico(dados);
+          setVeiculo(filteredResults);
+          console.log(filteredResults);
+        } else {
+          console.error("A resposta da API nao e um array", data);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar lojas: ", error);
+      }
+    };
+    fetchVeiculo();
+  }, []);
+
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
       return (
-        <g>
-          {/*Desenha a linha (seta)*/}
-          <line
-            x1={xLine}
-            y1={yLine}
-            x2={x}
-            y2={y}
-            stroke='black'
-            strokeWidth={1}
-          />
-          <text
-            x={x}
-            y={y}
-            fill='black'
-            textAnchor={x > cx ? 'start' : 'end'}
-            dominantBaseline="central">
-            {dadosGraficos[index] && dadosGraficos[index].unidade !== '' && dadosGraficos[index].name}
-          </text>
-  
-          <text
-            x={x}
-            y={y + 25}
-            fill="black"
-            textAnchor={x > cx ? 'start' : 'end'}
-            dominantBaseline="central">
-            {` (${(percent * 100).toFixed(0)}%)`}
-          </text>
-        </g>
-      )
-    }
-  
-    return (
-      <div >
-        <div className={styles.pi}>
-          <h2 className={styles.title}> QUANTIDADE DE VEICULOS DE ACORDO COM O ANO DO MODELO (EM %)</h2>
-          <p className={styles.p_txt}>Aqui é possivel visualizar a quantidade de veículos (em %) com relaçao ao ano modelo:</p>
-          {veiculo.length > 0 ? (
-            <div style={{ width: '100%', height: 800 }}>
-              <ResponsiveContainer width="100%" height="100%" >
-                <PieChart width={400} height={400}>
-                  <Pie
-                    data={dadosGraficos}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={renderRotulos}
-                    outerRadius={200}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {dadosGraficos.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          ) : (
-            <p>Carregando...</p> // Exibe uma mensagem de carregamento até que os dados cheguem
-          )}
+        <div
+          style={{
+            backgroundColor: "white",
+            border: "1px solid #ccc",
+            padding: "10px",
+            width: "150px",
+            height: "80px",
+            boxShadow: "0 0 10px rgba(0, 0, 0, 0.2 )",
+          }}>
+          <p style={{ fontWeight: "bold", color: "#8884EE" }}>{label}</p>
+          <p>{`${payload[0].name}:${payload[0].value}`} </p>
         </div>
-      </div>
-    )
+      );
+    }
+  };
+
+  return (
+    <div className={styles.container}>
+      <h2 className={styles.title}> QUANTIDADE DE VEÍCULOS DE ACORDO COM ANO MODELO</h2>
+      <p className={styles.p_txt}>
+        Abaixo pode-se visualizar as quantidades de veiculo por ano modelo que fazem
+        parte do estoque das lojas que se encontram nas dependencias do Auto
+        Shopping:
+      </p>
+      {dadosGrafico.length > 0 ? (
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart
+            width={500}
+            height={500}
+            data={dadosGrafico}
+            margin={{
+              top: 5,
+              right: 1,
+              left: 15,
+              bottom: 60,
+            }}
+            barSize={30}>
+            <XAxis
+              dataKey="name"
+              scale="point"
+              padding={{ left: 15, right: 15 }}
+              fontSize={"16"}
+            />
+            <YAxis />
+            <Tooltip content={<CustomTooltip />} />
+            <Legend />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Bar
+              dataKey="QUANTIDADE"
+              fill="#8884d8"
+              background={{ fill: "#eee" }}
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      ) : (
+        <p>Carregando dados...</p>
+      )}
+    </div>
+  );
 }
 
 export default AnoMod

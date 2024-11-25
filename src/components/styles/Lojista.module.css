@@ -59,12 +59,16 @@ option {
 .cor {
     width: 100px;
 }
+.valor{
+    width: 100px;
+    text-align: right;
+}
 
 .container {
     box-shadow: 2px 2px 3px 3px rgba(0, 0, 0, 0.2);
     background-color: rgb(255, 255, 255);
     margin: 25px 5%;
-    height: 1000px;
+    height: 1400px;
 }
 
 .status {

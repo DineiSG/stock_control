@@ -88,7 +88,7 @@ const SearchLojas = () => {
     return (
         <div >
             <div className={styles.container}>
-                <div class="container-lg">
+                <div class="container-md">
                     <h2 className={styles.title}>INFORME O NOME DA LOJA PARA BUSCAR INFORMAÇÕES:</h2>
                     <form className={styles.pesquisa} onSubmit={handleSearch}>
                         <label>
@@ -113,7 +113,7 @@ const SearchLojas = () => {
                                     <th>Box: {edit ? <input className={styles.edit_data} type='number' name="box" value={editableFields.box} onChange={handleInputChange} /> : result.box}</th>
                                     <th>Telefone: {edit ? <input className={styles.edit_data} type='text' name="telefone" value={editableFields.telefone} onChange={handleInputChange} /> : result.telefone}</th>
                                     <th>Email: {edit ? <input className={styles.edit_data} type='text' name="email" value={editableFields.email} onChange={handleInputChange} /> : result.email}</th>
-                                    <th>Qtd Vagas: {result.vagas}</th>
+                                    <th>Qtd Vagas: {edit ? <input classname={styles.edita_data} type='text' name="vagas" value={editableFields.vagas} onChange={handleInputChange}/>: result.vagas}</th>
                                 </tr>
                                 ))}
                             </thead>

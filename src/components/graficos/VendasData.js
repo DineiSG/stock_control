@@ -48,10 +48,14 @@ const VendasData = () => {
 
     const fetchBaixas = async () => {
 
-        if (!dataInicio || !dataFim) {
-            console.warn('Datas de inicio e fim nao foram definidas.')
+        if (!dataInicio || !dataFim || !query) {
+            console.warn('Datas ou motivo nao foram definidos.')
             return
         }
+
+        //Formatando as datas para o formato aceito pela API(YYY-MM-DD)
+        const dataInicioFormatada = new Date(dataInicio).toISOString().split('T')[0]
+        const dataFimFormatada = new Date(dataFim).toISOString().split('T')[0]
 
         const upperCaseQuery = query.toUpperCase();
         const motivosValidos = ['VENDA', 'DEVOLUÇAO', 'TRANSFERENCIA', 'CORRECAO'];
@@ -63,8 +67,9 @@ const VendasData = () => {
 
         try {
 
-            const response = await fetch(`http://192.168.1.114:8099/api/v1/baixas?motivo=${upperCaseQuery}`)
-            const data = await response.json()
+            const url = `http://localhost:8090/api/v1/baixas?motivo=${upperCaseQuery}`;
+            const response=await fetch(url)
+            
 
             if (!response.ok) {
                 console.error('Erro na resposta do servidor:', response.statusText);
@@ -72,7 +77,13 @@ const VendasData = () => {
                 return;
             }
 
-            const filteredResults = data.filter(baixa => baixa.motivo.toUpperCase() === upperCaseQuery && baixa.motivo.trim() !== '')
+            const data = await response.json()
+
+            const filteredResults = data.filter(baixa => {const dataBaixa = new Date(baixa.data).toISOString().split('T')[0]
+                return(
+                    baixa.motivo.toUpperCase()===upperCaseQuery && dataBaixa>=dataInicioFormatada && dataBaixa<=dataFimFormatada
+                )
+            })
 
             if (filteredResults.length > 0) {
                 setResults(filteredResults)
@@ -140,7 +151,7 @@ const VendasData = () => {
                         onChange={e => setDataFim(e.target.value)}
                     />
                 </label>
-                <button onClick={fetchBaixas}>Buscar</button>
+                <button className={styles.btn_buscar} onClick={fetchBaixas}>Buscar</button>
             </div>
             {dadosGrafico.length > 0 ? (
                 <ResponsiveContainer width="100%" height="100%">
