@@ -162,7 +162,7 @@ const CadVeicManual = () => {
         if (tag !== '') {
             console.log('Nº da tag para leitura: ' + hexToWiegand(tag))
         }
-    }
+    } 
 
     //Buscando lojas para preencher o select do front end
     useEffect(() => {

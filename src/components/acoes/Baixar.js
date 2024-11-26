@@ -37,20 +37,6 @@ const Baixar = () => {
       const filteredResults = data.filter(veiculo => veiculo.placa.toUpperCase() === upperCaseQuery && veiculo.unidade !== null);
 
       if (filteredResults.length > 0) {
-        const id_veiculo_acessante = filteredResults[0].id
-        const deleteAcessos = await fetch(`http://localhost:8090/api/v1/acessos/historico/${id_veiculo_acessante}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        if (deleteAcessos.ok) {
-          console.log("Acessos do veículo excluidos do BD");
-
-        } else {
-          window.alert("Ocorreu um erro ao buscar os dados do veículo. Favor informar ao administrador.")
-          window.location.reload()
-        }
         setResults(filteredResults)
         setError('')
         setEditableFields(filteredResults[0])
@@ -134,20 +120,23 @@ const Baixar = () => {
       });
 
       if (baixaResponse.ok) {
-        const veiculo = baixaData.id
-        const deleteVeiculo = await fetch(`http://localhost:8090/api/v1/veiculos/${veiculo}`, {
-          method: 'DELETE',
+        const veiculo = baixaData.placa
+        const updateVeiculo = await fetch(`http://localhost:8090/api/v1/veiculos/placa/${veiculo}`, {
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
+          body: JSON.stringify(updatedFields)
         });
-        console.log("Veículo excluido do BD");
-        if (deleteVeiculo.ok) {
+
+        if (updateVeiculo.ok) {
+          console.log("Veículo atualizado no BD");
           window.alert("Baixa realizada com sucesso.")
+
           window.location.reload()
         }
         else {
-          console.log('Erro ao buscar dados da loja.');
+          console.log('Erro ao atualizar os dados do veículo.');
         }
       } else {
         console.log("Ocorreu um erro ao realizar a baixa.");

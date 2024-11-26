@@ -23,16 +23,22 @@ const Contrato = () => {
   }, [placaInicial])
 
 
+  function converterParaMaiusculo(texto) {
+    return texto.toUpperCase()
+  }
 
+  let texto = placaInicial
+  
   const buscarDados = async (e) => {
 
     if (e.key === "Enter") {
       e.preventDefault();
 
+      let textoMaiusculo = converterParaMaiusculo(texto)
 
       try {
 
-        const responseFinanceiro = await fetch(`http://localhost:8090/api/v1/vendas/placa/${placa}`)
+        const responseFinanceiro = await fetch(`http://localhost:8090/api/v1/vendas/placa/${textoMaiusculo}`)
 
         if (responseFinanceiro.ok) {
           const data = await responseFinanceiro.json();
@@ -59,7 +65,7 @@ const Contrato = () => {
             bairro: data.bairro,
             estado: data.estado,
             registro: data.dataRegistro,
-            date:data.observacoes
+            date: data.observacoes
 
           })
 
@@ -113,112 +119,112 @@ const Contrato = () => {
   };
 
   return (
-    
-      <div class='container-sm' id='printable'>
-        <div className={styles.superior}>
-          <p className={styles.num_contrato}>CONTRATO:</p>
-          <input className={styles.placa} tyle='text' value={placa}></input>
-          <p className={styles.num_contrato}>{formatTimestamp(dadosVenda.registro)}</p>
-          <img src="/imagens/aspa.png" width={150} height={80} alt='Auto Shopping' title='Auto Shopping' className={styles.logo} />
-        </div>
-        <div className={styles.qr} >
-          <img src="/imagens/qrcodepasseio.png" width={80} height={80} alt='Passeio das Aguas' title='Passeio das Aguas' />
-        </div>
-        <p className={styles.title}> CONTRATO DE VENDA</p>
-        <p className={styles.descricao}>PARA PARTICIPAÇÃO NA PROMOÇÂO "AMOR QUE APROXIMA" DO PASSEIO DAS ÁGUAS SHOPPING.</p>
-        <div className={styles.body} >
-          <div className={styles.containers}>
-            <div className={styles.compra}>
-              <span ref={spanRef} contentEditable suppressContentEditableWarning={true}
-                style={{ color: 'black', padding: "2px", display: "inline-block", minWidth: "100px", fontSize: '12px' }} >{`COMPRADOR: ${dadosVenda.comprador},
+
+    <div class='container-sm' id='printable'>
+      <div className={styles.superior}>
+        <p className={styles.num_contrato}>CONTRATO:</p>
+        <input className={styles.placa} tyle='text' value={placa}></input>
+        <p className={styles.num_contrato}>{formatTimestamp(dadosVenda.registro)}</p>
+        <img src="/imagens/aspa.png" width={150} height={80} alt='Auto Shopping' title='Auto Shopping' className={styles.logo} />
+      </div>
+      <div className={styles.qr} >
+        <img src="/imagens/qrcodepasseio.png" width={80} height={80} alt='Passeio das Aguas' title='Passeio das Aguas' />
+      </div>
+      <p className={styles.title}> CONTRATO DE VENDA</p>
+      <p className={styles.descricao}>PARA PARTICIPAÇÃO NA PROMOÇÂO "AMOR QUE APROXIMA" DO PASSEIO DAS ÁGUAS SHOPPING.</p>
+      <div className={styles.body} >
+        <div className={styles.containers}>
+          <div className={styles.compra}>
+            <span ref={spanRef} contentEditable suppressContentEditableWarning={true}
+              style={{ color: 'black', padding: "2px", display: "inline-block", minWidth: "100px", fontSize: '12px' }} >{`COMPRADOR: ${dadosVenda.comprador},
                 brasileiro(a), nascido(a) em ${dadosVenda.nascimento}, residente e domicialiado(a) na ${dadosVenda.rua}, ${dadosVenda.endereco}, CEP: 
                 ${dadosVenda.cep}, bairro ${dadosVenda.bairro} na cidade de ${dadosVenda.cidade}, portador(a) do CPF. ${dadosVenda.cpf} e do RG ${dadosVenda.rg}, 
                 TELEFONE ${dadosVenda.telefone}, email ${dadosVenda.email}.`}  </span>
+          </div>
+          <div className={styles.vendedor}>
+            <span value={setTextoVenda} style={{ color: 'black', padding: "2px", display: "inline-block", minWidth: "100px", fontSize: '12px' }} > {textoVenda} </span>
+            <br></br>
+            <div className={styles.objeto} >
+              <table className={styles.veiculo}>
+                <tr>
+                  <th className={styles.tb_title} >DADOS DO VEÍCULO</th>
+                </tr>
+                <tr className={styles.info_venda}>
+                  <td><textarea
+                    className={styles.dados_veiculo}
+                    name='placa'
+                    type='text'
+                    value={inputValue || placa}
+                    onChange={(e) => {
+                      // Permite editar o input manualmente e atualizar o valor da placa
+                      setInputValue(e.target.value);
+                      setPlaca(e.target.value.split(",")[0].replace("Placa: ", "").trim().toUpperCase()); // Extrai a placa
+                    }}
+                    onKeyDown={buscarDados}
+                    placeholder='Digite a placa e pressione Enter' /></td>
+
+                </tr>
+              </table>
             </div>
-            <div className={styles.vendedor}>
-              <span value={setTextoVenda} style={{ color: 'black', padding: "2px", display: "inline-block", minWidth: "100px", fontSize: '12px' }} > {textoVenda} </span>
-              <br></br>
-              <div className={styles.objeto} >
-                <table className={styles.veiculo}>
+            <br>
+            </br>
+            <div>
+              <p className={styles.fin_data}>DADOS FINANCEIROS</p>
+              <table className={styles.tabela} >
+                <thead>
+                  <tr className={styles.dados_venda}  >
+                    <th className={styles.info_venda}>FORMA DE PAGAMENTO</th>
+                    <th className={styles.info_venda}>FINANCEIRA, BANCO OU CONSORCIO</th>
+                    <th className={styles.info_venda}>VALOR DE VENDA </th>
+                    <th className={styles.info_venda}>VALOR DE ENTRADA </th>
+                    <th className={styles.info_venda}>VALOR FINANCIADO </th>
+                    <th className={styles.info_venda}>TOTAL </th>
+                  </tr>
+                </thead>
+                <tbody>
                   <tr>
-                    <th className={styles.tb_title} >DADOS DO VEÍCULO</th>
+                    <td className={styles.info}><input type='text' className={styles.veic_data} name='negociacao' value={dadosVenda.tipoVenda} readOnly /></td>
+                    <td className={styles.info}><input type='text' className={styles.veic_data} name='instituicao' value={dadosVenda.instituicao} readOnly /></td>
+                    <td className={styles.info}><input type='text' className={styles.veic_data} name='venda' value={`R$ ${dadosVenda.valorVenda}`} readOnly /></td>
+                    <td className={styles.info}><input type='text' className={styles.veic_data} name='entrada' value={`R$ ${dadosVenda.valorEntrada}`} readOnly /></td>
+                    <td className={styles.info}><input type='text' className={styles.veic_data} name='financiamento' value={`R$ ${dadosVenda.valorFinanciado}.00`} readOnly /></td>
+                    <td className={styles.info}><input type='text' className={styles.veic_data} name='total' value={`R$ ${dadosVenda.valorVenda}`} readOnly /></td>
                   </tr>
-                  <tr className={styles.info_venda}>
-                    <td><textarea
-                      className={styles.dados_veiculo}
-                      name='placa'
-                      type='text'
-                      value={inputValue || placa}
-                      onChange={(e) => {
-                        // Permite editar o input manualmente e atualizar o valor da placa
-                        setInputValue(e.target.value);
-                        setPlaca(e.target.value.split(",")[0].replace("Placa: ", "").trim().toUpperCase()); // Extrai a placa
-                      }}
-                      onKeyDown={buscarDados}
-                      placeholder='Digite a placa e pressione Enter' /></td>
+                </tbody>
+              </table>
+            </div>
 
-                  </tr>
-                </table>
-              </div>
-              <br>
-              </br>
-              <div>
-                <p className={styles.fin_data}>DADOS FINANCEIROS</p>
-                <table className={styles.tabela} >
-                  <thead>
-                    <tr className={styles.dados_venda}  >
-                      <th className={styles.info_venda}>FORMA DE PAGAMENTO</th>
-                      <th className={styles.info_venda}>FINANCEIRA, BANCO OU CONSORCIO</th>
-                      <th className={styles.info_venda}>VALOR DE VENDA </th>
-                      <th className={styles.info_venda}>VALOR DE ENTRADA </th>
-                      <th className={styles.info_venda}>VALOR FINANCIADO </th>
-                      <th className={styles.info_venda}>TOTAL </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className={styles.info}><input type='text' className={styles.veic_data} name='negociacao' value={dadosVenda.tipoVenda} readOnly /></td>
-                      <td className={styles.info}><input type='text' className={styles.veic_data} name='instituicao' value={dadosVenda.instituicao} readOnly /></td>
-                      <td className={styles.info}><input type='text' className={styles.veic_data} name='venda' value={`R$ ${dadosVenda.valorVenda}`} readOnly /></td>
-                      <td className={styles.info}><input type='text' className={styles.veic_data} name='entrada' value={`R$ ${dadosVenda.valorEntrada}`} readOnly /></td>
-                      <td className={styles.info}><input type='text' className={styles.veic_data} name='financiamento' value={`R$ ${dadosVenda.valorFinanciado}.00`} readOnly /></td>
-                      <td className={styles.info}><input type='text' className={styles.veic_data} name='total' value={`R$ ${dadosVenda.valorVenda}`} readOnly /></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          </div>
+          <div className={styles.termos}>
+            <h3 className={styles.condicoes}>Termo de Condições para Concessão de Prêmio</h3>
+            <br></br>
+            <h5 className={styles.claus_title}>1ª – Condição de Elegibilidade ao Prêmio:</h5>
+            <p className={styles.clausula} >Fica estabelecido que o cliente declarado como ganhador da premiação promovida pelo Passeio das Águas Shopping somente fará jus à aquisição do prêmio se o veículo adquirido no Auto Shopping estiver devidamente registrado em seu nome ate á entrega da premiação.</p>
+            <h5 className={styles.claus_title}>2ª – Comprovação da Titularidade:</h5>
+            <p className={styles.clausula} >Para comprovação da titularidade, o cliente deverá apresentar:
+              a) Cópia autenticada do Certificado de Registro de Veículo (CRV) ou documento equivalente que comprove a transferência de propriedade;
+              b) Documento de identificação pessoal válido e atualizado;
+              c) Demais documentos solicitados pelo Auto Shopping, conforme necessidade.</p>
+            <h5 className={styles.claus_title}>3ª – Prazo para Regularização:</h5>
+            <p className={styles.clausula} >Caso a regularização da titularidade do veículo não seja realizada no prazo estipulado, o cliente perderá automaticamente o direito ao prêmio, sem qualquer direito a compensação ou ressarcimento.</p>
+            <h5 className={styles.claus_title}>4ª – Disposições Gerais:</h5>
+            <p className={styles.clausula} >Este termo faz parte integrante das regras gerais da promoção e o participante, ao aderir à campanha, declara ciência e concordância com todos os seus termos e condições.</p>
+            <p className={styles.clausula} >As partes reconhecem e concordam que este documento é exclusivamente para fins informativos e não constitui um contrato vinculativo ou acordo legal entre as partes. Este documento não gera obrigações legais de qualquer natureza, nem constitui compromisso, direito ou obrigação juridicamente exigível por qualquer uma das partes."</p>
 
-            </div>
-            <div className={styles.termos}>
-              <h3 className={styles.condicoes}>Termo de Condições para Concessão de Prêmio</h3>
-              <br></br>
-              <h5 className={styles.claus_title}>1ª – Condição de Elegibilidade ao Prêmio:</h5>
-              <p className={styles.clausula} >Fica estabelecido que o cliente declarado como ganhador da premiação promovida pelo Passeio das Águas Shopping somente fará jus à aquisição do prêmio se o veículo adquirido no Auto Shopping estiver devidamente registrado em seu nome ate á entrega da premiação.</p>
-              <h5 className={styles.claus_title}>2ª – Comprovação da Titularidade:</h5>
-              <p className={styles.clausula} >Para comprovação da titularidade, o cliente deverá apresentar:
-                a) Cópia autenticada do Certificado de Registro de Veículo (CRV) ou documento equivalente que comprove a transferência de propriedade;
-                b) Documento de identificação pessoal válido e atualizado;
-                c) Demais documentos solicitados pelo Auto Shopping, conforme necessidade.</p>
-              <h5 className={styles.claus_title}>3ª – Prazo para Regularização:</h5>
-              <p className={styles.clausula} >Caso a regularização da titularidade do veículo não seja realizada no prazo estipulado, o cliente perderá automaticamente o direito ao prêmio, sem qualquer direito a compensação ou ressarcimento.</p>
-              <h5 className={styles.claus_title}>4ª – Disposições Gerais:</h5>
-              <p className={styles.clausula} >Este termo faz parte integrante das regras gerais da promoção e o participante, ao aderir à campanha, declara ciência e concordância com todos os seus termos e condições.</p>
-              <p className={styles.clausula} >As partes reconhecem e concordam que este documento é exclusivamente para fins informativos e não constitui um contrato vinculativo ou acordo legal entre as partes. Este documento não gera obrigações legais de qualquer natureza, nem constitui compromisso, direito ou obrigação juridicamente exigível por qualquer uma das partes."</p>
-              
-              <p className={styles.periodo}>Promoção válida de 14/11/2024 a 31/12/2024</p>
-            </div>
-            <p className={styles.data_contrato}><strong> {dadosVenda.date}</strong> </p>
-            <div className={styles.assinatura} >
-              <input className={styles.linha} ></input>
-              <p className={styles.assinar}>Assinatura Comprador</p>
-            </div>
-            <div className={styles.informacoes}>
-              <p><strong>Certificado de autorização SPA/MF 04037951/2024</strong></p>
-            </div>
+            <p className={styles.periodo}>Promoção válida de 14/11/2024 a 31/12/2024</p>
+          </div>
+          <p className={styles.data_contrato}><strong> {dadosVenda.date}</strong> </p>
+          <div className={styles.assinatura} >
+            <input className={styles.linha} ></input>
+            <p className={styles.assinar}>Assinatura Comprador</p>
+          </div>
+          <div className={styles.informacoes}>
+            <p><strong>Certificado de autorização SPA/MF 04037951/2024</strong></p>
           </div>
         </div>
       </div>
-    
+    </div>
+
   )
 
 }

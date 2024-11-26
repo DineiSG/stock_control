@@ -1,27 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from '../styles/SearchForm.module.css'
 
 
 const SearchVeiculos = () => {
+
+    const [lojas, setLojas] = useState([])
     const [edit, setEdit] = useState(false)
     const [busca, setBusca] = useState(false)
     const [query, setQuery] = useState()
     const [results, setResults] = useState([])
     const [error, setError] = useState('')
-    const [editableFields, setEditableFields] = useState({
-        id: '',
-        marca: '',
-        modelo: '',
-        cor: '',
-        ano: '',
-        ano_modelo:'',
-        renavan: '',
-        unidade: '',
-        tag: '',
-        fipe:'',
-        observacoes:'',
-        valor_meio_acesso:''
-    })
+    const [unidade, setUnidade] = useState('')
+    const [idUnidade, setIdUnidade] = useState('')
+    const [editableFields, setEditableFields] = useState({ id: '', marca: '', modelo: '', cor: '', ano: '', ano_modelo: '', renavan: '', unidade: '', tag: '', fipe: '', observacoes: '', valor_meio_acesso: '', idUnidade: '' })
 
 
 
@@ -75,11 +66,19 @@ const SearchVeiculos = () => {
         // Concatena as partes formatadas
         return leftPartFormatted + rightPartFormatted;
     }
-    
+
     /*Função que transforma os campos de uma tabela gerada apos a pesquisa em campos editaveis */
     const handleInputChange = (e) => {
+
+        const selectedOption = e.target.selectedOptions[0]
+        const id = Number(selectedOption.value)
+        const unidade = selectedOption.getAttribute('data-descricao')
+
+        setUnidade(unidade)
+        setIdUnidade(id)
+
         const { name, value } = e.target
-        
+
         setEditableFields({
             ...editableFields,
             [name]: value.toUpperCase()
@@ -102,15 +101,18 @@ const SearchVeiculos = () => {
 
     }
 
-    
+
     const tag = editableFields.tag;
     /*Função que salva os dados */
     const handleSave = async () => {
-        
+
         const convertedValue = hexToWiegand(tag);
         editableFields.valor_meio_acesso = convertedValue;
         console.log(convertedValue)
-        
+
+        editableFields.unidade = unidade;
+        editableFields.idUnidade = idUnidade;
+
         try {
             const response = await fetch(`http://localhost:8090/api/v1/veiculos/placa/${editableFields.placa}`, {
                 method: 'PUT',
@@ -131,9 +133,41 @@ const SearchVeiculos = () => {
             window.location.reload()
         } catch (error) {
             console.log(`Erro ao enviar dados para o servidor`, error)
-            
+
         }
     }
+
+    //Buscando lojas para preencher o select do front end
+    useEffect(() => {
+        const fetchLojas = async () => {
+            try {
+                const response = await fetch(`http://localhost:8090/api/v1/lojas`)
+                const data = await response.json()
+                if (Array.isArray(data)) {
+                    const lojasOrdenadas = data.sort((a, b) => a.descricao.localeCompare(b.descricao))
+                    setLojas(lojasOrdenadas);
+                } else {
+                    console.error('A resposta da API nao e um array', data)
+                }
+            } catch (error) {
+                console.error('Erro ao buscar lojas: ', error)
+            }
+        }
+        fetchLojas()
+    }, [])
+
+    //Separando os valores de descrição e id da loja 
+    /*  const handleUnidadeChange = (e) => {
+          const selectedOption = e.target.selectedOptions[0]
+          const id = Number(selectedOption.value)
+          const unidade = selectedOption.getAttribute('data-descricao')
+  
+          setUnidade(unidade)
+          setIdUnidade(id)
+  
+      }*/
+
+
 
 
     return (
@@ -157,21 +191,28 @@ const SearchVeiculos = () => {
                     <table className="table table-secondary table-striped-columns" border="1">
                         <thead>
                             {results.map(result => (
-                            <tr className={styles.head} key={result.id}>
-                                <th className={styles.table_title} >DADOS DO VEÍCULO</th>
-                                <th>Marca: {result.marca}</th>
-                                <th>Modelo: {result.modelo}</th>
-                                <th>Cor: {result.cor}</th>
-                                <th>Renavan: {result.renavan}</th>
-                                <th>Loja: {edit ? <input className={styles.edit_data} type='text' name="unidade" value={editableFields.unidade} onChange={handleInputChange} /> : result.unidade}</th>
-                                <th>Status: {edit ? <input className={styles.edit_data} type='text' name="veiculo_status" value={editableFields.veiculo_status} onChange={handleInputChange} /> : result.veiculo_status}</th>
-                                <th>Ano de Fabricação: {result.ano}</th>
-                                <th>Ano Modelo: {result.ano_modelo}</th>
-                                <th>Nº Tag: {edit ? <input className={styles.edit_data} type='text' name="tag" value={editableFields.tag} onChange={handleInputChange} /> :result.tag}</th>
-                                <th>Valor FIPE: {result.fipe}</th>
-                                <th>Observaçoes: {edit ? <input className={styles.edit_data} type='text' name="observacoes" value={editableFields.observacoes} onChange={handleInputChange} /> :result.observacoes}</th>
-                                <th>Numero de Registro: {result.valor_meio_acesso}</th>
-                            </tr>
+                                <tr className={styles.head} key={result.id}>
+                                    <th className={styles.table_title} >DADOS DO VEÍCULO</th>
+                                    <th>Marca: {result.marca}</th>
+                                    <th>Modelo: {result.modelo}</th>
+                                    <th>Cor: {result.cor}</th>
+                                    <th>Renavan: {result.renavan}</th>
+                                    <th>Loja: {edit ? <select name='loja' value={idUnidade} onChange={handleInputChange} required >
+                                        <option value="" >SELECIONE UMA LOJA</option>
+                                        {lojas.map((loja) => (
+                                            <option key={loja.id} value={loja.id} data-descricao={loja.descricao}>
+                                                {loja.descricao}
+                                            </option>
+                                        ))}
+                                    </select> : result.unidade}</th>
+                                    <th>Status: {edit ? <input className={styles.edit_data} type='text' name="veiculo_status" value={editableFields.veiculo_status} onChange={handleInputChange} /> : result.veiculo_status}</th>
+                                    <th>Ano de Fabricação: {result.ano}</th>
+                                    <th>Ano Modelo: {result.ano_modelo}</th>
+                                    <th>Nº Tag: {edit ? <input className={styles.edit_data} type='text' name="tag" value={editableFields.tag} onChange={handleInputChange} /> : result.tag}</th>
+                                    <th>Valor FIPE: {result.fipe}</th>
+                                    <th>Observaçoes: {edit ? <input className={styles.edit_data} type='text' name="observacoes" value={editableFields.observacoes} onChange={handleInputChange} /> : result.observacoes}</th>
+                                    <th>Numero de Registro: {result.valor_meio_acesso}</th>
+                                </tr>
                             ))}
                         </thead>
                     </table>

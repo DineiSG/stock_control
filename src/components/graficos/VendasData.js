@@ -58,7 +58,7 @@ const VendasData = () => {
         const dataFimFormatada = new Date(dataFim).toISOString().split('T')[0]
 
         const upperCaseQuery = query.toUpperCase();
-        const motivosValidos = ['VENDA', 'DEVOLUÇAO', 'TRANSFERENCIA', 'CORRECAO'];
+        const motivosValidos = ['VENDA', 'DEVOLUCAO', 'TRANSFERENCIA', 'CORRECAO'];
 
         if (!motivosValidos.includes(upperCaseQuery)) {
             console.warn('Motivo inválido.');
@@ -66,10 +66,7 @@ const VendasData = () => {
         }
 
         try {
-
-            const url = `http://localhost:8090/api/v1/baixas?motivo=${upperCaseQuery}`;
-            const response=await fetch(url)
-            
+            const response = await fetch(`http://localhost:8090/api/v1/baixas?motivo=${upperCaseQuery}`)
 
             if (!response.ok) {
                 console.error('Erro na resposta do servidor:', response.statusText);
@@ -79,9 +76,10 @@ const VendasData = () => {
 
             const data = await response.json()
 
-            const filteredResults = data.filter(baixa => {const dataBaixa = new Date(baixa.data).toISOString().split('T')[0]
-                return(
-                    baixa.motivo.toUpperCase()===upperCaseQuery && dataBaixa>=dataInicioFormatada && dataBaixa<=dataFimFormatada
+            const filteredResults = data.filter(baixa => {
+                const dataBaixa = new Date(baixa.data_registro).toISOString().split('T')[0]
+                return (
+                    baixa.motivo.toUpperCase() === upperCaseQuery && dataBaixa >= dataInicioFormatada && dataBaixa <= dataFimFormatada
                 )
             })
 
@@ -93,7 +91,7 @@ const VendasData = () => {
                 setDadosGrafico(dadosGraficoPreparados);
             } else {
                 setResults([])
-                window.alert("Nao há nenhuma baixa relacionada ao motivo informado.")
+                window.alert("Nao há nenhuma baixa relacionada ao motivo informado dentro do periodo selecionado.")
                 window.location.reload()
             }
         } catch (error) {
@@ -122,7 +120,7 @@ const VendasData = () => {
 
     return (
         <div className={styles.container}>
-            <h2 className={styles.title}> BAIXAS REALIZADAS</h2>
+            <h2 className={styles.title}>BAIXAS REALIZADAS</h2>
             <label>
                 <p>Selecione um motivo:</p>
                 <select value={query} onChange={(e) => setQuery(e.target.value)} required>
@@ -137,19 +135,11 @@ const VendasData = () => {
             <div className={styles.dateInputs}>
                 <label>
                     Data de Início:
-                    <input
-                        type="date"
-                        value={dataInicio}
-                        onChange={e => setDataInicio(e.target.value)}
-                    />
+                    <input className={styles.date} type="date" value={dataInicio} onChange={e => setDataInicio(e.target.value)} />
                 </label>
                 <label>
                     Data de Fim:
-                    <input
-                        type="date"
-                        value={dataFim}
-                        onChange={e => setDataFim(e.target.value)}
-                    />
+                    <input className={styles.date} type="date" value={dataFim} onChange={e => setDataFim(e.target.value)} />
                 </label>
                 <button className={styles.btn_buscar} onClick={fetchBaixas}>Buscar</button>
             </div>
