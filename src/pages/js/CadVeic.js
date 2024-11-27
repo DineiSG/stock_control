@@ -3,21 +3,7 @@ import styles from "../styles/CadVeic.module.css";
 import { Link, useLocation } from "react-router-dom";
 
 const CadVeic = () => {
-  const [veiculo, setVeiculo] = useState({
-    unidade: "",
-    idUnidade: "",
-    marca: "",
-    modelo: "",
-    cor: "",
-    placa: "",
-    ano: "",
-    ano_modelo: "",
-    valor_meio_acesso: "",
-    veiculo_status: "",
-    fipe: "",
-    renavan: "",
-    tag: "",
-  });
+  const [veiculo, setVeiculo] = useState({ unidade: "", idUnidade: "", marca: "", modelo: "", cor: "", placa: "", ano: "", ano_modelo: "", valor_meio_acesso: "", veiculo_status: "", fipe: "", renavan: "", tag: "", });
   const [tag, setTag] = useState("");
   const [fipe, setFipe] = useState("");
   const [unidade, setUnidade] = useState("");
@@ -208,7 +194,7 @@ const CadVeic = () => {
       const dataLoja = await responseLoja.json();
 
       const loja = dataLoja.find((loja) => loja.descricao === unidade);
-      const vagasTotais = parseInt(loja.vagas, 10);
+      const vagasTotais = parseInt(loja.qtdVeiculos, 10);
       console.log(
         "Quantidade de vagas informadas no cadastro da loja: ",
         vagasTotais

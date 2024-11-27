@@ -69,21 +69,37 @@ const SearchVeiculos = () => {
 
     /*Função que transforma os campos de uma tabela gerada apos a pesquisa em campos editaveis */
     const handleInputChange = (e) => {
+        const { name, value, type } = e.target;
 
-        const selectedOption = e.target.selectedOptions[0]
-        const id = Number(selectedOption.value)
-        const unidade = selectedOption.getAttribute('data-descricao')
+        // Se o campo for do tipo texto, apenas atualiza o estado
+        if (type === "text") {
+            setEditableFields({
+                ...editableFields,
+                [name]: value.toUpperCase(), // Converte o valor para maiúsculas (se necessário)
+            });
+            return;
+        }
 
-        setUnidade(unidade)
-        setIdUnidade(id)
+        // Caso o campo seja um <select>, aplica a lógica de validação de opções
+        const selectedOption = e.target.selectedOptions?.[0];
+        if (!selectedOption || selectedOption.value === "") {
+            console.error("Nenhuma loja válida foi selecionada.");
+            setUnidade(null);
+            setIdUnidade("");
+            return;
+        }
 
-        const { name, value } = e.target
+        const id = Number(selectedOption.value);
+        const unidade = selectedOption.getAttribute("data-descricao");
+
+        setUnidade(unidade);
+        setIdUnidade(id);
 
         setEditableFields({
             ...editableFields,
-            [name]: value.toUpperCase()
-        })
-    }
+            [name]: value.toUpperCase(),
+        });
+    };
 
     /*Função para editar os dados encontrados */
     const handleEditToggle = async () => {
@@ -114,23 +130,44 @@ const SearchVeiculos = () => {
         editableFields.idUnidade = idUnidade;
 
         try {
-            const response = await fetch(`http://localhost:8090/api/v1/veiculos/placa/${editableFields.placa}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(editableFields)
-            })
-            if (response.ok) {
-                const updatedResult = await response.json()
-                setResults(results.map(result => (result.placa === updatedResult.placa ? updatedResult : result)))
-                window.alert("Dados editados com sucesso!")
-                setEdit(false)
+            /*---------------------------Fazendo a verificação das vagas disponiveis */
+            const responseUnidade = await fetch(`http://localhost:8090/api/v1/veiculos/unidade/${unidade}`)
+            const data = await responseUnidade.json()
 
-            } else {
-                window.alert("Erro ao salvar os dados")
+            const filteredResults = data.filter(veiculo => veiculo.valor_meio_acesso !== '').length;
+            console.log("Quantidade de veiculos: ", filteredResults.length)
+
+            const responseLoja = await fetch(`http://localhost:8090/api/v1/lojas`)
+            const dataLoja = await responseLoja.json()
+
+            const loja = dataLoja.find(loja => loja.descricao === unidade)
+            const vagasTotais = parseInt(loja.qtdVeiculos, 10)
+            console.log("Quantidade de vagas informadas no cadastro da loja: ", vagasTotais)
+
+            const vagasDisponiveis = vagasTotais - filteredResults
+            console.log("Quantidade de vagas disponiveis antes do cadastro do veiculo: ", vagasDisponiveis)
+            /*------------------------------------------------------------------------------------------------ */
+            if (vagasDisponiveis > 0) {
+                const response = await fetch(`http://localhost:8090/api/v1/veiculos/placa/${editableFields.placa}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(editableFields)
+                })
+                if (response.ok) {
+                    const updatedResult = await response.json()
+                    setResults(results.map(result => (result.placa === updatedResult.placa ? updatedResult : result)))
+                    window.alert("Dados editados com sucesso!")
+                    setEdit(false)
+
+                } else {
+                    window.alert("Erro ao salvar os dados")
+                }
+                window.location.reload()
+            }else{
+                window.alert("Nao há vagas disponíveis para novos cadastros nesta loja. O veículo nao pode ser recadastrado.")
             }
-            window.location.reload()
         } catch (error) {
             console.log(`Erro ao enviar dados para o servidor`, error)
 
@@ -197,18 +234,22 @@ const SearchVeiculos = () => {
                                     <th>Modelo: {result.modelo}</th>
                                     <th>Cor: {result.cor}</th>
                                     <th>Renavan: {result.renavan}</th>
-                                    <th>Loja: {edit ? <select name='loja' value={idUnidade} onChange={handleInputChange} required >
-                                        <option value="" >SELECIONE UMA LOJA</option>
+                                    <th>Loja: {edit ? <select name="loja" value={idUnidade || ""} onChange={handleInputChange} required>
+                                        <option value="" disabled>SELECIONE UMA LOJA</option>
                                         {lojas.map((loja) => (
-                                            <option key={loja.id} value={loja.id} data-descricao={loja.descricao}>
+                                            <option
+                                                key={loja.id}
+                                                value={loja.id}
+                                                data-descricao={loja.descricao}
+                                            >
                                                 {loja.descricao}
                                             </option>
                                         ))}
                                     </select> : result.unidade}</th>
+                                    <th>Nº Tag: {edit ? <input className={styles.edit_data} type='text' name="tag" value={editableFields.tag} onChange={handleInputChange} /> : result.tag}</th>
                                     <th>Status: {edit ? <input className={styles.edit_data} type='text' name="veiculo_status" value={editableFields.veiculo_status} onChange={handleInputChange} /> : result.veiculo_status}</th>
                                     <th>Ano de Fabricação: {result.ano}</th>
                                     <th>Ano Modelo: {result.ano_modelo}</th>
-                                    <th>Nº Tag: {edit ? <input className={styles.edit_data} type='text' name="tag" value={editableFields.tag} onChange={handleInputChange} /> : result.tag}</th>
                                     <th>Valor FIPE: {result.fipe}</th>
                                     <th>Observaçoes: {edit ? <input className={styles.edit_data} type='text' name="observacoes" value={editableFields.observacoes} onChange={handleInputChange} /> : result.observacoes}</th>
                                     <th>Numero de Registro: {result.valor_meio_acesso}</th>

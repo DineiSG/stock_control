@@ -175,7 +175,7 @@ const Baixar = () => {
                   <th>Marca</th>
                   <th>Modelo</th>
                   <th>Cor</th>
-                  <th>Nº Tag</th>
+                  <th>Nº Registro</th>
                   <th>Motivo</th>
                   <th>Observacoes</th>
                 </tr>

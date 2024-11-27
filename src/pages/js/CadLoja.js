@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import styles from '../styles/CadLoja.module.css'
 
 
-const url = 'http://localhost:8090/api/v1/lojas'
 const CadLoja = () => {
 
     const [descricao, setDescricao] = useState('')
     const [box, setBox] = useState('')
     const [telefone, setTelefone] = useState('')
     const [email, setEmail] = useState('')
-    const [vagas, setVagas] = useState('')
+    const [vagas, setVagas]=useState("1000")
+    const [qtdVeiculos, setQtdVeiculos] = useState('')
     const [loading, setLoading] = useState()
 
 
@@ -36,7 +36,7 @@ const CadLoja = () => {
 
         e.preventDefault()
         const payload = {
-            descricao, box, telefone, email, vagas, dataRegistro
+            descricao, box, telefone, email, qtdVeiculos, dataRegistro, vagas
         }
 
         const toUpperCasePayload = (data) => {
@@ -57,7 +57,7 @@ const CadLoja = () => {
         console.log('Payload enviado: ', payload)
 
         try {
-            const response = await fetch(url, {
+            const response = await fetch('http://localhost:8090/api/v1/lojas', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -105,9 +105,13 @@ const CadLoja = () => {
                                 <p>E-mail:</p>
                                 <input className={styles.email} type='text' name='email' value={email} onChange={(e) => setEmail(e.target.value)} required></input>
                             </label>
-                            <label >
+                            <label>
                                 <p>Qtd Vagas:</p>
-                                <input className={styles.vagas} type='text' name='vagas' value={vagas} onChange={(e) => setVagas(e.target.value)} required></input>
+                                <input className={styles.vagas} type='text' name='qtdVeiculos' value={qtdVeiculos} onChange={(e) => setQtdVeiculos(e.target.value)} required></input>
+                            </label>
+                            <label>
+                                
+                                <input className={styles.vagas} type='hidden' name='vagas' value={vagas} onChange={(e) => setVagas(e.target.value)} required></input>
                             </label>
                             <button type="submit" className={styles.cadastrar_lj} onClick={() => setLoading} disabled={loading}>{loading ? 'Cadastrando...' : 'Cadastrar'}</button>
                         </form>

@@ -103,7 +103,7 @@ const CadVeicManual = () => {
             const dataLoja = await responseLoja.json()
 
             const loja = dataLoja.find(loja => loja.descricao === unidade)
-            const vagasTotais = parseInt(loja.vagas, 10)
+            const vagasTotais = parseInt(loja.qtdVeiculos, 10)
             console.log("Quantidade de vagas informadas no cadastro da loja: ", vagasTotais)
 
             const vagasDisponiveis = vagasTotais - filteredResults
@@ -119,24 +119,6 @@ const CadVeicManual = () => {
                     body: JSON.stringify(upperCasePayload),
                 })
                 if (response.ok) {
-                    /*---------------------------Fazendo a verificação das vagas disponiveis */
-                    const responseUnidade = await fetch(`http://localhost:8090/api/v1/veiculos/unidade/${unidade}`)
-                    const data = await responseUnidade.json()
-
-                    const filteredResults = data.filter(veiculo => veiculo.valor_meio_acesso !== '').length;
-                    console.log("Quantidade de veiculos: ", filteredResults.length)
-
-                    const responseLoja = await fetch(`http://localhost:8090/api/v1/lojas`)
-                    const dataLoja = await responseLoja.json()
-
-                    const loja = dataLoja.find(loja => loja.descricao === unidade)
-                    const vagasTotais = parseInt(loja.vagas, 10)
-
-                    const vagasDisponiveis = vagasTotais - filteredResults
-                    console.log("Quantidade de vagas disponiveis após o cadastro do veículo: ", vagasDisponiveis)
-                    
-                    /*------------------------------------------------------------------------------------------------ */
-
                     console.log('Cadastro realizado com sucesso!')
                     window.alert('Veiculo cadastrado com sucesso!');
                     window.location.reload();

@@ -15,7 +15,7 @@ const SearchLojas = () => {
         box: '',
         telefone: '',
         email: '',
-        vagas: ''
+        qtdVeiculos: ''
     })
 
     /*Função que busca informações de uma loja pelo nome */
@@ -35,7 +35,7 @@ const SearchLojas = () => {
                 setEditableFields(filteredResults[0])
             } else {
                 setResults([])
-                setError(window.alert("Nao há nenhum veiculo com a placa informada."))
+                setError(window.alert("Nao há nenhuma loja com o nome informado."))
             }
         } catch (error) {
             window.alert("Erro ao buscar dados: ", error)
@@ -113,7 +113,7 @@ const SearchLojas = () => {
                                     <th>Box: {edit ? <input className={styles.edit_data} type='number' name="box" value={editableFields.box} onChange={handleInputChange} /> : result.box}</th>
                                     <th>Telefone: {edit ? <input className={styles.edit_data} type='text' name="telefone" value={editableFields.telefone} onChange={handleInputChange} /> : result.telefone}</th>
                                     <th>Email: {edit ? <input className={styles.edit_data} type='text' name="email" value={editableFields.email} onChange={handleInputChange} /> : result.email}</th>
-                                    <th>Qtd Vagas: {edit ? <input classname={styles.edita_data} type='text' name="vagas" value={editableFields.vagas} onChange={handleInputChange}/>: result.vagas}</th>
+                                    <th>Qtd Vagas: {edit ? <input classname={styles.edita_data} type='text' name="qtdVeiculos" value={editableFields.qtdVeiculos} onChange={handleInputChange}/>: result.qtdVeiculos}</th>
                                 </tr>
                                 ))}
                             </thead>
