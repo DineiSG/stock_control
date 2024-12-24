@@ -49,7 +49,7 @@ const SearchHistory = () => {
             }
         } catch (error) {
             console.error('Erro: ', error)
-            window.location.reload()
+            
         }
     }
 
@@ -69,7 +69,6 @@ const SearchHistory = () => {
                             </form>
                         </div>
                     </div>
-
                 </div>
                 <div ref={tabelaRef} className={styles.table} id='printable'>
                     {filtroAcesso ?

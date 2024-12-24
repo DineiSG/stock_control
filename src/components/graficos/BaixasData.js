@@ -1,33 +1,34 @@
 import styles from '../styles/Data.module.css'
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const VendasData = () => {
+const BaixasData = () => {
 
     const [dadosGrafico, setDadosGrafico] = useState([])
     const [dataInicio, setDataInicio] = useState('')
     const [dataFim, setDataFim] = useState('')
+    const [query, setQuery] = useState('')
     const [results, setResults] = useState([])
     const [error, setError] = useState('')
 
-    const contarVendasPorLoja = (vendas) => {
+    const contarBaixasPorLoja = (baixas) => {
 
-        if (!Array.isArray(vendas)) {
+        if (!Array.isArray(baixas)) {
             console.error("O parâmetro 'baixas' não é um array");
             return [];
         }
 
-        const contagemVendas = {};
+        const contagemBaixas = {};
 
-        vendas.forEach(venda => {
+        baixas.forEach(baixa => {
             // Verifica se a propriedade 'unidade' existe e é válida
-            if (venda.unidade) {
-                const loja = venda.unidade;
+            if (baixa.unidade) {
+                const loja = baixa.unidade;
 
-                if (contagemVendas[loja]) {
-                    contagemVendas[loja]++;
+                if (contagemBaixas[loja]) {
+                    contagemBaixas[loja]++;
                 } else {
-                    contagemVendas[loja] = 1;
+                    contagemBaixas[loja] = 1;
                 }
             } else {
                 console.warn("Propriedade 'unidade' não encontrada em um dos objetos.");
@@ -35,22 +36,20 @@ const VendasData = () => {
         });
 
         //Função que prepara os dados para o grafico
-        const dadosParaGrafico = Object.keys(contagemVendas).map(loja => ({
+        const dadosParaGrafico = Object.keys(contagemBaixas).map(loja => ({
             name: loja,
-            QUANTIDADE: contagemVendas[loja]
+            QUANTIDADE: contagemBaixas[loja]
         }))
 
         return dadosParaGrafico
     }
 
-
-
     //Função que busca os dados na tabela baixas
 
-    const fetchVendas = async () => {
+    const fetchBaixas = async () => {
 
-        if (!dataInicio || !dataFim) {
-            console.warn('Datas de inicio e fim nao definidos.')
+        if (!dataInicio || !dataFim || !query) {
+            console.warn('Datas ou motivo nao foram definidos.')
             return
         }
 
@@ -58,9 +57,17 @@ const VendasData = () => {
         const dataInicioFormatada = new Date(dataInicio).toISOString().split('T')[0]
         const dataFimFormatada = new Date(dataFim).toISOString().split('T')[0]
 
+        const upperCaseQuery = query.toUpperCase();
+        const motivosValidos = ['VENDA', 'DEVOLUCAO', 'TRANSFERENCIA', 'CORRECAO'];
+
+        if (!motivosValidos.includes(upperCaseQuery)) {
+            console.warn('Motivo inválido.');
+            return;
+        }
+
         //Buscando as baixas pelo motivo selecionado
         try {
-            const response = await fetch(`http://localhost:8090/api/v1/vendas`)
+            const response = await fetch(`http://localhost:8090/api/v1/baixas?motivo=${upperCaseQuery}`)
 
             if (!response.ok) {
                 console.error('Erro na resposta do servidor:', response.statusText);
@@ -70,25 +77,21 @@ const VendasData = () => {
 
             const data = await response.json()
 
-            const filteredResults = data.filter(venda => { const dataVenda = new Date(venda.dataRegistro).toISOString().split('T')[0]
-                console.log(dataVenda)
+            const filteredResults = data.filter(baixa => { const dataBaixa = new Date(baixa.data_registro).toISOString().split('T')[0]
                 return (
-                    dataVenda >= dataInicioFormatada && dataVenda <= dataFimFormatada
-                    
+                    baixa.motivo.toUpperCase() === upperCaseQuery && dataBaixa >= dataInicioFormatada && dataBaixa <= dataFimFormatada
                 )
-                
             })
 
             if (filteredResults.length > 0) {
-                
                 setResults(filteredResults)
                 setError('')
                 // Chama a função de contagem e armazena os dados no estado
-                const dadosGraficoPreparados = contarVendasPorLoja(filteredResults);
+                const dadosGraficoPreparados = contarBaixasPorLoja(filteredResults);
                 setDadosGrafico(dadosGraficoPreparados);
             } else {
                 setResults([])
-                window.alert("Nao há nenhuma venda dentro do periodo selecionado.")
+                window.alert("Nao há nenhuma baixa relacionada ao motivo informado dentro do periodo selecionado.")
                 window.location.reload()
             }
         } catch (error) {
@@ -115,11 +118,24 @@ const VendasData = () => {
         }
     }
 
+    
+
+    
 
     return (
         <div className={styles.container}>
-            <h2 className={styles.title}>VENDAS REALIZADAS</h2>
-            <p className={styles.p_txt}>Selecione um período para ver a quantidade de vendas: </p>
+            <h2 className={styles.title}>BAIXAS REALIZADAS</h2>
+            <label>
+                <p>Selecione um motivo:</p>
+                <select value={query} onChange={(e) => setQuery(e.target.value)} required>
+                    <option value=""></option>
+                    <option value='VENDA'>VENDA</option>
+                    <option value='TRANSFERENCIA'>TRANSFERENCIA</option>
+                    <option value='DEVOLUCAO'>DEVOLUÇAO</option>
+                    <option value='CORRECAO'>CORREÇÃO DE ESTOQUE</option>
+                </select>
+            </label>
+            <p className={styles.p_txt}>Selecione um período para ver a quantidade de baixas de acordo com o motivo selecionado: </p>
             <div className={styles.dateInputs}>
                 <label>
                     Data de Início:
@@ -129,7 +145,7 @@ const VendasData = () => {
                     Data de Fim:
                     <input className={styles.date} type="date" value={dataFim} onChange={e => setDataFim(e.target.value)} />
                 </label>
-                <button className={styles.btn_buscar} onClick={fetchVendas} s>Buscar</button>
+                <button className={styles.btn_buscar} onClick={fetchBaixas}>Buscar</button>
             </div>
             {dadosGrafico.length > 0 ? (
                 <ResponsiveContainer width="100%" height="100%">
@@ -160,4 +176,4 @@ const VendasData = () => {
     )
 }
 
-export default VendasData
+export default BaixasData

@@ -13,7 +13,7 @@
 }
 .p_txt{
     margin-left: 5%;
-    margin-bottom: 5%;
+    margin-bottom: 1%;
 }
 
 /*Veiculos Data*/
@@ -50,4 +50,5 @@
 /*Veiculos Data*/
 .date{
     text-align: center;
+    margin-left: 5px;
 }

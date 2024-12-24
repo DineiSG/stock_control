@@ -12,11 +12,8 @@ const ComVenda = () => {
   const [telefone, setTelefone] = useState('')
   const [cep, setCep] = useState('')
   const [local, setLocal] = useState('')
-  const [rua, setRua] = useState('')
+
   const [endereco, setEndereco] = useState('')
-  const [bairro, setBairro] = useState('')
-  const [cidade, setCidade] = useState('')
-  const [estado, setEstado] = useState('')
   const [email, setEmail] = useState('')
   const [cpf, setCpf] = useState('')
   const [rg, setRg] = useState('')
@@ -104,10 +101,11 @@ const ComVenda = () => {
       const response = await fetch(`https://brasilapi.com.br/api/cep/v1/${endereco}`)
       if (response.ok) {
         const data = await response.json()
+        const ruaTruncada = data.street ? data.street.substring(0, 30) : '';
         setLocal({
           ...local,
           cep:data.cep,
-          rua: data.street,
+          rua: ruaTruncada,
           cidade: data.city,
           estado: data.state,
           bairro: data.neighborhood,
@@ -120,10 +118,6 @@ const ComVenda = () => {
 
     }
   };
-
-
-
-
 
 
   //Enviando os dados para a tabela vendas
@@ -267,7 +261,7 @@ const ComVenda = () => {
                 </label>
                 <label>
                   <p>Nome Completo do Comprador:</p>
-                  <input className={styles.obs} type='text' name='comprador' value={comprador} onChange={(e) => setComprador(e.target.value)} required></input>
+                  <input className={styles.obs} type='text' name='comprador' value={comprador} maxLength={30} onChange={(e) => setComprador(e.target.value)} required></input>
                 </label>
                 <label>
                   <p>Nascimento:</p>
@@ -295,7 +289,7 @@ const ComVenda = () => {
                 </label>
                 <label>
                   <p>Logradouro:</p>
-                  <input className={styles.email} type='text' name='rua' value={local.rua || ''} onChange={(e)=> setLocal({...local, rua:e.target.value})} required ></input>
+                  <input className={styles.email} type='text' name='rua' value={local.rua || ''} maxLength={30} onChange={(e)=> setLocal({...local, rua:e.target.value})} required ></input>
                 </label>
                 <label>
                   <p>Complemento:</p>

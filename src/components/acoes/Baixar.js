@@ -9,21 +9,9 @@ const Baixar = () => {
   const [error, setError] = useState('')
   const [selectedMotivo, setSelectedMotivo] = useState('')
   const [editableFields, setEditableFields] = useState({
-    id: '',
-    placa: '',
-    marca: '',
-    modelo: '',
-    cor: '',
-    observacoes: '',
-    renavan: '',
-    id_unidade: '',
-    unidade: '',
-    valor_meio_acesso: '',
-    motivo: ''
+    id: '', placa: '', marca: '', modelo: '', cor: '', observacoes: '', renavan: '',
+    id_unidade: '', unidade: '', valor_meio_acesso: '', motivo: ''
   })
-
-
-
 
   /*Função que busca informações de um veiculo de acordo com a placa */
   const handleSearch = async (e) => {
@@ -105,7 +93,7 @@ const Baixar = () => {
     //Esta funçao envia para o bd o motivo e a data da baixa (data_registro) para a tabela vaga.baixas
     const baixaData = { ...editableFields, motivo: selectedMotivo, data_registro };
 
-    const updatedFields = { ...editableFields, data_alteracao: currentDate, valor_meio_acesso: '', unidade: null, idUnidade: null }
+    const updatedFields = { ...editableFields, data_alteracao: currentDate, valor_meio_acesso: '', unidade: null, idUnidade: null, tag: null }
 
 
 

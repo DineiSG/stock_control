@@ -56,25 +56,10 @@ const EstoqueData = () => {
   }, []);
 
   //Função que disponibiliza as cores para cada fatia do gráfico
-  const COLORS = [
-    "#0088AA",
-    "#00C480",
-    "#f14b09",
-    "#FF8150",
-    "#7A0890",
-    "#fba500",
-  ];
+  const COLORS = [ "#0088AA", "#00C480", "#f14b09", "#FF8150", "#7A0890", "#fba500", ];
 
   //Função que configura os rótulos do gráfico
-  const renderRotulos = ({
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    percent,
-    index,
-  }) => {
+  const renderRotulos = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index, }) => {
     const RADIAN = Math.PI / 180;
     const radius = outerRadius + 100;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
