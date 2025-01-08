@@ -1,54 +1,156 @@
 /*Estoque Data*/
-.pi{
-    background-color: #ffffff;
-    margin: 1% 8%;
-    padding: 18px
-    
+.pi {
+  background-color: #ffffff;
+  margin: 1% 8%;
+  padding: 5px;
 }
-.title{
-    margin-bottom: 2%;
-    font-size: 20px;
-    font-weight: 600;
-    color:#333333
+
+.data_container {
+  width: 100%;
+  padding: 2%;
+  margin-bottom: 2%;
 }
-.p_txt{
-    margin-left: 5%;
-    margin-bottom: 1%;
+.gerar_planilha{
+  margin:1%;
+}
+
+.p_titulo {
+  margin: 3%;
+  font-style: oblique;
+  font-size: 40px;
+  color: black;
+  font-weight: bold;
+
+}
+.quantidade {
+  font-weight: 600;
+  color: rgba(3, 0, 4, 0.871);
+  padding: 5px;
+  background-color: #d7d8da;
+  width: 500px;
+  margin-left: 31%;
+  margin-bottom: 2%;
+}
+.title {
+  margin-bottom: 2%;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333333;
+}
+.p_txt {
+  margin-left: 5%;
+  margin-bottom: 1%;
 }
 
 /*Veiculos Data*/
-.container{
-    position: absolute;
-    left: 8%;
-    height: 500px;
-    width: 1285px;
-    background-color: #ffffff;
-    padding: 25px
+.container {
+  position: absolute;
+  left: 8%;
+  height: 500px;
+  width: 1285px;
+  background-color: #ffffff;
+  padding: 25px;
 }
 .btn_buscar {
-    height: 40px;
-    width: 100px;
-    color: #FFF;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 2px;
-    background-color: rgba(89, 3, 110, 0.871);
-    font-weight: 600;
-    margin-top: 20px;
+  height: 40px;
+  width: 100px;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 2px;
+  background-color: rgba(89, 3, 110, 0.871);
+  font-weight: 600;
+  margin-top: 20px;
 }
 
 .btn_buscar:focus {
-    outline: 1px solid blue;
-    background-color: rgb(199, 48, 236);
+  outline: 1px solid blue;
+  background-color: rgb(199, 48, 236);
 }
 
 .btn_buscar:hover {
-    background-color: #669231;
-    color: rgba(255, 255, 255, 0.871);
+  background-color: #669231;
+  color: rgba(255, 255, 255, 0.871);
 }
 
 /*Veiculos Data*/
-.date{
-    text-align: center;
-    margin-left: 5px;
+.date {
+  text-align: center;
+  margin-left: 5px;
+}
+
+/*Vendas Data*/
+.div_table {
+  margin-top: 50%;
+}
+.container_bar {
+  position: absolute;
+  left: 10%;
+  height: 600px;
+  width: 80%;
+  background-color: #ffffff;
+  padding-bottom: 2%;
+}
+
+/*Render table*/
+.render {
+  padding: 2%;
+}
+.inst_table {
+  margin-right: 50%;
+}
+.table-responsive {
+  margin-top:5%;
+  overflow-x: auto;
+}
+
+@media print {
+  .table-responsive {
+    overflow: visible;
+  }
+
+  .inst_table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10px;
+  }
+
+
+
+  .div_table_estoque {
+    margin-right: 50%;
+    margin-top: 45%;
+  }
+
+  .pi_vendas {
+    margin-left: -15%;
+    margin-top: 80%;
+    padding-top: 20%;
+  }
+
+  .div_table {
+    margin-left: -15%;
+    margin-top: 90%;
+    width: 100%;
+  }
+
+  #printable,
+  #printable * {
+    visibility: visible;
+  }
+
+  #printable {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .btn_buscar, .dateImputs, .containe_bar {
+    display: none;
+}
+
+  @page {
+    size: A4 landscape; /* Configuração horizontal para melhor ajuste */
+    margin: 10mm; /* Margem mínima para caber mais conteúdo */
+}
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, } from "recharts";
 import styles from '../styles/Data.module.css'
 
+
 const AnoMod = () => {
   const [veiculo, setVeiculo] = useState([]);
   const [dadosGrafico, setDadosGrafico] = useState([]);
@@ -58,14 +59,7 @@ const AnoMod = () => {
     if (active && payload && payload.length) {
       return (
         <div
-          style={{
-            backgroundColor: "white",
-            border: "1px solid #ccc",
-            padding: "10px",
-            width: "150px",
-            height: "80px",
-            boxShadow: "0 0 10px rgba(0, 0, 0, 0.2 )",
-          }}>
+          style={{ backgroundColor: "white", border: "1px solid #ccc", padding: "10px", width: "150px", height: "80px", boxShadow: "0 0 10px rgba(0, 0, 0, 0.2 )", }}>
           <p style={{ fontWeight: "bold", color: "#8884EE" }}>{label}</p>
           <p>{`${payload[0].name}:${payload[0].value}`} </p>
         </div>
@@ -74,46 +68,29 @@ const AnoMod = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}> QUANTIDADE DE VEÍCULOS DE ACORDO COM ANO MODELO</h2>
-      <p className={styles.p_txt}>
-        Abaixo pode-se visualizar as quantidades de veiculo por ano modelo que fazem
-        parte do estoque das lojas que se encontram nas dependencias do Auto
-        Shopping:
-      </p>
-      {dadosGrafico.length > 0 ? (
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            width={500}
-            height={500}
-            data={dadosGrafico}
-            margin={{
-              top: 5,
-              right: 1,
-              left: 15,
-              bottom: 60,
-            }}
-            barSize={30}>
-            <XAxis
-              dataKey="name"
-              scale="point"
-              padding={{ left: 15, right: 15 }}
-              fontSize={"16"}
-            />
-            <YAxis />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-            <CartesianGrid strokeDasharray="3 3" />
-            <Bar
-              dataKey="QUANTIDADE"
-              fill="#8884d8"
-              background={{ fill: "#eee" }}
-            />
-          </BarChart>
-        </ResponsiveContainer>
-      ) : (
-        <p>Carregando dados...</p>
-      )}
+    <div>
+      <div className={styles.container}>
+        <h2 className={styles.title}> QUANTIDADE DE VEÍCULOS DE ACORDO COM ANO MODELO</h2>
+        <p className={styles.p_txt}>
+          Abaixo pode-se visualizar as quantidades de veiculo por ano modelo que fazem
+          parte do estoque das lojas que se encontram nas dependencias do Auto
+          Shopping:
+        </p>
+        {dadosGrafico.length > 0 ? (
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart width={500} height={500} data={dadosGrafico} margin={{ top: 5, right: 1, left: 15, bottom: 60, }} barSize={30}>
+              <XAxis dataKey="name" scale="point" padding={{ left: 15, right: 15 }} fontSize={"16"} />
+              <YAxis />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Bar dataKey="QUANTIDADE" fill="#8884d8" background={{ fill: "#eee" }} />
+            </BarChart>
+          </ResponsiveContainer>
+        ) : (
+          null
+        )}
+      </div>
     </div>
   );
 }

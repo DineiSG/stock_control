@@ -126,12 +126,7 @@ const RelBaixasLoja = () => {
                 ))}
               </select>
             </label>
-            <button
-              className={styles.btn_buscar}
-              type="submit"
-              onClick={handleButtonClick}>
-              {filtroLoja ? "Buscar" : "Buscar"}
-            </button>
+            <button className={styles.btn_buscar} type="submit" onClick={handleButtonClick}> {filtroLoja ? "Buscar" : "Buscar"} </button>
           </form>
         </div>
       </div>

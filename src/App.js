@@ -18,6 +18,13 @@ import CadVendendor from "./pages/js/CadVendendor";
 import ConsVenda from "./components/buscas/ConsVenda";
 import SolicLibVenda from "./components/acoes/SolicLibVenda";
 import Contrato from "./components/outros/Contrato";
+import EstatisticaEstoque from "./pages/js/EstatisticaEstoque";
+import EstVendaLoja from "./pages/js/EstVendaLoja";
+import EstatInstituicao from "./pages/js/EstatInstituicao";
+import RenderTable from "./components/outros/RenderTable";
+import EstatisticaMarcas from "./pages/js/EstatisticaMarcas";
+import EstatisticaAnoMod from "./pages/js/EstatisticaAnoMod";
+import EstatisticasBaixas from "./pages/js/EstatisticasBaixas";
 
 function App() {
   return (
@@ -42,6 +49,13 @@ function App() {
           <Route path="/cad_vendedor" element={<CadVendendor />} />
           <Route path="/cons_venda" element={<ConsVenda />} />
           <Route path="/solic_lib_venda" element={<SolicLibVenda />} />
+          <Route path="/est_estoque" element={<EstatisticaEstoque/>}/>
+          <Route path="/est_venda_loja" element={<EstVendaLoja/>}/>
+          <Route path="/est_venda_instituicao" element={<EstatInstituicao/>}/>
+          <Route path='/render_table' element={<RenderTable/>} />
+          <Route path='/estat_marcas' element={<EstatisticaMarcas/>}/>
+          <Route path='/estat_ano_mod' element={<EstatisticaAnoMod/>}/>
+          <Route path='/estatisticas_baixas' element={<EstatisticasBaixas/>}/>
           {/*<Route path='/cad_user' element={<CadUser/>}/>*/}
         </Routes>
       </BrowserRouter>

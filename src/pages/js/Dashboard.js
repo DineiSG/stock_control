@@ -1,86 +1,76 @@
-import { useState } from 'react';
-import EstoqueData from '../../components/graficos/EstoqueData';
-import VeiculosData from '../../components/graficos/VeiculosData';
-import AnoMod from '../../components/graficos/AnoMod';
-import BaixasData from '../../components/graficos/BaixasData';
-import VendasData from '../../components/graficos/VendasData';
-import InstData from '../../components/graficos/InstData';
+import { Link } from "react-router-dom";
+import styles from "../styles/Dashboard.module.css"
 
 
 const Dashboard = () => {
-  const [estoque, setEstoque] = useState(false)
-  const [baixas, setBaixas] = useState(false)
-  const [marcas, setMarcas] = useState(false)
-  const [anoModelo, setAnoModelo]=useState(false)
-  const [vendas, setVendas]=useState(false)
-  const [instituicao, setInstituicao]=useState(false)
-
-
 
   return (
-    <div >
-      <div class="container-md" >
-        <h1 ><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/statistic.png" alt="statistic" onClick={() => setEstoque(!estoque)} />Estoque Geral</h1>
-        <div>
-          {estoque ?
-            <>
-              <EstoqueData />
-            </>
-            : null}
-        </div>
-      </div>
-      <div class="container-md">
-        <h1 ><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/statistic.png" alt="statistic" onClick={() => setMarcas(!marcas)} />Estoque Por Marcas</h1>
-        <div>
-          {marcas ?
-          <>
-          <VeiculosData />
-          </>
-        
-      :null}
-        </div>
-      </div>
-      <div class="container-md">
-        <h1 ><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/statistic.png" alt="statistic" onClick={() => setAnoModelo(!anoModelo)} />Estoque Por Ano Modelo</h1>
-        <div>
-          {anoModelo ?
-          <>
-          <AnoMod />
-          </>
-      :null}
-        </div>
-      </div>
-      <div class="container-md">
-        <h1 ><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/statistic.png" alt="statistic" onClick={() => setBaixas(!baixas)} />Baixas</h1>
-        <div>
-          {baixas ?
-            <>
-              <BaixasData />
-            </>
-            : null}
-        </div>
-      </div>
-      <div class="container-md">
-        <h1 ><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/statistic.png" alt="statistic" onClick={() => setVendas(!vendas)} />Vendas Por Loja</h1>
-        <div>
-          {vendas ?
-            <>
-              <VendasData/>
-            </>
-            : null}
-        </div>
-      </div>
-      <div class="container-md">
-        <h1 ><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/statistic.png" alt="statistic" onClick={() => setInstituicao(!instituicao)} />Vendas Por Instituicao Financeira</h1>
-        <div>
-          {instituicao ?
-            <>
-              <InstData/>
-            </>
-            : null}
+    <div>
+      <p className={styles.p_titulo}><img width="70" height="80" src="https://img.icons8.com/3d-fluency/94/bar-chart.png" alt="bar-chart" /> Dashboard</p>
+      <div className="container-md">
+        <div className={styles.dash}>
+          <div className="row">
+            <div class="col p-3" >
+              <div className={styles.link_card}>
+                <Link to="/est_estoque" style={{ textDecoration: 'none' }}>
+                  <p className={styles.est_title}><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/statistic.png" alt="statistic" />
+                    Estoque Geral
+                  </p>
+                </Link>
+              </div>
+            </div>
+            <div class="col p-3" >
+              <div className={styles.link_card}>
+                <Link to='/estat_marcas' style={{ textDecoration: 'none' }}>
+                  <p className={styles.est_title}><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/statistic.png" alt="statistic" />
+                    Estoque por Marca
+                  </p>
+                </Link>
+              </div>
+            </div>
+            <div class="col p-3" >
+              <div className={styles.link_card}>
+                <Link to='/estat_ano_mod' style={{ textDecoration: 'none' }}>
+                  <p className={styles.est_title}><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/statistic.png" alt="statistic" />
+                    Estoque por Ano Modelo
+                  </p>
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div class="col p-3" >
+              <div className={styles.link_card}>
+                <Link to='/estatisticas_baixas' style={{ textDecoration: 'none' }}>
+                  <p className={styles.est_title}><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/statistic.png" alt="statistic" />
+                    Baixas
+                  </p>
+                </Link>
+              </div>
+            </div>
+            <div class="col p-3" >
+              <div className={styles.link_card}>
+                <Link to="/est_venda_loja" style={{ textDecoration: 'none' }}>
+                  <p className={styles.est_title}><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/statistic.png" alt="statistic" />
+                    Vendas Por Loja
+                  </p>
+                </Link>
+              </div>
+            </div>
+            <div class="col p-3" >
+              <div className={styles.link_card}>
+                <Link to="/est_venda_instituicao" style={{ textDecoration: 'none' }}>
+                  <p className={styles.est_title}><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/statistic.png" alt="statistic" />
+                    Vendas Por Instituicao
+                  </p>
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
   )
 }
 
