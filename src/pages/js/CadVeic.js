@@ -3,7 +3,7 @@ import styles from "../styles/CadVeic.module.css";
 import { Link, useLocation } from "react-router-dom";
 
 const CadVeic = () => {
-  const [veiculo, setVeiculo] = useState({ unidade: "", idUnidade: "", marca: "", modelo: "", cor: "", placa: "", ano: "", ano_modelo: "", valor_meio_acesso: "", veiculo_status: "", fipe: "", renavan: "", tag: "", });
+  const [veiculo, setVeiculo] = useState({ unidade: "", idUnidade: "", marca: "", modelo: "", cor: "", placa: "", ano: "", ano_modelo: "", valorMeioAcesso: "", veiculo_status: "", fipe: "", renavan: "", tag: "", });
   const [tag, setTag] = useState("");
   const [fipe, setFipe] = useState("");
   const [unidade, setUnidade] = useState("");
@@ -114,7 +114,7 @@ const CadVeic = () => {
     // Converte o valor hexadecimal para o formato Wiegand
 
     const convertedValue = hexToWiegand(tag);
-    const valor_meio_acesso = convertedValue;
+    const valorMeioAcesso = convertedValue;
 
     /*Função que trata da inserção de data de forma automática */
     const formatTimestamp = (date) => {
@@ -155,7 +155,7 @@ const CadVeic = () => {
       ano_modelo: veiculo.AnoModelo,
       cor: veiculo.CorVeiculo,
       placa,
-      valor_meio_acesso,
+      valorMeioAcesso,
       veiculo_status,
       renavan: veiculo.renavam,
       data_registro,
@@ -186,7 +186,7 @@ const CadVeic = () => {
       const data = await responseUnidade.json();
 
       const filteredResults = data.filter(
-        (veiculo) => veiculo.valor_meio_acesso !== ""
+        (veiculo) => veiculo.valorMeioAcesso !== ""
       ).length;
       console.log("Quantidade de veiculos: ", filteredResults);
 

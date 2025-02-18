@@ -12,7 +12,7 @@ const SearchVeiculos = () => {
     const [error, setError] = useState('')
     const [unidade, setUnidade] = useState('')
     const [idUnidade, setIdUnidade] = useState('')
-    const [editableFields, setEditableFields] = useState({ id: '', marca: '', modelo: '', cor: '', ano: '', ano_modelo: '', renavan: '', unidade: '', tag: '', fipe: '', observacoes: '', valor_meio_acesso: '', idUnidade: '' })
+    const [editableFields, setEditableFields] = useState({ id: '', marca: '', modelo: '', cor: '', ano: '', ano_modelo: '', renavan: '', unidade: '', tag: '', fipe: '', observacoes: '', valorMeioAcesso: '', idUnidade: '' })
 
 
 
@@ -123,7 +123,7 @@ const SearchVeiculos = () => {
     const handleSave = async () => {
 
         const convertedValue = hexToWiegand(tag);
-        editableFields.valor_meio_acesso = convertedValue;
+        editableFields.valorMeioAcesso = convertedValue;
         console.log(convertedValue)
 
         editableFields.unidade = unidade;
@@ -134,7 +134,7 @@ const SearchVeiculos = () => {
             const responseUnidade = await fetch(`http://localhost:8090/api/v1/veiculos/unidade/${unidade}`)
             const data = await responseUnidade.json()
 
-            const filteredResults = data.filter(veiculo => veiculo.valor_meio_acesso !== '').length;
+            const filteredResults = data.filter(veiculo => veiculo.valorMeioAcesso !== '').length;
             console.log("Quantidade de veiculos: ", filteredResults.length)
 
             const responseLoja = await fetch(`http://localhost:8090/api/v1/lojas`)
@@ -252,7 +252,7 @@ const SearchVeiculos = () => {
                                     <th>Ano Modelo: {result.ano_modelo}</th>
                                     <th>Valor FIPE: {result.fipe}</th>
                                     <th>Observaçoes: {edit ? <input className={styles.edit_data} type='text' name="observacoes" value={editableFields.observacoes} onChange={handleInputChange} /> : result.observacoes}</th>
-                                    <th>Numero de Registro: {result.valor_meio_acesso}</th>
+                                    <th>Numero de Registro: {result.valorMeioAcesso}</th>
                                 </tr>
                             ))}
                         </thead>

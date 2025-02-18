@@ -43,7 +43,7 @@ const GerarInventario = () => {
 
       let filteredResults
 
-      filteredResults = data.filter(veiculo => veiculo.unidade.toUpperCase() === upperCaseQuery && veiculo.unidade.trim() !== '' && veiculo.valor_meio_acesso !== '');//Buscando o estoque valido de uma loja
+      filteredResults = data.filter(veiculo => veiculo.unidade.toUpperCase() === upperCaseQuery && veiculo.unidade.trim() !== '' && veiculo.valorMeioAcesso !== '');//Buscando o estoque valido de uma loja
       filteredResults.sort((a, b) => a.unidade.localeCompare(b.unidade)) //Filtrando as lojas de ordem alfabetica
 
       if (filteredResults.length > 0) {

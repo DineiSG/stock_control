@@ -59,7 +59,7 @@ const RelBaixasLoja = () => {
           (veiculo) =>
             veiculo.unidade &&
             veiculo.unidade.trim() !== "" &&
-            veiculo.valor_meio_acesso !== ""
+            veiculo.valorMeioAcesso !== ""
         ); //Buscando o estoque valido de todas as lojas
         filteredResults.sort((a, b) => a.unidade.localeCompare(b.unidade)); //Filtrando as lojas de ordem alfabetica
       } else {
@@ -67,7 +67,7 @@ const RelBaixasLoja = () => {
           (veiculo) =>
             veiculo.unidade.toUpperCase() === upperCaseQuery &&
             veiculo.unidade.trim() !== "" &&
-            veiculo.valor_meio_acesso !== ""
+            veiculo.valorMeioAcesso !== ""
         ); //Buscando o estoque valido de uma loja
       }
 

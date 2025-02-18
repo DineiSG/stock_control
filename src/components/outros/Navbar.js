@@ -17,21 +17,28 @@ const Navbar = () => {
   const [isMenuVisible, setIsMenuVisible] = useState(false)
   const [iconVisible, setIconVisible] = useState(false)
 
+  //* Função para deslogar usuario
+  const handleLogout = () => {
+    //* Remover o token de autenticação
+    localStorage.clear()
 
+    //* Redirecionando para a pagina de login
+    navigate('/')
+  }
 
-  //Função que altera a visibilidade do menu
+  //* Função que altera a visibilidade do menu
   const handleMenu = () => {
     setIsMenuVisible(!isMenuVisible)
   }
 
-  //Esconde o ícone quando a URL muda
+  //* Esconde o ícone quando a URL muda
   useEffect(() => {
     if (location.pathname !== '/') {
-      setIconVisible(false)// Oculta o ícone quando sair da página "acesso"
-      setIsMenuVisible(true);// Garante que o menu permaneça visível após a navegação
+      setIconVisible(false)//* Oculta o ícone quando sair da página "acesso"
+      setIsMenuVisible(true)//* Garante que o menu permaneça visível após a navegação
     } else {
-      setIconVisible(true)// Exibe o ícone quando estiver na página "acesso"
-      setIsMenuVisible(false);// Esconde o menu inicialmente
+      setIconVisible(true)//* Exibe o ícone quando estiver na página "acesso"
+      setIsMenuVisible(false)//* Esconde o menu inicialmente
     }
   }, [location])
 
@@ -41,8 +48,6 @@ const Navbar = () => {
   const handleModalAlertClose = () => {
     setAletModalOpen(false)
   }
-
-
 
   const handleOpenModal = (path) => {
     setRedirectPath(path);
@@ -55,14 +60,15 @@ const Navbar = () => {
 
   const handleLoginSuccess = () => {
     setIsModalOpen(false);
-    navigate(redirectPath); // Redireciona para a página desejada após o login
+    navigate(redirectPath); //* Redireciona para a página desejada após o login
   };
-
 
   return (
     <div>
+
       {!isContratoPage && (
         <nav className={styles.navbar} id="navbar">
+
           <div className={styles.logo}>
             <img src='/logo2.png' className={styles.logo} alt='Stock Control' title='Stock Control' />
           </div>
@@ -91,6 +97,7 @@ const Navbar = () => {
                   <li><Link to='/inventario' className={styles.dropdown}>Inventário</Link> </li>
                 </ul>
               </div>
+
               <div className={styles.navItem}>
                 <button className={styles.nav} id="dropdown3">Administração</button>
                 <ul className={styles.dropdownMenu}>
@@ -98,7 +105,6 @@ const Navbar = () => {
                   <li><button onClick={() => handleOpenModal('/baixar_veic')} className={styles.dropdown}>Baixar Veículo</button></li>
                   <li><Link to='relatorio_estoque' className={styles.dropdown}>Relatórios</Link></li>
                   <li><Link to='dashboard' className={styles.dropdown}>Dashboard</Link></li>
-
                 </ul>
                 {isModalOpen && (
                   <LoginModal onClose={handleCloseModal} onLogin={handleLoginSuccess} />
@@ -106,22 +112,22 @@ const Navbar = () => {
               </div>
 
               <Link to='/buscas' className={styles.pesquisar} i>Pesquisar</Link>
+
               <div className={styles.links} alt='Home' title='Ir para home'>
                 <Link to='/home'><img width="50" height="50" src="https://img.icons8.com/3d-fluency/94/home.png" alt="home" /></Link>
               </div>
-              {/*} {isHome && (
-            <Link to='/'><button className={styles.login} ><svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
-              <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-            </svg>Sair</button></Link>
-          )}*/}
+
+              {isHome && (
+                <img width="50" height="50" src="https://img.icons8.com/3d-fluency/94/lock-2.png" alt="lock-2" title="Logout" onClick={handleLogout} />
+              )}
+
             </div>
+
           )}
           {iconVisible && (
-            <Link to='/home'>
-              <img width="50" height="50" src="https://img.icons8.com/3d-fluency/94/door.png" alt="door" title='Acessar' onClick={handleMenu} />
-            </Link>
+            <Link to='/home'><img width="50" height="50" src="https://img.icons8.com/3d-fluency/94/door.png" alt="door" title='Acessar' onClick={handleMenu} /> </Link>
           )}
+
         </nav>
       )}
     </div>

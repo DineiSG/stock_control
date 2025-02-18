@@ -124,7 +124,7 @@ const SearchLibMotivo = () => {
                                             <td>{result.renavan}</td>
                                             <td>{result.placa}</td>
                                             <td>{formatTimestamp(result.data_registro)}</td>
-                                            <td>{result.valor_meio_acesso}</td>
+                                            <td>{result.valorMeioAcesso}</td>
                                             <td>{result.observacoes}</td>
                                         </tr>
                                     ))}

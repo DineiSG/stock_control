@@ -4,8 +4,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(3, 43, 53, 0.685);
-  /* Fundo semi-transparente */
+  background-color: rgba(3, 43, 53, 0.815);
+  /** Fundo semi-transparente */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,7 +75,7 @@ button {
   overflow-y: auto;
   max-height: 28vh;
   text-align: center;
-  /* Limitar a altura do modal */
+  /** Limitar a altura do modal */
 }
 
 .log {
@@ -101,7 +101,7 @@ button {
   color: red;
 }
 
-/*CSS Modal Alert*/
+/** CSS Modal Alert*/
 
 .btn_continuar {
   height: 40px;
@@ -122,4 +122,42 @@ button {
 .btn_continuar:focus {
   outline: 1px solid rgb(0, 0, 255);
   background-color:rgb(199, 48, 236);
+}
+
+/** Access Modal*/
+
+.AccessModalContent {
+  margin-bottom: 4%;
+  text-align: center;
+  background-color: #26ACE2;
+  padding: 20px;
+  width: 540px;
+
+}
+
+.accessParameters {
+  display:flow-root;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 16px;
+  height: 35px;
+  color: #333333;
+}
+
+.accessTitle {
+  color: #ffffff;
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.accessLogin{
+  margin-top: 1%;
+
+}
+
+.accessParameters{
+
+  text-transform:none;
+  width: 400px;
 }

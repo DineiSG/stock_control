@@ -46,7 +46,7 @@ const CadVeicManual = () => {
         // Converte o valor decimal (em string) para o formato Wiegand
 
         const convertedValue = hexToWiegand(tag);
-        const valor_meio_acesso = convertedValue
+        const valorMeioAcesso = convertedValue
 
 
 
@@ -71,7 +71,7 @@ const CadVeicManual = () => {
 
         e.preventDefault()
         const payload = {
-            unidade, idUnidade, marca, modelo, ano, ano_modelo, cor, placa, tag, veiculo_status, renavan, data_registro, valor_meio_acesso, fipe
+            unidade, idUnidade, marca, modelo, ano, ano_modelo, cor, placa, tag, veiculo_status, renavan, data_registro, valorMeioAcesso, fipe
         }
         //Alterando os valores informados no input para lertas maiusculas
         const toUpperCasePayload = (data) => {
@@ -96,7 +96,7 @@ const CadVeicManual = () => {
             const responseUnidade = await fetch(`http://localhost:8090/api/v1/veiculos/unidade/${unidade}`)
             const data = await responseUnidade.json()
 
-            const filteredResults = data.filter(veiculo => veiculo.valor_meio_acesso !== '').length;
+            const filteredResults = data.filter(veiculo => veiculo.valorMeioAcesso !== '').length;
             console.log("Quantidade de veiculos: ", filteredResults.length)
 
             const responseLoja = await fetch(`http://localhost:8090/api/v1/lojas`)

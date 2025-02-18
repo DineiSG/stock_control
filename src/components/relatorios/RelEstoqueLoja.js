@@ -72,10 +72,10 @@ const RelEstoqueLoja = () => {
 
       let filteredResults;
       if (upperCaseQuery === "ESTOQUE GERAL") {
-        filteredResults = data.filter( (veiculo) => veiculo.unidade && veiculo.unidade.trim() !== "" && veiculo.valor_meio_acesso.trim() !== "" ); //Buscando o estoque valido de todas as lojas
+        filteredResults = data.filter( (veiculo) => veiculo.unidade && veiculo.unidade.trim() !== "" && veiculo.valorMeioAcesso.trim() !== "" ); //Buscando o estoque valido de todas as lojas
         filteredResults.sort((a, b) => a.unidade.localeCompare(b.unidade)); //Filtrando as lojas de ordem alfabetica
       } else {
-        filteredResults = data.filter( (veiculo) => veiculo.unidade.toUpperCase() === upperCaseQuery && veiculo.unidade.trim() !== "" && veiculo.valor_meio_acesso !== "" ); //Buscando o estoque valido de uma loja
+        filteredResults = data.filter( (veiculo) => veiculo.unidade.toUpperCase() === upperCaseQuery && veiculo.unidade.trim() !== "" && veiculo.valorMeioAcesso !== "" ); //Buscando o estoque valido de uma loja
       }
 
       if (filteredResults.length > 0) {

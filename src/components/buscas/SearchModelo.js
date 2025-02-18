@@ -20,7 +20,7 @@ const SearchModelo = () => {
             // Filtra os veículos que possuem o modelo parcialmente correspondente e com tag válida
             const filteredResults = data.filter(veiculo => 
                 veiculo.modelo.toUpperCase().includes(upperCaseQuery.replace('%', '')) && 
-                veiculo.valor_meio_acesso &&
+                veiculo.valorMeioAcesso &&
                 veiculo.unidade !==null// Verifica se a tag está cadastrada
             );
     
@@ -29,7 +29,7 @@ const SearchModelo = () => {
                 setError('');
             } else {
                 setResults([]);
-                window.alert("Não há nenhum veículo do modelo informado ou com valor_meio_acesso cadastrado.");
+                window.alert("Não há nenhum veículo do modelo informado ou com valorMeioAcesso cadastrado.");
             }
         } catch (error) {
             window.alert("Erro ao buscar dados: " + error.message);

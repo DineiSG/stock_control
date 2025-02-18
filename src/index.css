@@ -41,12 +41,12 @@ input, textarea, select{
   text-transform:uppercase;
 }
 textarea, input:focus{
-  border-color: #02acfa;
+  border-color: #0251fa;
   outline:none
 }
 
 select:focus{
-  border-color: #02acfa;
+  border-color: #0251fa;
   outline:none
 }
 

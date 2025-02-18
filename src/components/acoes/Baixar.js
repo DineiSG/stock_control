@@ -10,7 +10,7 @@ const Baixar = () => {
   const [selectedMotivo, setSelectedMotivo] = useState('')
   const [editableFields, setEditableFields] = useState({
     id: '', placa: '', marca: '', modelo: '', cor: '', observacoes: '', renavan: '',
-    id_unidade: '', unidade: '', valor_meio_acesso: '', motivo: ''
+    id_unidade: '', unidade: '', valorMeioAcesso: '', motivo: ''
   })
 
   /*Função que busca informações de um veiculo de acordo com a placa */
@@ -93,7 +93,7 @@ const Baixar = () => {
     //Esta funçao envia para o bd o motivo e a data da baixa (data_registro) para a tabela vaga.baixas
     const baixaData = { ...editableFields, motivo: selectedMotivo, data_registro };
 
-    const updatedFields = { ...editableFields, data_alteracao: currentDate, valor_meio_acesso: '', unidade: null, idUnidade: null, tag: null }
+    const updatedFields = { ...editableFields, data_alteracao: currentDate, valorMeioAcesso: '', unidade: null, idUnidade: null, tag: null }
 
 
 
@@ -136,7 +136,6 @@ const Baixar = () => {
 
   }
 
-
   return (
     <div className={styles.container}>
       <div>
@@ -176,7 +175,7 @@ const Baixar = () => {
                     <td>{result.marca}</td>
                     <td>{result.modelo}</td>
                     <td>{result.cor}</td>
-                    <td>{result.valor_meio_acesso}</td>
+                    <td>{result.valorMeioAcesso}</td>
                     <td>{<select type='text' name="motivo" value={selectedMotivo} onChange={(e) => setSelectedMotivo(e.target.value)} required>
                       <option value="" placeholder="SELECIONE UM MOTIVO" ></option>
                       <option value="VENDA" >VENDA</option>

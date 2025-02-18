@@ -15,7 +15,7 @@ const LoginModal = ({ onClose, onLogin }) => {
         }
     };
 
-    
+
     //funçao que trabalha a verificação de login
     const handleLogin = async () => {
         try {
@@ -29,7 +29,7 @@ const LoginModal = ({ onClose, onLogin }) => {
 
             if (response.ok) {
                 const users = await response.json();
-                const user = users.find(u => u.login===login && u.password===password)
+                const user = users.find(u => u.login === login && u.password === password)
                 if (user) {
                     onLogin();
                 } else {
@@ -48,20 +48,10 @@ const LoginModal = ({ onClose, onLogin }) => {
         <div className={styles.modalOverlay} onClick={handleOverlayClick}>
             <div className={styles.modalContent}>
                 <p className={styles.title}>Login</p>
-                <input className={styles.parameters}
-                    type="text"
-                    placeholder="Login"
-                    value={login}
-                    onChange={(e) => setLogin(e.target.value)}
-                />
-                <input className={styles.parameters}
-                    type="password"
-                    placeholder="Senha"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button className={styles.botao} onClick={handleLogin}>Entrar</button>
-                <button className={styles.botao} onClick={onClose}>Cancelar</button>
+                <input className={styles.parameters} type="text" placeholder="Login" value={login} onChange={(e) => setLogin(e.target.value)} />
+                <input className={styles.parameters} type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <button className={styles.botao} onClick={handleLogin}>ENTRAR</button>
+                <button className={styles.botao} onClick={onClose}>CANCELAR</button>
             </div>
         </div>
     )

@@ -38,9 +38,9 @@ const VeiculosData = () => {
         const data = await response.json();
         const filteredResults = data.filter(
           (veiculo) =>
-            veiculo.unidade !== "" && veiculo.valor_meio_acesso !== ""
+            veiculo.unidade !== "" && veiculo.valorMeioAcesso !== ""
         );
-        //Filtrando os dados obtidos. As coluna unidade e valor_meio_acesso devem conter dados
+        //Filtrando os dados obtidos. As coluna unidade e valorMeioAcesso devem conter dados
 
         if (filteredResults.length > 0) {
           const dados = contarMarcas(filteredResults);
