@@ -8,11 +8,18 @@ const RelEstoqueLoja = () => {
   const [results, setResults] = useState([]);
   const [setError] = useState("");
   const [lojas, setLojas] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1)
+  const [qtdItems, setQtdItems] = useState([5])
+
+  const itemsPerPage = (e) => {
+    setQtdItems(e.target.value)
+  }
+
 
   //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
   const tabelaRef = useRef(null);
 
-  
+
 
   const handleButtonClick = () => {
     setFiltroLoja(!filtroLoja); //Alterando o estado da tabela
@@ -60,7 +67,7 @@ const RelEstoqueLoja = () => {
       if (upperCaseQuery === "ESTOQUE GERAL") {
         response = await fetch(`http://localhost:8090/api/v1/veiculos`); //Buscando o estoque de todas as lojas
       } else {
-        response = await fetch( `http://localhost:8090/api/v1/veiculos/unidade/${upperCaseQuery}` ); //Buscando o estoque da loja de acordo com o nome
+        response = await fetch(`http://localhost:8090/api/v1/veiculos/unidade/${upperCaseQuery}`); //Buscando o estoque da loja de acordo com o nome
       }
 
       if (!response.ok) {
@@ -72,14 +79,15 @@ const RelEstoqueLoja = () => {
 
       let filteredResults;
       if (upperCaseQuery === "ESTOQUE GERAL") {
-        filteredResults = data.filter( (veiculo) => veiculo.unidade && veiculo.unidade.trim() !== "" && veiculo.valorMeioAcesso.trim() !== "" ); //Buscando o estoque valido de todas as lojas
+        filteredResults = data.filter((veiculo) => veiculo.unidade && veiculo.unidade.trim() !== "" && veiculo.valorMeioAcesso.trim() !== ""); //Buscando o estoque valido de todas as lojas
         filteredResults.sort((a, b) => a.unidade.localeCompare(b.unidade)); //Filtrando as lojas de ordem alfabetica
       } else {
-        filteredResults = data.filter( (veiculo) => veiculo.unidade.toUpperCase() === upperCaseQuery && veiculo.unidade.trim() !== "" && veiculo.valorMeioAcesso !== "" ); //Buscando o estoque valido de uma loja
+        filteredResults = data.filter((veiculo) => veiculo.unidade.toUpperCase() === upperCaseQuery && veiculo.unidade.trim() !== "" && veiculo.valorMeioAcesso !== ""); //Buscando o estoque valido de uma loja
       }
 
       if (filteredResults.length > 0) {
         setResults(filteredResults);
+        setCurrentPage(1)
       } else {
         setResults([]);
         setError(window.alert("Nao há estoque valido para a loja informada."));
@@ -98,7 +106,7 @@ const RelEstoqueLoja = () => {
         const data = await response.json();
 
         if (Array.isArray(data)) {
-          const lojasOrdenadas = data.sort((a,b)=> a.descricao.localeCompare(b.descricao))
+          const lojasOrdenadas = data.sort((a, b) => a.descricao.localeCompare(b.descricao))
           setLojas(lojasOrdenadas);
         } else {
           console.error("A resposta da API nao e um array", data);
@@ -110,6 +118,23 @@ const RelEstoqueLoja = () => {
     fetchLojas();
   }, []);
 
+  //Calculando a quantidade de itens para exibir
+  const indexOfLastItem = currentPage * qtdItems
+  const indexOfFirstItem = indexOfLastItem - qtdItems
+  const currentItems = results.slice(indexOfFirstItem, indexOfLastItem)
+
+  //Gera botoes de paginaçao
+  const totalPages = Math.ceil(results.length / qtdItems)
+  const paginationButtons = Array.from({ length: totalPages }, (_, index) => (
+    <button
+      key={index + 1}
+      className={styles.btn_paginacao}
+      onClick={() => setCurrentPage(index + 1)}
+      disabled={currentPage === index + 1}>
+      {index + 1}
+    </button>
+  ))
+  
   //Front End
 
   return (
@@ -146,8 +171,18 @@ const RelEstoqueLoja = () => {
         {filtroLoja ? (
           <>
             <div ref={tabelaRef}>
-              <p className={styles.txt_title}> RELATORIO DE ESTOQUE<br/> {query} </p>
-
+              <p className={styles.txt_title}> RELATORIO DE ESTOQUE<br /> {query} </p>
+              <div className={styles.selectQtd}>
+                <span style={{ color: 'black' }}>Selecione a quantidade de itens a ser exibido por pagina:</span>
+                <select value={qtdItems} name="cars" id="cars" onChange={(e) => setQtdItems(e.target.value)} >
+                  <option value="5">5</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                  <option value="1000">TODOS</option>
+                </select>
+              </div>
+              <div className={styles.paginacao}><span style={{ color: 'black' }} >Página: {paginationButtons}</span></div>
               <table
                 className="table table-secondary table-striped-columns" border="1" >
                 <thead>
@@ -166,16 +201,12 @@ const RelEstoqueLoja = () => {
                     <th>Valor FIPE</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {results.map((result) => (
+                {currentItems.map((result) => (
+                  <tbody>
                     <tr key={result.id}>
                       <td>{result.unidade}</td>
                       <td>{formatTimestamp(result.data_registro)}</td>
-                      <td>
-                        {result.unidade
-                          ? calculateDaysInStock(result.data_registro)
-                          : "-"}
-                      </td>
+                      <td> {result.unidade ? calculateDaysInStock(result.data_registro) : "-"} </td>
                       <td>{result.marca}</td>
                       <td>{result.modelo}</td>
                       <td>{result.cor}</td>
@@ -186,10 +217,11 @@ const RelEstoqueLoja = () => {
                       <td>{result.tag}</td>
                       <td>{result.fipe}</td>
                     </tr>
-                  ))}
-                </tbody>
+                  </tbody>
+                ))}
               </table>
             </div>
+
             <p className={styles.quantidade}>
               TOTAL DE VEICULOS EM ESTOQUE: {results.length}
             </p>

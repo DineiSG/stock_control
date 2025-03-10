@@ -7,6 +7,12 @@ const RelBaixasLoja = () => {
   const [results, setResults] = useState([]);
   const [setError] = useState("");
   const [lojas, setLojas] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1)
+  const [qtdItems, setQtdItems] = useState([50])
+
+  const itemsPerPage = (e) => {
+    setQtdItems(e.target.value)
+  }
 
   //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
   const tabelaRef = useRef(null);
@@ -92,9 +98,9 @@ const RelBaixasLoja = () => {
         const data = await response.json();
 
         if (Array.isArray(data)) {
-        const lojasOrdenadas = data.sort((a, b) =>
+          const lojasOrdenadas = data.sort((a, b) =>
             a.descricao.localeCompare(b.descricao));
-            setLojas(lojasOrdenadas);
+          setLojas(lojasOrdenadas);
         } else {
           console.error("A resposta da API nao e um array", data);
         }
@@ -104,6 +110,24 @@ const RelBaixasLoja = () => {
     };
     fetchLojas();
   }, []);
+
+  //Calculando a quantidade de itens para exibir
+  const indexOfLastItem = currentPage * qtdItems
+  const indexOfFirstItem = indexOfLastItem - qtdItems
+  const currentItems = results.slice(indexOfFirstItem, indexOfLastItem)
+
+  //Gera botoes de paginaçao
+  const totalPages = Math.ceil(results.length / qtdItems)
+  const paginationButtons = Array.from({ length: totalPages }, (_, index) => (
+    <button
+      key={index + 1}
+      className={styles.btn_paginacao}
+      onClick={() => setCurrentPage(index + 1)}
+      disabled={currentPage === index + 1}
+    >
+      {index + 1}
+    </button>
+  ))
 
   return (
     <div>
@@ -136,7 +160,16 @@ const RelBaixasLoja = () => {
           <>
             <div ref={tabelaRef}>
               <p className={styles.txt_title}> BAIXAS REALIZADAS </p>
-
+              <div className={styles.selectQtd}>
+                <span style={{ color: 'black' }} >Selecione a quantidade de itens a ser exibido por pagina:</span>
+                <select value={qtdItems} name="cars" id="cars" onChange={(e) => setQtdItems(e.target.value)}>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                  <option value="500">500</option>
+                  <option value="10000">TODOS</option>
+                </select>
+              </div>
+              <div className={styles.paginacao} ><span aria-hidden="true" style={{ color: 'black' }}>Página: {paginationButtons}</span></div>
               <table
                 className="table table-secondary table-striped-columns"
                 border="1">
@@ -153,8 +186,8 @@ const RelBaixasLoja = () => {
                     <th>Observação</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {results.map((result) => (
+                {currentItems.map((result) => (
+                  <tbody>
                     <tr key={result.id}>
                       <td>{result.unidade}</td>
                       <td>{result.marca}</td>
@@ -166,8 +199,8 @@ const RelBaixasLoja = () => {
                       <td>{result.motivo}</td>
                       <td>{result.observacoes}</td>
                     </tr>
-                  ))}
-                </tbody>
+                  </tbody>
+                ))}
               </table>
               <p className={styles.quantidade}>
                 TOTAL DE VEICULOS BAIXADOS: {results.length}

@@ -133,7 +133,7 @@
 
     #printable,
     #printable * {
-        visibility: visible;
+        visibility: visible; 
     }
 
     #printable {
@@ -145,4 +145,15 @@
 
 .liberacoes {
     margin: 2% 8% 5% 8%;
+}
+.selectQtd {
+    margin-bottom:10px;
+}
+.btn_paginacao{
+    margin-bottom:10px;
+    font-weight: bold;
+}
+.btn_paginacao:hover {
+    background-color: rgb(199, 48, 236);
+    color: rgba(255, 255, 255, 0.871);
 }

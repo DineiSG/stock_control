@@ -16,15 +16,20 @@ const Navbar = () => {
   const navigate = useNavigate()
   const [isMenuVisible, setIsMenuVisible] = useState(false)
   const [iconVisible, setIconVisible] = useState(false)
+  
 
   //* Função para deslogar usuario
   const handleLogout = () => {
     //* Remover o token de autenticação
-    localStorage.clear()
+    sessionStorage.clear()
+
+    window.close(localStorage.clear())
 
     //* Redirecionando para a pagina de login
     navigate('/')
   }
+
+
 
   //* Função que altera a visibilidade do menu
   const handleMenu = () => {
@@ -103,6 +108,7 @@ const Navbar = () => {
                 <ul className={styles.dropdownMenu}>
                   <li><button onClick={() => handleOpenModal('/liberacoes')} className={styles.dropdown}>Liberar Veículo</button></li>
                   <li><button onClick={() => handleOpenModal('/baixar_veic')} className={styles.dropdown}>Baixar Veículo</button></li>
+                  <li><button onClick={() => handleOpenModal('/cad_user')} className={styles.dropdown}>Cad. Usuário</button></li>
                   <li><Link to='relatorio_estoque' className={styles.dropdown}>Relatórios</Link></li>
                   <li><Link to='dashboard' className={styles.dropdown}>Dashboard</Link></li>
                 </ul>

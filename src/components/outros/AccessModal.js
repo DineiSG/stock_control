@@ -13,7 +13,7 @@ const AccessModal = () => {
     }
 
 
-    //funçao que trabalha a verificação de login
+    //* Funçao que trabalha a verificação de login
     const handleLogin = async () => {
         try {
             const response = await fetch(`http://localhost:8091/api/v1/usuario/login`, {
@@ -36,7 +36,11 @@ const AccessModal = () => {
                 throw new Error('Token não recebido. Verifique o backend.');
             }
 
-            localStorage.setItem('token', data.token)
+            const tokenPayload = JSON.parse(atob(data.token.split('.')[1])) //* Decodifica o payload
+            const userTipo=tokenPayload.userTipo
+
+            sessionStorage.setItem('role', userTipo)
+            sessionStorage.setItem('token', data.token)
 
             window.location.href = '/home'
         } catch (error) {

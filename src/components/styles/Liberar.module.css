@@ -12,6 +12,11 @@ span{
 input, option {
     background-color: rgba(252, 252, 252, 0.871);
 }
+.container {
+    box-shadow: 2px 2px 3px 3px rgba(0, 0, 0, 0.2);
+    background-color: rgb(255, 255, 255);
+    margin: 25px 0;
+}
 .title{
     padding: 3% 2% 0 2%;
     font-size: 16px;
@@ -55,11 +60,7 @@ input, option {
 .tag, .cor{
     width: 80px;
 }
-.container{
-    box-shadow: 2px 2px 3px 3px rgba(0,0,0,0.2);
-    background-color: rgb(255, 255, 255);
-    margin:25px 5%;
-}
+
 .status{
     width: 50px;
 }
@@ -145,6 +146,39 @@ input, option {
 .consult{
     margin:4% -5%
 }
-.table{
-    margin: 0 5%;
+.selectQtd {
+    margin-bottom:10px;
 }
+.btn_paginacao{
+    margin-bottom:10px;
+    font-weight: bold;
+}
+.btn_paginacao:hover {
+    background-color: rgb(199, 48, 236);
+    color: rgba(255, 255, 255, 0.871);
+}
+.containerLib{
+    box-shadow: 2px 2px 3px 3px rgba(0, 0, 0, 0.2);
+    background-color: rgb(255, 255, 255);
+    margin: 25px 5%
+    ;
+}
+.btn_cancelar{
+    height: 40px;
+    width: 100px;
+    color: #FFF;
+    text-align: center;
+    background-color:rgba(89, 3, 110, 0.871);
+    font-weight:600;
+    margin-top: 20px;
+    margin-left: 3%;
+}
+.btn_cancelar:hover{
+    background-color: #669231;
+    color:rgba(255, 255, 255, 0.871);
+}
+.btn_cancelar:focus{
+    outline: 1px solid blue;
+    background-color:rgb(199, 48, 236);
+}
+

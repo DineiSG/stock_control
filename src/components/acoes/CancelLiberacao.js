@@ -1,12 +1,12 @@
-import React from 'react'
 import { useState, useRef } from 'react'
 import styles from '../styles/Liberar.module.css'
 
-const SearchLiberacoes = () => {
+const CancelLiberacao = () => {
     const [filtroAcesso, setFiltroAcesso] = useState(false)
-    const [query, setQuery] = useState()
+    const [query, setQuery] = useState('')
     const [results, setResults] = useState([])
-    const [setError] = useState('')
+    const [error, setError] = useState('')
+    const [cancelar, setCancelar] = useState(false)
 
     //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
     const tabelaRef = useRef(null)
@@ -62,6 +62,31 @@ const SearchLiberacoes = () => {
         }
     }
 
+    const handleCancel = async () => {
+
+        const liberacaoId = results[0].id
+        try {
+            const response = await fetch(`http://localhost:8090/api/v1/liberacoes/${liberacaoId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+
+            if (response.ok) {
+                setResults([])
+                alert('Liberação cancelada com sucesso!')
+                window.location.reload()
+            } else {
+                alert('Erro ao cancelar veículo!')
+            }
+        } catch (error) {
+            console.error('Erro: ', error)
+        }
+    }
+
+
+
     return (
         <div>
             <div className={styles.container}>
@@ -72,7 +97,11 @@ const SearchLiberacoes = () => {
                             <p>Placa:</p>
                             <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
                         </label>
-                        <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>{filtroAcesso ? 'Buscar' : 'Buscar'}</button>
+                        
+                            <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>Buscar</button> <br></br>
+                            {filtroAcesso && (<button className={styles.btn_cancelar} type='submit' onClick={handleCancel} >Cancelar</button>)}
+                     
+
                     </form>
                 </div>
             </div>
@@ -102,4 +131,4 @@ const SearchLiberacoes = () => {
     )
 }
 
-export default SearchLiberacoes
+export default CancelLiberacao
