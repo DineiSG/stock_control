@@ -34,8 +34,8 @@ const RelBaixasMotivo = () => {
     /*Função que trata do retorno de data */
     const formatTimestamp = (timestamp) => {
         const date = new Date(timestamp);
-        return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-    };
+        return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }; 
 
 
     /*Função que busca o estoque de acordo com a loja */
@@ -142,7 +142,6 @@ const RelBaixasMotivo = () => {
                                         <th>Marca</th>
                                         <th>Modelo</th>
                                         <th>Cor</th>
-                                        <th>Renavan</th>
                                         <th>Placa</th>
                                         <th>Data Baixa</th>
                                         <th>Observação</th>
@@ -156,9 +155,8 @@ const RelBaixasMotivo = () => {
                                             <td>{result.marca}</td>
                                             <td>{result.modelo}</td>
                                             <td>{result.cor}</td>
-                                            <td>{result.renavan}</td>
                                             <td>{result.placa}</td>
-                                            <td>{formatTimestamp(result.data_registro)}</td>
+                                            <td>{formatTimestamp(result.dataRegistro)}</td>
                                             <td>{result.observacoes}</td>
                                         </tr>
                                     </tbody>

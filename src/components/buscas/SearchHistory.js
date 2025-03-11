@@ -55,7 +55,7 @@ const SearchHistory = () => {
 
     return (
         <div>
-            <div>
+                        <div>
                 <div className={styles.container}>
                     <div class='container-lg'>
                         <div className={styles.input}>
@@ -82,7 +82,7 @@ const SearchHistory = () => {
                                         <th>Marca: {result.marca}</th>
                                         <th>Modelo: {result.modelo}</th>
                                         <th>Cor: {result.cor}</th>
-                                        <th>Data da Baixa: {result.data_registro ? formatTimestamp(result.data_registro) : "CARRO AINDA DISPONIVEL PARA VENDA"}</th>
+                                        <th>Data da Baixa: {result.dataRegistro ? formatTimestamp(result.dataRegistro) : "CARRO AINDA DISPONIVEL PARA VENDA"}</th>
                                         <th>Observações: {result.observacoes}</th>
                                     </tr>
                                 ))}

@@ -34,14 +34,9 @@ const RelEstoqueLoja = () => {
     }, 100); //Timeout para garantir que a tabela esteja visivel apos a renderização
   };
 
-  /*Função que trata do retorno de data */
   const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
-    return date.toLocaleDateString("pt-BR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
+    return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
   };
 
   // Função que calcula a quantidade de dias em estoque
@@ -134,7 +129,7 @@ const RelEstoqueLoja = () => {
       {index + 1}
     </button>
   ))
-  
+
   //Front End
 
   return (
@@ -195,7 +190,6 @@ const RelEstoqueLoja = () => {
                     <th>Cor</th>
                     <th>Ano Fab.</th>
                     <th>Ano Mod.</th>
-                    <th>Renavan</th>
                     <th>Placa</th>
                     <th>Tag</th>
                     <th>Valor FIPE</th>
@@ -212,7 +206,6 @@ const RelEstoqueLoja = () => {
                       <td>{result.cor}</td>
                       <td>{result.ano}</td>
                       <td>{result.ano_modelo}</td>
-                      <td>{result.renavan}</td>
                       <td>{result.placa}</td>
                       <td>{result.tag}</td>
                       <td>{result.fipe}</td>

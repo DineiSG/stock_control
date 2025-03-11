@@ -31,8 +31,8 @@ const SearchLibMotivo = () => {
     /*Função que trata do retorno de data */
     const formatTimestamp = (timestamp) => {
         const date = new Date(timestamp);
-        return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-    };
+        return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }; 
 
 
     /*Função que busca o estoque de acordo com a loja */
@@ -119,7 +119,7 @@ const SearchLibMotivo = () => {
                 {filtroLoja ? (
                     <>
                         <div ref={tabelaRef}>
-                            <p className={styles.txt_title} > BAIXAS REALIZADAS </p>
+                            <p className={styles.txt_title} > LIBERAÇÕES REALIZADAS </p>
                             <div className={styles.selectQtd}>
                                 <span style={{ color: 'black' }} >Selecione a quantidade de itens a ser exibido por pagina:</span>
                                 <select value={qtdItems} name="cars" id="cars" onChange={(e) => setQtdItems(e.target.value)}>

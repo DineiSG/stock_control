@@ -12,7 +12,7 @@ const SearchLibData = () => {
     
         const formatTimestamp = (timestamp) => {
             const date = new Date(timestamp);
-            return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
         };
     
         /*Função que busca informações de uma liberaçao de acordo com a data */
@@ -97,9 +97,8 @@ const SearchLibData = () => {
                                 <th>Marca</th>
                                 <th>Modelo</th>
                                 <th>Cor</th>
-                                <th>Renavan</th>
                                 <th>Loja</th>
-                                <th>Data Baixa</th>
+                                <th>Data Liberação</th>
                                 <th>Motivo</th>
                                 <th>Observação</th>
                             </tr>
@@ -111,7 +110,6 @@ const SearchLibData = () => {
                                     <td>{result.marca}</td>
                                     <td>{result.modelo}</td>
                                     <td>{result.cor}</td>
-                                    <td>{result.renavan}</td>
                                     <td>{result.unidade}</td>
                                     <td>{formatTimestamp(result.dataRegistro)}</td>
                                     <td>{result.motivo}</td>

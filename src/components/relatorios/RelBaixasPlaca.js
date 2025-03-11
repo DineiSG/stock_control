@@ -79,7 +79,6 @@ const RelBaixasPlaca = () => {
                                 <th>Marca</th>
                                 <th>Modelo</th>
                                 <th>Cor</th>
-                                <th>Renavan</th>
                                 <th>Loja</th>
                                 <th>Data Baixa</th>
                                 <th>Motivo</th>
@@ -93,9 +92,8 @@ const RelBaixasPlaca = () => {
                                     <td>{result.marca}</td>
                                     <td>{result.modelo}</td>
                                     <td>{result.cor}</td>
-                                    <td>{result.renavan}</td>
                                     <td>{result.unidade}</td>
-                                    <td>{formatTimestamp(result.data_registro)}</td>
+                                    <td>{formatTimestamp(result.dataRegistro)}</td>
                                     <td>{result.motivo}</td>
                                     <td>{result.observacoes}</td>
                                 </tr>

@@ -62,7 +62,7 @@ const CadUser = () => {
 
         try {
             
-            const response = await fetch('http://localhost:8091/api/v1/usuario', {
+            const response = await fetch('http://localhost:8091/api/v1/usuario/create-user', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
