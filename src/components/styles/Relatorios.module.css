@@ -122,9 +122,16 @@
 
 /*Removendo a caixa de pesquisa do impressao*/
 @media print {
+    
 
+    .selectQtd, .paginacao, .input{
+        position: absolute;
+        left: -9999px;
+        margin-top: 0;
+        display: inline
+    }
 
-    .container * { 
+    .container, .container-lg, .container-md, .container-sm { 
         position: absolute;
         left: -9999px;
         margin-top: 0;
@@ -144,7 +151,7 @@
 }
 
 .liberacoes {
-    margin: 2% 8% 5% 8%;
+    margin: 2% 8% 5% 8%; 
 }
 .selectQtd {
     margin-bottom:10px;

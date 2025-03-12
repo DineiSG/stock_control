@@ -16,7 +16,7 @@ const Navbar = () => {
   const navigate = useNavigate()
   const [isMenuVisible, setIsMenuVisible] = useState(false)
   const [iconVisible, setIconVisible] = useState(false)
-  
+
 
   //* Função para deslogar usuario
   const handleLogout = () => {
@@ -69,69 +69,62 @@ const Navbar = () => {
   };
 
   return (
-    <div>
+    <div className={styles.modalOverlay}>
 
       {!isContratoPage && (
         <nav className={styles.navbar} id="navbar">
 
-          <div className={styles.logo}>
-            <img src='/logo2.png' className={styles.logo} alt='Stock Control' title='Stock Control' />
-          </div>
+
 
           {isMenuVisible && (
             <div className={styles.menu}>
-
               <div className={styles.navItem}>
-                <button className={styles.nav} id="dropdown5" >Lojista</button>
-                <ul className={styles.dropdownMenu}>
-                  <li><Link to='com_vendas' className={styles.dropdown}>Comunicação de Venda</Link></li>
-                  <li><button onClick={() => handleModalAlertOpen('/solic_lib_venda')} className={styles.dropdown}> Solicitar Liberação</button></li>
-                  <li><Link to='cad_vendedor' className={styles.dropdown}>Cadastro de Vendedor</Link></li>
-                  <li><Link to='cons_venda' className={styles.dropdown}>Consultar Venda</Link></li>
-                  <li><Link to='/contrato' className={styles.dropdown}>Contrato</Link></li>
-                </ul>
-                {alertModalOpen && <AlertLibModal onClose={handleModalAlertClose} />}
+                <div className={styles.burger} id="dropdown5">
+                  <img width="50" height="50" src="https://img.icons8.com/3d-fluency/94/menu.png" alt="menu" />
+
+                  <ul className={styles.dropdownMenu} >
+                    <li><Link to='/home' className={styles.dropdown}>Home</Link></li>
+                    <p className={styles.nav}>LOJISTA</p>
+                    <li><Link to='com_vendas' className={styles.dropdown}>Comunicação de Venda</Link></li>
+                    <li><button onClick={() => handleModalAlertOpen('/solic_lib_venda')} className={styles.dropdown}> Solicitar Liberação</button></li>
+                    <li><Link to='cad_vendedor' className={styles.dropdown}>Cadastro de Vendedor</Link></li>
+                    <li><Link to='cons_venda' className={styles.dropdown}>Consultar Venda</Link></li>
+                    <li><Link to='/contrato' className={styles.dropdown}>Contrato</Link></li>
+                    <p className={styles.nav}>GESTÃO DE ESTOQUE</p>
+                    <li><Link to='cad_veic' className={styles.dropdown}>Cad. Veiculo BIN</Link></li>
+                    <li><Link to='cadastro_manual' className={styles.dropdown}>Cad. Veiculo S/ BIN</Link></li>
+                    <li><Link to='cad_loja' className={styles.dropdown}>Cad. Loja</Link></li>
+                    <li><Link to='/inventario' className={styles.dropdown}>Inventário</Link> </li>
+                    <li><Link to='/buscas' className={styles.dropdown} i>Pesquisar</Link></li>
+                    <p className={styles.nav}>ADMINISTRAÇÃO</p>
+                    <li><button onClick={() => handleOpenModal('/liberacoes')} className={styles.dropdown}>Liberar Veículo</button></li>
+                    <li><button onClick={() => handleOpenModal('/baixar_veic')} className={styles.dropdown}>Baixar Veículo</button></li>
+                    <li><button onClick={() => handleOpenModal('/cad_user')} className={styles.dropdown}>Cad. Usuário</button></li>
+                    <li><Link to='relatorio_estoque' className={styles.dropdown}>Relatórios</Link></li>
+                    <li><Link to='dashboard' className={styles.dropdown}>Dashboard</Link></li>
+
+                  </ul>
+                  {alertModalOpen && <AlertLibModal onClose={handleModalAlertClose} />}
+                  {isModalOpen && (
+                    <LoginModal onClose={handleCloseModal} onLogin={handleLoginSuccess} />
+                  )}
+                </div>
               </div>
-
-              <div className={styles.navItem}>
-                <button className={styles.nav} id="dropdown2">Gestao de Estoque</button>
-                <ul className={styles.dropdownMenu} >
-                  <li><Link to='cad_veic' className={styles.dropdown}>Cad. Veiculo BIN</Link></li>
-                  <li><Link to='cadastro_manual' className={styles.dropdown}>Cad. Veiculo S/ BIN</Link></li>
-                  <li><Link to='cad_loja' className={styles.dropdown}>Cad. Loja</Link></li>
-                  <li><Link to='/inventario' className={styles.dropdown}>Inventário</Link> </li>
-                </ul>
-              </div>
-
-              <div className={styles.navItem}>
-                <button className={styles.nav} id="dropdown3">Administração</button>
-                <ul className={styles.dropdownMenu}>
-                  <li><button onClick={() => handleOpenModal('/liberacoes')} className={styles.dropdown}>Liberar Veículo</button></li>
-                  <li><button onClick={() => handleOpenModal('/baixar_veic')} className={styles.dropdown}>Baixar Veículo</button></li>
-                  <li><button onClick={() => handleOpenModal('/cad_user')} className={styles.dropdown}>Cad. Usuário</button></li>
-                  <li><Link to='relatorio_estoque' className={styles.dropdown}>Relatórios</Link></li>
-                  <li><Link to='dashboard' className={styles.dropdown}>Dashboard</Link></li>
-                </ul>
-                {isModalOpen && (
-                  <LoginModal onClose={handleCloseModal} onLogin={handleLoginSuccess} />
-                )}
-              </div>
-
-              <Link to='/buscas' className={styles.pesquisar} i>Pesquisar</Link>
-
-              <div className={styles.links} alt='Home' title='Ir para home'>
+              <div className={styles.btn_house} alt='Home' title='Ir para home'>
                 <Link to='/home'><img width="50" height="50" src="https://img.icons8.com/3d-fluency/94/home.png" alt="home" /></Link>
               </div>
 
               {isHome && (
-                <img width="50" height="50" src="https://img.icons8.com/3d-fluency/94/lock-2.png" alt="lock-2" title="Logout" onClick={handleLogout} />
+                <div className={styles.btn_lock}>
+                  <img width="50" height="50" src="https://img.icons8.com/3d-fluency/94/lock-2.png" alt="lock-2" title="Logout" onClick={handleLogout} />
+                </div>
               )}
-
             </div>
-
           )}
           {iconVisible && (
-            <Link to='/home'><img width="50" height="50" src="https://img.icons8.com/3d-fluency/94/door.png" alt="door" title='Acessar' onClick={handleMenu} /> </Link>
+            <div className={styles.btn_door}>
+              <Link to='/home'><img width="50" height="50" src="https://img.icons8.com/3d-fluency/94/door.png" alt="door" title='Acessar' onClick={handleMenu} /> </Link>
+            </div>
           )}
 
         </nav>

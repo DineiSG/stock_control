@@ -201,7 +201,7 @@ const RelEstoqueLoja = () => {
                       <td>{result.unidade}</td>
                       <td>{formatTimestamp(result.data_registro)}</td>
                       <td> {result.unidade ? calculateDaysInStock(result.data_registro) : "-"} </td>
-                      <td>{result.marca}</td>
+                      <td>{result.marca}</td> 
                       <td>{result.modelo}</td>
                       <td>{result.cor}</td>
                       <td>{result.ano}</td>

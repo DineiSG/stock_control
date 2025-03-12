@@ -24,10 +24,11 @@ const RelBaixasPlaca = () => {
 
     }
 
+    /*Função que trata do retorno de data */
     const formatTimestamp = (timestamp) => {
         const date = new Date(timestamp);
-        return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-    };
+        return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }; 
 
     /*Função que busca informações de um veiculo de acordo com a placa */
     const handleSearch = async (e) => {
@@ -70,7 +71,6 @@ const RelBaixasPlaca = () => {
             </div>
             {busca ?
                 <div ref={tabelaRef} className={styles.table}>
-
                     <br />
                     <table className="table table-secondary table-striped-columns" border="1">
                         <thead>
