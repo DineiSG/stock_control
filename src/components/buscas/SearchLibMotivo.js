@@ -95,8 +95,8 @@ const SearchLibMotivo = () => {
 
     return (
         <div>
+            <div class="container-md">
             <div className={styles.container}>
-                <div className={styles.input}>
                     <h2 className={styles.title}>POR MOTIVO:</h2>
                     <form className={styles.pesquisa} onSubmit={handleSearch}>
                         <label>

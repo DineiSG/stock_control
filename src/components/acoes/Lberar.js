@@ -133,10 +133,10 @@ const Lberar = () => {
 
   return (
     <div>
-      <div>
+      <div class="container-md">
         <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/car.png" alt="car" /> Liberação de Veículos</h1>
         <div className={styles.container}>
-          <div class="container-lg">
+          <div>
             <h2 className={styles.title} >INFORME OS DADOS DO VEÍCULO:</h2>
             <div className={styles.formulario}>
               <form className={styles.cadastro} onSubmit={handleSubmit} >

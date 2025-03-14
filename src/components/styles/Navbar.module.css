@@ -42,20 +42,15 @@ button {
   right: 15px;
 }
 .btn_house {
-  display: inline;
+  display: inline-block;
+  position: absolute;
   background: none;
   border: none;
   cursor: pointer;
   position: fixed;
   right: 80px;
-}
-
-/*-------------------------------------------*/
-
-.navItem {
-  position: relative;
-  top: -25px;
-  left: -25px;
+  top:2px
+  
 }
 
 /*Titulos do menu*/

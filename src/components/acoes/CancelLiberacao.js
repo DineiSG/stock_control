@@ -6,7 +6,7 @@ const CancelLiberacao = () => {
     const [query, setQuery] = useState('')
     const [results, setResults] = useState([])
     const [error, setError] = useState('')
-    const [cancelar, setCancelar] = useState(false)
+    
 
     //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
     const tabelaRef = useRef(null)
@@ -98,10 +98,8 @@ const CancelLiberacao = () => {
                             <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
                         </label>
                         
-                            <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>Buscar</button> <br></br>
-                            {filtroAcesso && (<button className={styles.btn_cancelar} type='submit' onClick={handleCancel} >Cancelar</button>)}
-                     
-
+                            <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>Buscar</button> 
+                            {filtroAcesso && (<><button className={styles.btn_cancelar} type='submit' onClick={handleCancel} >Cancelar</button></>)}
                     </form>
                 </div>
             </div>

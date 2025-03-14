@@ -49,7 +49,7 @@ const SearchLiberacoes = () => {
             const filteredResults = data.filter(veiculo => veiculo.placa.toUpperCase() === upperCaseQuery);
             if (filteredResults.length > 0) {
                 setResults(filteredResults)
-                setError('')
+             
 
             } else {
                 setResults([])
@@ -64,8 +64,8 @@ const SearchLiberacoes = () => {
 
     return (
         <div>
-            <div className={styles.container}>
-                <div class='container-lg'>
+            <div class="container-md">
+                <div className={styles.container}>
                     <h2 className={styles.title} >INFORME A PLACA DO VEÍCULO:</h2>
                     <form className={styles.pesquisa} onSubmit={handleSearch}>
                         <label>
