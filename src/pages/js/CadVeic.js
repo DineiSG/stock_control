@@ -54,7 +54,6 @@ const CadVeic = () => {
             AnoModelo: dataVeiculo.AnoModelo,
             renavam: dataVeiculo.renavam,
           });
-          console.log("Dados do veículo.", dataVeiculo);
 
           /*const responseFipe = await fetch(
             `http://localhost:8090/api/v1/veiculos/fipe?placa=${placa}`
