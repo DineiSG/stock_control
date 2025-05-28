@@ -1,9 +1,6 @@
 import styles from '../styles/StylesModal.module.css'
 import { Link } from 'react-router-dom'
 
-import React from 'react'
-
-
 
 const AlertLibModal = ({onClose}) => {
 

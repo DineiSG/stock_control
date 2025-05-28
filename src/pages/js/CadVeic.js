@@ -30,12 +30,11 @@ const CadVeic = () => {
     if (placa.length === 7) {
       // Delimitando o tempo maximo que a consulta à base bin deve levar
       const timeoutId = setTimeout(() => {
-        console.log("Tempo limite excedido, recarregando a página...");
         window.alert(
-          "Tempo de requisição expirou. Clique em ok para recarregar a pagina para tentar novamente. Se preferir role para baixo e clique em Cadastro Manual para cadastrar sem consultar a Base BIN. "
+          "BASE BIN offline ou com conexao instável. Tente novamente ou realize o cadastro de forma manual. "
         );
         window.location.reload();
-      }, 30000);
+      }, 120000);
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
       try {
@@ -77,8 +76,7 @@ const CadVeic = () => {
 
           console.log("valor fipe: ", dataFipe);*/
         } else {
-          console.error("Erro ao buscar dados do veículo");
-          window.alert(console.error());
+          window.alert("Base BIN offline. Realize o cadastro manual do veículo.");
         }
       } catch (error) {
         console.error("Erro na requisição", error);
@@ -216,11 +214,10 @@ const CadVeic = () => {
           window.alert("Veiculo cadastrado com sucesso!");
           window.location.reload();
         } else {
-          console.log("Erro ao enviar os dados");
-          if (placa !== "") {
-            window.alert('Este veículo ja fez ou faz parte do estoque. Para recadastra-lo vá em Pesquisa, insira a placa do veículo, clique em editar e informe os dados do veículo novamente.')
+          if (placa || tag !== "") {
+            window.alert('Não foi possível realizar o cadastro do veículo. Verifique:\n 1 - Se algum veículo com a mesma placa já foi cadastrado.\n 2 - Se a tag informada ja se encontra em uso.');
           }
-          window.alert("Erro ao realizar o cadastro. Tente novamente.");
+          window.location.reload();
         }
       } else {
         window.alert(

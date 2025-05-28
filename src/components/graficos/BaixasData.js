@@ -58,12 +58,7 @@ const BaixasData = () => {
         const dataFimFormatada = new Date(dataFim).toISOString().split('T')[0]
 
         const upperCaseQuery = query.toUpperCase();
-        const motivosValidos = ['VENDA', 'DEVOLUCAO', 'TRANSFERENCIA', 'CORRECAO'];
-
-        if (!motivosValidos.includes(upperCaseQuery)) {
-            console.warn('Motivo inválido.');
-            return;
-        }
+      
 
         //Buscando as baixas pelo motivo selecionado
         try {
@@ -76,8 +71,7 @@ const BaixasData = () => {
             }
 
             const data = await response.json()
-
-            const filteredResults = data.filter(baixa => { const dataBaixa = new Date(baixa.data_registro).toISOString().split('T')[0]
+            const filteredResults = data.filter(baixa => { const dataBaixa = new Date(baixa.dataRegistro).toISOString().split('T')[0]
                 return (
                     baixa.motivo.toUpperCase() === upperCaseQuery && dataBaixa >= dataInicioFormatada && dataBaixa <= dataFimFormatada
                 )
@@ -149,18 +143,7 @@ const BaixasData = () => {
             </div>
             {dadosGrafico.length > 0 ? (
                 <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                        width={500}
-                        height={500}
-                        data={dadosGrafico}
-                        margin={{
-                            top: 5,
-                            right: 1,
-                            left: 15,
-                            bottom: 60,
-                        }}
-                        barSize={30}
-                    >
+                    <BarChart width={500} height={500} data={dadosGrafico} margin={{ top: 5, right: 1, left: 15, bottom: 60, }} barSize={30} >
                         <XAxis dataKey="name" scale="point" padding={{ left: 15, right: 15 }} fontSize={'16'} />
                         <YAxis />
                         <Tooltip content={<CustomTooltip />} />

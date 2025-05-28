@@ -7,7 +7,6 @@ const RelBaixasMotivo = () => {
     const [query, setQuery] = useState()
     const [results, setResults] = useState([])
     const [setError] = useState('')
-    const [todos, setTodos] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
     const [qtdItems, setQtdItems] = useState([50])
 
@@ -38,7 +37,7 @@ const RelBaixasMotivo = () => {
     }; 
 
 
-    /*Função que busca o estoque de acordo com a loja */
+    /*Função que busca a baixa de acordo com o motivo */
     const handleSearch = async (e) => {
         e.preventDefault();
         if (!query) return;
@@ -49,10 +48,10 @@ const RelBaixasMotivo = () => {
 
 
             if (upperCaseQuery === 'TODAS') {
-                response = await fetch(`http://localhost:8090/api/v1/baixas`)//Buscando o estoque de todas as lojas
+                response = await fetch(`http://localhost:8090/api/v1/baixas`) //Buscando todas as baixas
 
             } else if (upperCaseQuery === 'VENDA' || 'DEVOLUÇAO' || 'TRANSFERENCIA' || 'CORRECAO') {
-                response = await fetch(`http://localhost:8090/api/v1/baixas?motivo=${upperCaseQuery}`)//Buscando o estoque da loja de acordo com o nome
+                response = await fetch(`http://localhost:8090/api/v1/baixas?motivo=${upperCaseQuery}`)//Buscando a baixa de acordo com o motivo
             }
 
             const data = await response.json()

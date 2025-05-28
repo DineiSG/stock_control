@@ -33,9 +33,7 @@ const AnoMod = () => {
   useEffect(() => {
     const fetchVeiculo = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8090/api/v1/veiculos`
-        );
+        const response = await fetch( `http://localhost:8090/api/v1/veiculos` );
         const data = await response.json();
         const filteredResults = data.filter(veiculo => veiculo.ano_modelo !== null);
         //Filtrando os dados obtidos. As coluna unidade e valorMeioAcesso devem conter dados

@@ -89,7 +89,7 @@ const Navbar = () => {
                     <li><button onClick={() => handleModalAlertOpen('/solic_lib_venda')} className={styles.dropdown}> Solicitar Liberação</button></li>
                     <li><Link to='cad_vendedor' className={styles.dropdown}>Cadastro de Vendedor</Link></li>
                     <li><Link to='cons_venda' className={styles.dropdown}>Consultar Venda</Link></li>
-                    <li><Link to='/contrato' className={styles.dropdown}>Contrato</Link></li>
+                    {/*<li><Link to='/contrato' className={styles.dropdown}>Contrato</Link></li>*/}
                     <p className={styles.nav}>GESTÃO DE ESTOQUE</p>
                     <li><Link to='cad_veic' className={styles.dropdown}>Cad. Veiculo BIN</Link></li>
                     <li><Link to='cadastro_manual' className={styles.dropdown}>Cad. Veiculo S/ BIN</Link></li>

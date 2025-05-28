@@ -15,7 +15,7 @@ const CadVeicManual = () => {
     const [tag, setTag] = useState('')
     const [veiculo_status, setVeiculoStatus] = useState('F')
     const [renavan, setRenavan] = useState('')
-    const [fipe, setFipe]=useState('')
+    const [fipe, setFipe] = useState('')
     const [loading, setLoading] = useState()
     const [lojas, setLojas] = useState([])
 
@@ -124,10 +124,10 @@ const CadVeicManual = () => {
                     window.location.reload();
                 } else {
                     console.log('Erro ao enviar os dados')
-                    if (placa !== '') {
-                        window.alert('Erro ao realizar o cadastro. Este veículo ja fez parte do estoque. Para recadastra-lo vá em Pesquisa, insira a placa do veículo, clique em Editar e informe os dados do veículo novamente.')
+                    if (placa || tag !== "") {
+                        window.alert('Não foi possível realizar o cadastro do veículo. Verifique:\n 1 - Se algum veículo com a mesma placa já foi cadastrado.\n 2 - Se a tag informada ja se encontra em uso.');
                     }
-                    window.alert('Erro ao realizar o cadastro. Tente novamente.');
+                    window.location.reload();
                 }
             } else {
                 window.alert("Nao há vagas disponíveis para novos cadastros nesta loja. O veículo nao pode ser cadastrado.")
@@ -144,7 +144,7 @@ const CadVeicManual = () => {
         if (tag !== '') {
             console.log('Nº da tag para leitura: ' + hexToWiegand(tag))
         }
-    } 
+    }
 
     //Buscando lojas para preencher o select do front end
     useEffect(() => {
@@ -153,7 +153,7 @@ const CadVeicManual = () => {
                 const response = await fetch(`http://localhost:8090/api/v1/lojas`)
                 const data = await response.json()
                 if (Array.isArray(data)) {
-                    const lojasOrdenadas = data.sort((a,b)=> a.descricao.localeCompare(b.descricao))
+                    const lojasOrdenadas = data.sort((a, b) => a.descricao.localeCompare(b.descricao))
                     setLojas(lojasOrdenadas);
                 } else {
                     console.error('A resposta da API nao e um array', data)
