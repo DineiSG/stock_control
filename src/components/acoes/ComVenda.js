@@ -54,9 +54,9 @@ const ComVenda = () => {
   }
 
   //redireciona para a pagina de contrato 
-  const handleContrato = (placa) => {
+  /*const handleContrato = (placa) => {
     navigate('/contrato', { state: { placa } })
-  }
+  }*/
 
   //Buscando os dados do veiculo de acordo com a placa
   const handleBlur = async (e) => {
@@ -181,8 +181,9 @@ const ComVenda = () => {
       if (response.ok) {
         console.log('Dados enviados com sucesso');
         window.alert('Comunicação de venda registrada!');
-        handleContrato(placa)
+        /*handleContrato(placa)*/
         // Limpar o formulário se necessário
+        window.location.reload();
       } else {
         console.error('Erro ao enviar dados');
         window.alert('Erro ao cadastrar liberação');
@@ -209,12 +210,10 @@ const ComVenda = () => {
     }
   }
 
-
-
   return (
     <div>
       <div>
-        <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/money.png" alt="money" /> Comunicação de Venda</h1>
+        <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/money.png" alt="money" /> Registro de Venda</h1>
         <div className={styles.container}>
           <div class="container-md">
             <h2 className={styles.title} >DADOS DA OPERAÇÃO</h2>

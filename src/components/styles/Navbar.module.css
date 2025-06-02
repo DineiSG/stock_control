@@ -69,7 +69,8 @@ button {
   transform: translateX(272px);
   width: 272px;
   overflow-y: scroll;
-  height: 600px;
+  height: 630px;
+  padding-bottom: 15px;
 }
 
 /*hover dos titulos do menu*/
@@ -143,6 +144,7 @@ button {
             transform-origin: 0% 0%;
   }
 }
+
 
 @media (max-width: 768px) {
   .navbar {

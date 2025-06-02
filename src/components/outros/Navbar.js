@@ -85,7 +85,7 @@ const Navbar = () => {
                   <ul className={styles.dropdownMenu} >
                     <li><Link to='/home' className={styles.dropdown}>Home</Link></li>
                     <p className={styles.nav}>LOJISTA</p>
-                    <li><Link to='com_vendas' className={styles.dropdown}>Comunicação de Venda</Link></li>
+                    <li><Link to='com_vendas' className={styles.dropdown}>Registro de Venda</Link></li>
                     <li><button onClick={() => handleModalAlertOpen('/solic_lib_venda')} className={styles.dropdown}> Solicitar Liberação</button></li>
                     <li><Link to='cad_vendedor' className={styles.dropdown}>Cadastro de Vendedor</Link></li>
                     <li><Link to='cons_venda' className={styles.dropdown}>Consultar Venda</Link></li>
