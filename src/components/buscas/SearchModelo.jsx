@@ -20,8 +20,7 @@ const SearchModelo = () => {
             // Filtra os veículos que possuem o modelo parcialmente correspondente e com tag válida
             const filteredResults = data.filter(veiculo => 
                 veiculo.modelo.toUpperCase().includes(upperCaseQuery.replace('%', '')) && 
-                veiculo.valorMeioAcesso &&
-                veiculo.unidade !==null// Verifica se a tag está cadastrada
+                veiculo.unidade !==null
             );
     
             if (filteredResults.length > 0) {
@@ -34,19 +33,19 @@ const SearchModelo = () => {
         } catch (error) {
             window.alert("Erro ao buscar dados: " + error.message);
         }
+        setQuery(''); // Limpa o campo de pesquisa após a busca
     };
 
     return (
         <div className={styles.container}>
             <div class="container-lg">
-                <h2 className={styles.title}>INFORME O MODELO DE UM VEÍCULO PARA BUSCAR INFORMAÇÕES:</h2>
+                {!busca ? <h2 className={styles.title}>INFORME O MODELO DE UM VEÍCULO PARA BUSCAR INFORMAÇÕES:</h2> : <h2 className={styles.title}>RESULTADOS DA PESQUISA:</h2>}
                 <form className={styles.pesquisa} onSubmit={handleSearch}>
                     <label>
-                        <p>Modelo:</p>
-                        <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
+                        {!busca ? <p>Modelo:</p> : null}
+                        {!busca ? <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required /> : null}
                     </label>
-                    <button className={styles.btn_buscar} type='submit' onClick={() => setBusca(!busca)}>
-                        {busca ? 'Resultados' : 'Buscar'}</button>
+                    <button className={styles.btn_buscar} type='submit' onClick={() => setBusca(!busca)}> {busca ? 'Nova Busca' : 'Buscar'}</button>
                 </form>
             </div>
             {busca ?
@@ -68,7 +67,7 @@ const SearchModelo = () => {
                                     <td>{result.marca}</td>
                                     <td>{result.modelo}</td>
                                     <td>{result.cor}</td>
-                                    <td>{result.ano}</td>
+                                    <td>{result.ano_fabricacao}</td>
                                     
                                 </tr>
 

@@ -40,6 +40,7 @@ const SearchLojas = () => {
         } catch (error) {
             window.alert("Erro ao buscar dados: ", error)
         }
+        setQuery('') // Limpa o campo de pesquisa após a busca
     }
 
     /*Função para editar os dados encontrados */
@@ -89,14 +90,13 @@ const SearchLojas = () => {
         <div >
             <div className={styles.container}>
                 <div class="container-md">
-                    <h2 className={styles.title}>INFORME O NOME DA LOJA PARA BUSCAR INFORMAÇÕES:</h2>
+                   {!busca ? <h2 className={styles.title}>INFORME O NOME DA LOJA PARA BUSCAR INFORMAÇÕES:</h2>: <h2 className={styles.title}>RESULTADOS DA PESQUISA:</h2>}
                     <form className={styles.pesquisa} onSubmit={handleSearch}>
                         <label>
-                            <p>Nome:</p>
-                            <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
+                            {!busca ? <p>Nome:</p> : null}
+                            {!busca ? <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required /> : null}
                         </label>
-                        <button className={styles.btn_buscar} type='submit' onClick={() => setBusca(!busca)}>
-                            {busca ? 'Buscar' : 'Buscar'}</button>
+                        <button className={styles.btn_buscar} type='submit' onClick={() => setBusca(!busca)}> {busca ? 'Nova Busca' : 'Buscar'}</button>
                     </form>
                 </div>
                 {busca ?

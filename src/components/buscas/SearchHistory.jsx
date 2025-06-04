@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useRef } from 'react'
-import styles from '../styles/SearchForm.module.css'
+import styles from '../styles/Relatorios.module.css'
 
 const SearchHistory = () => {
     const [filtroAcesso, setFiltroAcesso] = useState(false)
@@ -51,26 +51,26 @@ const SearchHistory = () => {
             console.error('Erro: ', error)
             
         }
+        setQuery('') // Limpa o campo de pesquisa após a busca
     }
 
     return (
         <div>
-                        <div>
-                <div className={styles.container}>
-                    <div class='container-lg'>
+            <div class='container-md'>
+                    <div className={styles.container}>
                         <div className={styles.input}>
-                            <h2 className={styles.title} >INFORME A PLACA DO VEÍCULO:</h2>
+                            {!filtroAcesso?  <h2 className={styles.title} >INFORME A PLACA DO VEÍCULO:</h2> : <h2 className={styles.title} >RELATÓRIO DE HISTÓRICO DO VEÍCULO GERADO</h2>}
                             <form className={styles.pesquisa} onSubmit={handleSearch}>
                                 <label>
-                                    <p>Placa:</p>
-                                    <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
+                                    {!filtroAcesso? <p>Placa:</p> : null}
+                                    {!filtroAcesso? <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required /> : null} 
                                 </label>
-                                <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>{filtroAcesso ? 'Buscar' : 'Buscar'}</button>
+                                <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>{filtroAcesso ? 'Novo Relatório' : 'Gerar Relatório'}</button>
                             </form>
                         </div>
                     </div>
-                </div>
-                <div ref={tabelaRef} className={styles.table} id='printable'>
+            </div>
+                <div ref={tabelaRef} className={styles.table_h} id='printable'>
                     {filtroAcesso ?
                         <table className="table table-secondary table-striped-columns" border="1">
                             <thead>
@@ -89,7 +89,6 @@ const SearchHistory = () => {
                             </thead>
                         </table> : null}
                 </div>
-            </div>
         </div>
     )
 }

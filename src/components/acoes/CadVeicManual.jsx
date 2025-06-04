@@ -5,15 +5,12 @@ import styles from '../../pages/styles/CadVeic.module.css'
 
 const CadVeicManual = () => {
     const [unidade, setUnidade] = useState('')
-    const [idUnidade, setIdUnidade] = useState('')
     const [marca, setMarca] = useState('')
     const [modelo, setModelo] = useState('')
     const [cor, setCor] = useState('')
     const [placa, setPlaca] = useState('')
-    const [ano, setAno] = useState('')
+    const [ano_fabricacao, setAnoFabricacao] = useState('')
     const [ano_modelo, setAnoModelo] = useState('')
-    const [tag, setTag] = useState('')
-    const [veiculo_status, setVeiculoStatus] = useState('F')
     const [renavan, setRenavan] = useState('')
     const [fipe, setFipe] = useState('')
     const [loading, setLoading] = useState()
@@ -22,7 +19,7 @@ const CadVeicManual = () => {
 
     //Função de conversao Hexadecimal para Wiegand. Essa função recebe o valor da tag em Hexadecimal e converte para Wiegand,
     // que e um formato muito utilizado em controle de acessos.
-    function hexToWiegand(hexValue) {
+    /*function hexToWiegand(hexValue) {
         // Divide o valor hexadecimal em duas partes
         const leftPartHex = hexValue.substring(0, 2); // Parte esquerda (2 primeiros caracteres)
         const rightPartHex = hexValue.substring(2);  // Parte direita (restante dos caracteres)
@@ -37,7 +34,7 @@ const CadVeicManual = () => {
 
         // Concatena as partes formatadas
         return leftPartFormatted + rightPartFormatted;
-    }
+    }*/
 
 
 
@@ -45,8 +42,8 @@ const CadVeicManual = () => {
     const handleSubmit = async (e) => {
         // Converte o valor decimal (em string) para o formato Wiegand
 
-        const convertedValue = hexToWiegand(tag);
-        const valorMeioAcesso = convertedValue
+        /*const convertedValue = hexToWiegand(tag);
+        const valorMeioAcesso = convertedValue*/
 
 
 
@@ -71,7 +68,7 @@ const CadVeicManual = () => {
 
         e.preventDefault()
         const payload = {
-            unidade, idUnidade, marca, modelo, ano, ano_modelo, cor, placa, tag, veiculo_status, renavan, data_registro, valorMeioAcesso, fipe
+            unidade, marca, modelo, ano_fabricacao, ano_modelo, cor, placa, renavan, data_registro, fipe
         }
         //Alterando os valores informados no input para lertas maiusculas
         const toUpperCasePayload = (data) => {
@@ -124,8 +121,8 @@ const CadVeicManual = () => {
                     window.location.reload();
                 } else {
                     console.log('Erro ao enviar os dados')
-                    if (placa || tag !== "") {
-                        window.alert('Não foi possível realizar o cadastro do veículo. Verifique:\n 1 - Se algum veículo com a mesma placa já foi cadastrado.\n 2 - Se a tag informada ja se encontra em uso.');
+                    if (placa !== "") {
+                        window.alert('Não foi possível realizar o cadastro do veículo. O a placa informada já está cadastrada. Verifique a placa e tente novamente.');
                     }
                     window.location.reload();
                 }
@@ -140,11 +137,11 @@ const CadVeicManual = () => {
 
 
 
-    const handleBlur = async () => {
+    /*const handleBlur = async () => {
         if (tag !== '') {
             console.log('Nº da tag para leitura: ' + hexToWiegand(tag))
         }
-    }
+    }*/
 
     //Buscando lojas para preencher o select do front end
     useEffect(() => {
@@ -172,13 +169,11 @@ const CadVeicManual = () => {
         const descricao = selectedOption.getAttribute('data-descricao')
 
         setUnidade(descricao)
-        setIdUnidade(id)
     }
 
 
     return (
-        <div >
-
+        <div>
             <h1 ><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/add.png" alt="add" /> Cadastro de Veículos S/ BIN</h1>
             <div className={styles.container}>
                 <div class="container-sm">
@@ -187,17 +182,14 @@ const CadVeicManual = () => {
                         <form className={styles.cadastro} onSubmit={handleSubmit}>
                             <label>
                                 <p>Loja:</p>
-                                <select type='text' name='loja' value={idUnidade} onChange={handleUnidadeChange} required >
+                                <select type='text' name='loja' value={unidade} onChange={handleUnidadeChange} required >
                                     <option value="" >SELECIONE UMA LOJA</option>
                                     {lojas.map((loja) => (
-                                        <option key={loja.id} value={loja.id} data-descricao={loja.descricao}>
+                                        <option key={loja.descricao} value={loja.descricao} data-descricao={loja.descricao}>
                                             {loja.descricao}
                                         </option>
                                     ))}
                                 </select>
-                            </label>
-                            <label>
-                                <input className={styles.tag} type='hidden' value={idUnidade}></input>
                             </label>
                             <label>
                                 <p>Marca:</p>
@@ -213,13 +205,12 @@ const CadVeicManual = () => {
                             </label>
                             <label>
                                 <p>Ano Fab.:</p>
-                                <input className={styles.ano} type='text' name='ano' value={ano} onChange={(e) => setAno(e.target.value)} required></input>
+                                <input className={styles.ano} type='text' name='ano_fabricacao' value={ano_fabricacao} onChange={(e) => setAnoFabricacao(e.target.value)} maxLength={4} required></input>
                             </label>
                             <label>
                                 <p>Ano Mod.:</p>
-                                <input className={styles.ano} type='text' name='ano_modelo' value={ano_modelo} onChange={(e) => setAnoModelo(e.target.value)} required></input>
+                                <input className={styles.ano} type='text' name='ano_modelo' value={ano_modelo} onChange={(e) => setAnoModelo(e.target.value)} maxLength={4} required></input>
                             </label>
-
                             <label>
                                 <p>Placa:</p>
                                 <input className={styles.placa} type='text' name='placa' value={placa} maxLength={7} onChange={(e) => setPlaca(e.target.value)} required></input>
@@ -232,20 +223,11 @@ const CadVeicManual = () => {
                                 <p>Valor FIPE R$:</p>
                                 <input type='text' name='fipe' value={fipe} onChange={(e) => setFipe(e.target.value)} required></input>
                             </label>
-                            <label>
-                                <p>Tag:</p>
-                                <input className={styles.tag} type='text' name='tag' maxLength={6} value={tag} onChange={(e) => setTag(e.target.value)} onBlur={handleBlur} required></input>
-                            </label>
-                            <label>
-                                {/*<p>Status (D: Dentro/ F:Fora):</p>*/}
-                                <input className={styles.status} type='hidden' name='status' value={veiculo_status} onChange={(e) => setVeiculoStatus(e.target.value)} required maxLength={1}></input>
-                            </label>
                             <button className={styles.cadastrar} onClick={() => setLoading} disabled={loading}>{loading ? 'Cadastrando...' : 'Cadastrar'}</button>
                         </form>
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }

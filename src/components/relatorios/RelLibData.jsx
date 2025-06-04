@@ -1,12 +1,12 @@
-import React from 'react'
-import styles from '../styles/Relatorios.module.css'
-import { useState, useRef, } from 'react'
+import { useState, useRef } from 'react'
+import styles from "../styles/Relatorios.module.css"
 
-const RelBaixasData = () => {
+const RelLibData = () => {
     const [busca, setBusca] = useState(false)
     const [results, setResults] = useState([])
     const [dataRegistro, setDataRegistro] = useState('')
     const [error, setError] = useState('')
+    const [exibir, setExibir] = useState(false) 
 
     //Tratando o foco da tela ao clicar o botao. Mudando para a tabela
     const tabelaRef = useRef(null)
@@ -14,9 +14,9 @@ const RelBaixasData = () => {
     const formatTimestamp = (timestamp) => {
         const date = new Date(timestamp);
         return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-    }; 
+    };
 
-    /*Função que busca informações de um veiculo de acordo com a data */
+    /*Função que busca informações de uma liberaçao de acordo com a data */
     const fetchBaixas = async (data) => {
         if (!data) {
             window.alert("Por favor, informe uma data.");
@@ -24,7 +24,7 @@ const RelBaixasData = () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:8090/api/v1/baixas`)
+            const response = await fetch(`http://localhost:8090/api/v1/liberacoes`)
 
             if (!response.ok) {
                 console.error('Erro na resposta do servidor:', response.statusText);
@@ -58,11 +58,13 @@ const RelBaixasData = () => {
         } catch (error) {
             window.alert("Erro ao buscar dados: ", error)
         }
+        setDataRegistro('') // Limpa o campo de pesquisa após a busca
     }
 
     const handleButtonClick = async (e) => {
         e.preventDefault(); // Impede o envio do formulário
         setBusca(true);
+        setExibir(!exibir)
         await fetchBaixas(dataRegistro)
 
         setTimeout(() => {
@@ -70,20 +72,21 @@ const RelBaixasData = () => {
                 tabelaRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
             }
         }, 100)//Timeout para garantir que a tabela esteja visivel apos a renderização
-
+        setDataRegistro('') // Limpa o campo de pesquisa após a busca
     }
+
 
     return (
         <div>
-            <div className={styles.container}>
-                <div class="container-lg">
-                    <h2 className={styles.title}>POR DATA:</h2>
+            <div class="container-md">
+                <div className={styles.container}>
+                    {!exibir ? <h2 className={styles.title}>POR DATA:</h2> : <h2 className={styles.title}>RELATÓRIO DE LIBERAÇÕES POR DATA GERADO</h2>}
                     <form className={styles.pesquisa}>
                         <label>
-                            <p>Informe a Data:</p>
-                            <input className={styles.date} type="date" value={dataRegistro} onChange={e => setDataRegistro(e.target.value)} />
+                           {!exibir ? <p>Informe a Data:</p> : null } 
+                            {!exibir ? <input className={styles.date} type="date" value={dataRegistro} onChange={e => setDataRegistro(e.target.value)} /> : null}
                         </label>
-                        <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>Buscar</button>
+                        <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>{!exibir? 'Gerar Relatório' : 'Novo Relatório'}</button>
                     </form>
                 </div>
             </div>
@@ -98,7 +101,7 @@ const RelBaixasData = () => {
                                 <th>Modelo</th>
                                 <th>Cor</th>
                                 <th>Loja</th>
-                                <th>Data Baixa</th>
+                                <th>Data Liberação</th>
                                 <th>Motivo</th>
                                 <th>Observação</th>
                             </tr>
@@ -124,4 +127,4 @@ const RelBaixasData = () => {
     )
 }
 
-export default RelBaixasData
+export default RelLibData

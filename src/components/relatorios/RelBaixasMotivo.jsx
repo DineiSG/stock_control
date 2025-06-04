@@ -75,6 +75,7 @@ const RelBaixasMotivo = () => {
         } catch (error) {
             console.error('Erro ao conectar ao servidor')
         }
+        setQuery('') // Limpa o campo de pesquisa após a busca
     }
 
     //Calculando a quantidade de itens para exibir
@@ -100,20 +101,20 @@ const RelBaixasMotivo = () => {
         <div>
             <div className={styles.container}>
                 <div className={styles.input}> 
-                    <h2 className={styles.title}>POR MOTIVO:</h2>
+                    {!filtroLoja ? <h2 className={styles.title}>POR MOTIVO:</h2> : <h2 className={styles.title}>RELATÓRIO DE BAIXAS POR MOTIVO GERADO</h2>}
                     <form className={styles.pesquisa} onSubmit={handleSearch}>
                         <label>
-                            <p>Selecione um motivo:</p>
-                            <select value={query} onChange={(e) => setQuery(e.target.value)} required>
+                            {!filtroLoja ? <p>Selecione um motivo:</p> : null}
+                            {!filtroLoja ? <select value={query} onChange={(e) => setQuery(e.target.value)} required>
                                 <option value=""></option>
                                 <option value='TODAS'>TODAS AS BAIXAS</option>
                                 <option value='VENDA'>VENDA</option>
                                 <option value='TROCA'>TROCA</option>
                                 <option value='DEVOLUCAO'>DEVOLUÇAO</option>
                                 <option value='CORRECAO'>CORREÇÃO DE ESTOQUE</option>
-                            </select>
+                            </select> : null}
                         </label>
-                        <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>{filtroLoja ? 'Buscar' : 'Buscar'}</button>
+                        <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>{filtroLoja ? 'Novo Relatório' : 'Gerar Relatório'}</button>
                     </form>
                 </div>
 

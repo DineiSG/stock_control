@@ -52,20 +52,22 @@ const RelBaixasPlaca = () => {
         } catch (error) {
             window.alert("Erro ao buscar dados: ", error)
         }
+
+        setQuery('')// Limpa o campo de pesquisa após a busca
+        setBusca(busca) // Atualiza o estado para exibir a tabela
     }
 
     return (
         <div>
             <div className={styles.container}>
                 <div class="container-lg">
-                    <h2 className={styles.title}>POR PLACA:</h2>
+                    {!busca ? <h2 className={styles.title}>POR PLACA:</h2> : <h2 className={styles.title}>RELATÓRIO DE BAIXAS POR PLACA GERADO</h2>}
                     <form className={styles.pesquisa} onSubmit={handleSearch}>
                         <label>
-                            <p>Placa:</p>
-                            <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
+                            {!busca ? <p>Placa:</p> : null}
+                            {!busca ? <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />: null}
                         </label>
-                        <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>
-                            {busca ? 'Buscar' : 'Buscar'}</button>
+                        <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}> {busca ? 'Novo Relatório' : 'Gerar Relatório'}</button>
                     </form>
                 </div>
             </div>

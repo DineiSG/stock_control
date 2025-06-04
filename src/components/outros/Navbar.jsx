@@ -1,7 +1,7 @@
 import styles from '../styles/Navbar.module.css'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import LoginModal from '../outros/LoginModal'
+import LoginModal from './LoginModal'
 import AlertLibModal from './AlertLibModal'
 
 
@@ -93,8 +93,8 @@ const Navbar = () => {
                     <p className={styles.nav}>GESTÃO DE ESTOQUE</p>
                     <li><Link to='cad_veic' className={styles.dropdown}>Cad. Veiculo BIN</Link></li>
                     <li><Link to='cadastro_manual' className={styles.dropdown}>Cad. Veiculo S/ BIN</Link></li>
-                    <li><Link to='cad_loja' className={styles.dropdown}>Cad. Loja</Link></li>
-                    <li><Link to='/inventario' className={styles.dropdown}>Inventário</Link> </li>
+                    {/*<li><Link to='cad_loja' className={styles.dropdown}>Cad. Loja</Link></li>*/}
+                    {/*<li><Link to='/inventario' className={styles.dropdown}>Inventário</Link> </li>*/}
                     <li><Link to='/buscas' className={styles.dropdown} i>Pesquisar</Link></li>
                     <p className={styles.nav}>ADMINISTRAÇÃO</p>
                     <li><button onClick={() => handleOpenModal('/liberacoes')} className={styles.dropdown}>Liberar Veículo</button></li>

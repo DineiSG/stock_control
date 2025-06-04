@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
-import styles from '../styles/Relatorios.module.css'
+import styles from "../styles/Relatorios.module.css"
 
-const SearchLibMotivo = () => {
+const RelLibMotivo = () => {
     const [filtroLoja, setFiltroLoja] = useState(false)
     const [query, setQuery] = useState()
     const [results, setResults] = useState([])
@@ -73,6 +73,7 @@ const SearchLibMotivo = () => {
         } catch (error) {
             console.error('Erro ao conectar ao servidor')
         }
+        setQuery('')// Limpa o campo de pesquisa após a busca
     }
 
     //Calculando a quantidade de itens para exibir
@@ -97,20 +98,20 @@ const SearchLibMotivo = () => {
         <div>
             <div class="container-md">
             <div className={styles.container}>
-                    <h2 className={styles.title}>POR MOTIVO:</h2>
+                    {!filtroLoja ? <h2 className={styles.title}>POR MOTIVO:</h2> : <h2 className={styles.title}>RELATÓRIO DE LIBERAÇÕES POR MOTIVO GERADO</h2>}
                     <form className={styles.pesquisa} onSubmit={handleSearch}>
                         <label>
-                            <p>Selecione um motivo:</p>
-                            <select value={query} onChange={(e) => setQuery(e.target.value)} required>
+                            {!filtroLoja? <p>Selecione um motivo:</p> : null}
+                            {!filtroLoja? <select value={query} onChange={(e) => setQuery(e.target.value)} required>
                                 <option value=""></option>
                                 <option value='TODAS'>TODAS AS LIBERAÇÕES</option>
                                 <option value='VENDA'>VENDA</option>
                                 <option value='TRANSFERENCIA'>TRANSFERENCIA</option>
                                 <option value='DEVOLUÇÃO'>DEVOLUÇÃO</option>
                                 <option value='MANUTENÇÃO'>MANUTENÇÃO</option>
-                            </select>
+                            </select> : null}
                         </label>
-                        <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>{filtroLoja ? 'Buscar' : 'Buscar'}</button>
+                        <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>{filtroLoja ? 'Novo Relatório' : 'Gerar Relatório'}</button>
                     </form>
                 </div>
 
@@ -169,4 +170,4 @@ const SearchLibMotivo = () => {
     )
 }
 
-export default SearchLibMotivo
+export default RelLibMotivo

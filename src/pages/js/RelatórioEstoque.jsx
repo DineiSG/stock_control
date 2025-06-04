@@ -1,4 +1,3 @@
-import React from 'react'
 import RelEstoqueLoja from '../../components/relatorios/RelEstoqueLoja'
 import RelBaixasMotivo from '../../components/relatorios/RelBaixasMotivo'
 import RelBaixasPlaca from '../../components/relatorios/RelBaixasPlaca'
@@ -7,9 +6,10 @@ import RelAcesso from '../../components/relatorios/RelAcesso'
 import SearchHistory from '../../components/buscas/SearchHistory'
 import SearchInventario from '../../components/buscas/SearchInventario'
 import RelBaixasData from '../../components/relatorios/RelBaixasData'
-import SearchLiberacoes from '../../components/buscas/SearchLiberacoes'
-import SearchLibMotivo from '../../components/buscas/SearchLibMotivo'
-import SearchLibData from '../../components/buscas/SearchLibData'
+import RelLibData from '../../components/relatorios/RelLibData'
+import RelLibMotivo from '../../components/relatorios/RelLibMotivo'
+import RelLibPlaca from '../../components/relatorios/RelLibPlaca'
+import RelLibLoja from '../../components/relatorios/RelLibLoja'
 
 const RelatorioEstoque = () => {
   return (
@@ -30,9 +30,11 @@ const RelatorioEstoque = () => {
       </div>
       <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/document.png" alt="document" /> Relatório de Liberações</h1>
       <div className="container-md">
-        <SearchLiberacoes></SearchLiberacoes>
-        <SearchLibMotivo></SearchLibMotivo>
-        <SearchLibData></SearchLibData>
+
+        <RelLibPlaca></RelLibPlaca>
+        <RelLibMotivo></RelLibMotivo>
+        <RelLibData> </RelLibData>
+        <RelLibLoja></RelLibLoja>
       </div>
       <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/document.png" alt="document" /> Relatório de Acessos</h1>
       <div className="container-md">
@@ -42,10 +44,10 @@ const RelatorioEstoque = () => {
         <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/document.png" alt="search" /> Buscar Histórico do Veiculo</h1>
         <SearchHistory />
       </div>
-      <div>
+      {/*<div>
         <h1><img width="70" height="70" src="https://img.icons8.com/3d-fluency/94/document.png" alt="search" /> Relatorio de Inventário</h1>
         <SearchInventario></SearchInventario>
-      </div>
+      </div>*/}
     </div>
   )
 }

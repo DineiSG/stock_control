@@ -3,13 +3,10 @@ import styles from "../styles/CadVeic.module.css";
 import { Link, useLocation } from "react-router-dom";
 
 const CadVeic = () => {
-  const [veiculo, setVeiculo] = useState({ unidade: "", idUnidade: "", marca: "", modelo: "", cor: "", placa: "", ano: "", ano_modelo: "", valorMeioAcesso: "", veiculo_status: "", fipe: "", renavan: "", tag: "", });
-  const [tag, setTag] = useState("");
+  const [veiculo, setVeiculo] = useState({ unidade: "", marca: "", modelo: "", cor: "", placa: "", ano_fabricacao: "", ano_modelo: "",fipe: "", renavan: "", });
   const [fipe, setFipe] = useState("");
   const [unidade, setUnidade] = useState("");
-  const [idUnidade, setIdUnidade] = useState("");
   const [placa, setPlaca] = useState("");
-  const [veiculo_status, setVeiculoStatus] = useState("F");
   const [loading, setLoading] = useState();
   const [lojas, setLojas] = useState([]);
   const location = useLocation();
@@ -44,6 +41,8 @@ const CadVeic = () => {
         if (response.ok) {
           const dataVeiculo = await response.json();
           console.log("Dados do veiculo: ", dataVeiculo)
+
+          //Dados do veiculo retornados da base bin
           setVeiculo({
             ...veiculo,
             Fabricante: dataVeiculo.Fabricante,
@@ -89,7 +88,7 @@ const CadVeic = () => {
 
   //Função de conversao Hexadecimal para Wiegand. Essa função recebe o valor da tag em Hexadecimal e converte para Wiegand,
   // que e um formato muito utilizado em controle de acessos.
-  function hexToWiegand(hexValue) {
+ /* function hexToWiegand(hexValue) {
     // Divide o valor hexadecimal em duas partes
     const leftPartHex = hexValue.substring(0, 2); // Parte esquerda (2 primeiros caracteres)
     const rightPartHex = hexValue.substring(2); // Parte direita (restante dos caracteres)
@@ -104,14 +103,14 @@ const CadVeic = () => {
 
     // Concatena as partes formatadas
     return leftPartFormatted + rightPartFormatted;
-  }
+  }*/
 
   //Função para inserir os dados no BD
   const handleSubmit = async (e) => {
     // Converte o valor hexadecimal para o formato Wiegand
 
-    const convertedValue = hexToWiegand(tag);
-    const valorMeioAcesso = convertedValue;
+    /*const convertedValue = hexToWiegand(tag);
+    const valorMeioAcesso = convertedValue;*/
 
     /*Função que trata da inserção de data de forma automática */
     const formatTimestamp = (date) => {
@@ -145,19 +144,15 @@ const CadVeic = () => {
     e.preventDefault();
     const payload = {
       unidade,
-      idUnidade,
       marca: veiculo.Fabricante,
       modelo: veiculo.MarcaModelo,
       ano: veiculo.AnoFabricacao,
       ano_modelo: veiculo.AnoModelo,
       cor: veiculo.CorVeiculo,
       placa,
-      valorMeioAcesso,
-      veiculo_status,
       renavan: veiculo.renavam,
       data_registro,
       fipe: fipe.fipe,
-      tag,
     };
 
     const toUpperCasePayload = (data) => {
@@ -214,8 +209,8 @@ const CadVeic = () => {
           window.alert("Veiculo cadastrado com sucesso!");
           window.location.reload();
         } else {
-          if (placa || tag !== "") {
-            window.alert('Não foi possível realizar o cadastro do veículo. Verifique:\n 1 - Se algum veículo com a mesma placa já foi cadastrado.\n 2 - Se a tag informada ja se encontra em uso.');
+          if (placa !== "") {
+            window.alert('Não foi possível realizar o cadastro do veículo. O a placa informada já está cadastrada. Verifique a placa e tente novamente.');
           }
           window.location.reload();
         }
@@ -259,7 +254,6 @@ const CadVeic = () => {
     const descricao = selectedOption.getAttribute("data-descricao");
 
     setUnidade(descricao);
-    setIdUnidade(id);
   };
 
   return (
@@ -280,15 +274,13 @@ const CadVeic = () => {
             <form className={styles.cadastro} onSubmit={handleSubmit}>
               <label>
                 <p>Loja:</p>
-                <select type="text" name="loja" value={idUnidade} onChange={handleUnidadeChange} required> <option value="">SELECIONE UMA LOJA</option>
+                <select type="text" name="loja" value={unidade} onChange={handleUnidadeChange} required> <option value="">SELECIONE UMA LOJA</option>
                   {lojas.map((loja) => (
-                    <option key={loja.id} value={loja.id} data-descricao={loja.descricao}>
+                    <option key={loja.descricao} value={loja.decricao} data-descricao={loja.descricao}>
                       {loja.descricao} </option>))}
                 </select>
               </label>
-              <label>
-                <input className={styles.tag} type="hidden" value={idUnidade}></input>
-              </label>
+
               <label>
                 <p>Placa:</p>
                 <input className={styles.placa} type="text" name="placa" value={placa} onChange={(e) => setPlaca(e.target.value)} onBlur={handleBlur} required></input>
@@ -323,14 +315,6 @@ const CadVeic = () => {
               <label>
                 <p>Valor FIPE:</p>
                 <input type="text" name="fipe" value={fipe.fipe} readOnly disabled required></input>
-              </label>
-              <label>
-                <p>Tag:</p>
-                <input className={styles.tag} type="text" name="tag" maxLength={6} value={tag} onChange={(e) => setTag(e.target.value)} required></input>
-              </label>
-
-              <label>
-                <input className={styles.status} type="hidden" name="status" value={veiculo_status} onChange={(e) => setVeiculoStatus(e.target.value)} required maxLength={1}></input>
               </label>
               <button className={styles.cadastrar} onClick={() => setLoading} disabled={loading}> {loading ? "Buscando..." : "Cadastrar"} </button>
             </form>

@@ -12,7 +12,7 @@ const SearchVeiculos = () => {
     const [error, setError] = useState('')
     const [unidade, setUnidade] = useState('')
     const [idUnidade, setIdUnidade] = useState('')
-    const [editableFields, setEditableFields] = useState({ id: '', marca: '', modelo: '', cor: '', ano: '', ano_modelo: '', renavan: '', unidade: '', tag: '', fipe: '', observacoes: '', valorMeioAcesso: '', idUnidade: '' })
+    const [editableFields, setEditableFields] = useState({ id: '',placa:'', marca: '', modelo: '', cor: '', ano: '', ano_modelo: '', renavan: '', unidade: '', observacoes: ''})
 
 
 
@@ -38,13 +38,14 @@ const SearchVeiculos = () => {
         } catch (error) {
             window.alert("Erro ao buscar dados: ", error)
         }
+        setQuery('') // Limpa o campo de pesquisa após a busca
     }
 
 
 
     //Função de conversao Hexadecimal para Wiegand. Essa função recebe o valor da tag em Hexadecimal e converte para Wiegand,
     // que e um formato muito utilizado em controle de acessos.
-    function hexToWiegand(hexValue) {
+   /* function hexToWiegand(hexValue) {
         if (!hexValue) {
             console.error("hexValue está indefinido ou nulo:", hexValue);
             return '';
@@ -65,7 +66,7 @@ const SearchVeiculos = () => {
 
         // Concatena as partes formatadas
         return leftPartFormatted + rightPartFormatted;
-    }
+    }*/
 
     /*Função que transforma os campos de uma tabela gerada apos a pesquisa em campos editaveis */
     const handleInputChange = (e) => {
@@ -118,16 +119,17 @@ const SearchVeiculos = () => {
     }
 
 
-    const tag = editableFields.tag;
+    /*const tag = editableFields.tag;*/
+
     /*Função que salva os dados */
     const handleSave = async () => {
 
-        const convertedValue = hexToWiegand(tag);
+        /*const convertedValue = hexToWiegand(tag);
         editableFields.valorMeioAcesso = convertedValue;
-        console.log(convertedValue)
+        console.log(convertedValue)*/
 
         editableFields.unidade = unidade;
-        editableFields.idUnidade = idUnidade;
+        //editableFields.idUnidade = idUnidade;
 
         try {
             /*---------------------------Fazendo a verificação das vagas disponiveis */
@@ -210,14 +212,13 @@ const SearchVeiculos = () => {
     return (
         <div className={styles.container}>
             <div class="container-sm">
-                <h2 className={styles.title}>INFORME A PLACA DE UM VEÍCULO PARA BUSCAR INFORMAÇÕES:</h2>
+                {!busca ? <h2 className={styles.title}>INFORME A PLACA DE UM VEÍCULO PARA BUSCAR INFORMAÇÕES:</h2> : <h2 className={styles.title}>RESULTADO DA PESQUISA</h2>}
                 <form className={styles.pesquisa} onSubmit={handleSearch}>
                     <label>
-                        <p>Placa:</p>
-                        <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
+                       {!busca ?   <p>Placa:</p>: null}
+                        {!busca? <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />: null}
                     </label>
-                    <button className={styles.btn_buscar} type='submit' onClick={() => setBusca(!busca)}>
-                        {busca ? 'Buscar' : 'Buscar'}</button>
+                    <button className={styles.btn_buscar} type='submit' onClick={() => setBusca(!busca)}> {busca ? 'Nova Busca' : 'Buscar'}</button>
                 </form>
             </div>
             {busca ?
@@ -230,6 +231,7 @@ const SearchVeiculos = () => {
                             {results.map(result => (
                                 <tr className={styles.head} key={result.id}>
                                     <th className={styles.table_title} >DADOS DO VEÍCULO</th>
+                                    <th>Placa: {result.placa}</th>
                                     <th>Marca: {result.marca}</th>
                                     <th>Modelo: {result.modelo}</th>
                                     <th>Cor: {result.cor}</th>
@@ -246,13 +248,9 @@ const SearchVeiculos = () => {
                                             </option>
                                         ))}
                                     </select> : result.unidade}</th>
-                                    <th>Nº Tag: {edit ? <input className={styles.edit_data} type='text' name="tag" value={editableFields.tag} onChange={handleInputChange} /> : result.tag}</th>
-                                    <th>Status: {edit ? <input className={styles.edit_data} type='text' name="veiculo_status" value={editableFields.veiculo_status} onChange={handleInputChange} /> : result.veiculo_status}</th>
                                     <th>Ano de Fabricação: {result.ano}</th>
                                     <th>Ano Modelo: {result.ano_modelo}</th>
-                                    <th>Valor FIPE: {result.fipe}</th>
                                     <th>Observaçoes: {edit ? <input className={styles.edit_data} type='text' name="observacoes" value={editableFields.observacoes} onChange={handleInputChange} /> : result.observacoes}</th>
-                                    <th>Numero de Registro: {result.valorMeioAcesso}</th>
                                 </tr>
                             ))}
                         </thead>

@@ -74,10 +74,10 @@ const RelEstoqueLoja = () => {
 
       let filteredResults;
       if (upperCaseQuery === "ESTOQUE GERAL") {
-        filteredResults = data.filter((veiculo) => veiculo.unidade && veiculo.unidade.trim() !== "" && veiculo.valorMeioAcesso.trim() !== ""); //Buscando o estoque valido de todas as lojas
+        filteredResults = data.filter((veiculo) => veiculo.unidade && veiculo.unidade.trim() !== "" ); //Buscando o estoque valido de todas as lojas
         filteredResults.sort((a, b) => a.unidade.localeCompare(b.unidade)); //Filtrando as lojas de ordem alfabetica
       } else {
-        filteredResults = data.filter((veiculo) => veiculo.unidade.toUpperCase() === upperCaseQuery && veiculo.unidade.trim() !== "" && veiculo.valorMeioAcesso !== ""); //Buscando o estoque valido de uma loja
+        filteredResults = data.filter((veiculo) => veiculo.unidade.toUpperCase() === upperCaseQuery && veiculo.unidade.trim()); //Buscando o estoque valido de uma loja
       }
 
       if (filteredResults.length > 0) {
@@ -91,6 +91,7 @@ const RelEstoqueLoja = () => {
     } catch (error) {
       console.error("Erro ao conectar ao servidor", error);
     }
+    setQuery(""); // Limpa o campo de pesquisa após a busca
   };
 
   //Buscando as lojas para o select
@@ -137,11 +138,12 @@ const RelEstoqueLoja = () => {
       <div className={styles.container}>
         <div class="container-sm,">
           <div className={styles.input}>
-            <h2 className={styles.title}>INFORME O NOME DA LOJA</h2>
+            {!filtroLoja ?
+            <h2 className={styles.title}>INFORME O NOME DA LOJA</h2>: <h2 className={styles.title}>RELATÓRIO GERADO</h2>}
             <form className={styles.pesquisa} onSubmit={handleSearch}>
               <label>
-                <p>Selecione uma loja:</p>
-                <select value={query} onChange={(e) => setQuery(e.target.value)} required >
+                {!filtroLoja ? <p>Selecione uma loja:</p> : null}
+                {!filtroLoja ? <select value={query} onChange={(e) => setQuery(e.target.value)} required >
                   <option value=""></option>
                   <option value="ESTOQUE GERAL">ESTOQUE GERAL</option>
                   {lojas.map((loja) => (
@@ -149,15 +151,9 @@ const RelEstoqueLoja = () => {
                       {loja.descricao}
                     </option>
                   ))}
-                </select>
+                </select>: null}
               </label>
-              <button
-                className={styles.btn_buscar}
-                type="submit"
-                onClick={handleButtonClick}
-              >
-                {filtroLoja ? "Buscar" : "Buscar"}
-              </button>
+              <button className={styles.btn_buscar} type="submit" onClick={handleButtonClick} > {filtroLoja ? "Novo Relatório" : "Gerar Relatório"} </button>
             </form>
           </div>
         </div>
@@ -191,7 +187,6 @@ const RelEstoqueLoja = () => {
                     <th>Ano Fab.</th>
                     <th>Ano Mod.</th>
                     <th>Placa</th>
-                    <th>Tag</th>
                     <th>Valor FIPE</th>
                   </tr>
                 </thead>
@@ -207,7 +202,6 @@ const RelEstoqueLoja = () => {
                       <td>{result.ano}</td>
                       <td>{result.ano_modelo}</td>
                       <td>{result.placa}</td>
-                      <td>{result.tag}</td>
                       <td>{result.fipe}</td>
                     </tr>
                   </tbody>

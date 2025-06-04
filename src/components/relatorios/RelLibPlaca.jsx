@@ -1,8 +1,8 @@
 import React from 'react'
 import { useState, useRef } from 'react'
-import styles from '../styles/Liberar.module.css'
+import styles from "../styles/Relatorios.module.css"
 
-const SearchLiberacoes = () => {
+const RelLibPlaca = () => {
     const [filtroAcesso, setFiltroAcesso] = useState(false)
     const [query, setQuery] = useState()
     const [results, setResults] = useState([])
@@ -49,7 +49,7 @@ const SearchLiberacoes = () => {
             const filteredResults = data.filter(veiculo => veiculo.placa.toUpperCase() === upperCaseQuery);
             if (filteredResults.length > 0) {
                 setResults(filteredResults)
-             
+
 
             } else {
                 setResults([])
@@ -60,19 +60,20 @@ const SearchLiberacoes = () => {
             console.error('Erro: ', error)
 
         }
+        setQuery('') // Limpa o campo de pesquisa após a busca
     }
 
     return (
         <div>
             <div class="container-md">
                 <div className={styles.container}>
-                    <h2 className={styles.title} >INFORME A PLACA DO VEÍCULO:</h2>
+                    {!filtroAcesso ? <h2 className={styles.title} >INFORME A PLACA DO VEÍCULO:</h2> : <h2 className={styles.title} >RELATÓRIO DE LIBERAÇÕES POR PLACA GERADO</h2>}
                     <form className={styles.pesquisa} onSubmit={handleSearch}>
                         <label>
-                            <p>Placa:</p>
-                            <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required />
+                            {!filtroAcesso ?  <p>Placa:</p>: null}
+                            {!filtroAcesso ? <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} required /> : null}
                         </label>
-                        <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>{filtroAcesso ? 'Buscar' : 'Buscar'}</button>
+                        <button className={styles.btn_buscar} type='submit' onClick={handleButtonClick}>{filtroAcesso ? 'Novo Relatório' : 'Gerar Relatório'}</button>
                     </form>
                 </div>
             </div>
@@ -102,4 +103,4 @@ const SearchLiberacoes = () => {
     )
 }
 
-export default SearchLiberacoes
+export default RelLibPlaca

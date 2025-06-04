@@ -83,6 +83,7 @@ const RelBaixasLoja = () => {
     } catch (error) {
       console.error("Erro ao conectar ao servidor");
     }
+    setQuery(""); // Limpa o campo de pesquisa após a busca
   };
 
   //Buscando as lojas para o select
@@ -128,11 +129,11 @@ const RelBaixasLoja = () => {
     <div>
       <div className={styles.container}>
         <div className={styles.input}>
-          <h2 className={styles.title}>POR LOJA:</h2>
+          {!filtroLoja? <h2 className={styles.title}>POR LOJA:</h2> : <h2 className={styles.title}>RELATÓRIO DE BAIXAS POR LOJA GERADO</h2>}
           <form className={styles.pesquisa} onSubmit={handleSearch}>
             <label>
-              <p>Selecione uma loja:</p>
-              <select
+              {!filtroLoja? <p>Selecione uma loja:</p> : null}
+              {!filtroLoja? <select
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 required>
@@ -143,9 +144,9 @@ const RelBaixasLoja = () => {
                     {loja.descricao}
                   </option>
                 ))}
-              </select>
+              </select> : null}
             </label>
-            <button className={styles.btn_buscar} type="submit" onClick={handleButtonClick}> {filtroLoja ? "Buscar" : "Buscar"} </button>
+            <button className={styles.btn_buscar} type="submit" onClick={handleButtonClick}> {filtroLoja ? "Novo Relatório" : "Gerar Relatório"} </button>
           </form>
         </div>
       </div>
