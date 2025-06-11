@@ -93,7 +93,7 @@ const CadVeicManual = () => {
             const responseUnidade = await fetch(`http://localhost:8090/api/v1/veiculos/unidade/${unidade}`)
             const data = await responseUnidade.json()
 
-            const filteredResults = data.filter(veiculo => veiculo.valorMeioAcesso !== '').length;
+            const filteredResults = data.filter(veiculo => veiculo.placa !== '').length;
             console.log("Quantidade de veiculos: ", filteredResults.length)
 
             const responseLoja = await fetch(`http://localhost:8090/api/v1/lojas`)

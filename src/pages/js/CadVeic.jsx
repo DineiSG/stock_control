@@ -177,9 +177,7 @@ const CadVeic = () => {
       );
       const data = await responseUnidade.json();
 
-      const filteredResults = data.filter(
-        (veiculo) => veiculo.valorMeioAcesso !== ""
-      ).length;
+      const filteredResults = data.filter( (veiculo) => veiculo.placa !== "" ).length; 
       console.log("Quantidade de veiculos: ", filteredResults);
 
       const responseLoja = await fetch(`http://localhost:8090/api/v1/lojas`);

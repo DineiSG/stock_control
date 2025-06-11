@@ -93,9 +93,6 @@ const Baixar = () => {
     //Esta funçao envia para o bd o motivo e a data da baixa (data_registro) para a tabela vaga.baixas
     const baixaData = { ...editableFields, motivo: selectedMotivo, data_registro };
 
-    const updatedFields = { ...editableFields, data_alteracao: currentDate, valorMeioAcesso: '', unidade: null, idUnidade: null, tag: null }
-
-
 
     //Função que insere os dados na tabela vaga.baixas
     try {
@@ -109,16 +106,15 @@ const Baixar = () => {
 
       if (baixaResponse.ok) {
         const veiculo = baixaData.placa
-        const updateVeiculo = await fetch(`http://localhost:8090/api/v1/veiculos/placa/${veiculo}`, {
-          method: 'PUT',
+        const deleteVeiculo = await fetch(`http://localhost:8090/api/v1/veiculos/placa/${veiculo}`, {
+          method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(updatedFields)
+          }
         });
 
-        if (updateVeiculo.ok) {
-          console.log("Veículo atualizado no BD");
+        if (deleteVeiculo.ok) {
+          console.log("Veículo excluido do BD");
           window.alert("Baixa realizada com sucesso.")
 
           window.location.reload()
