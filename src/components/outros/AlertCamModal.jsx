@@ -1,12 +1,3 @@
-// Verificar permissão de notificação
-/*if (Notification.permission !== "granted") {
-      Notification.requestPermission().then((permission) => {
-        if (permission !== "granted") {
-          console.warn("Permissão de notificação negada.");
-          }
-          });
-          }*/
-
 import { useEffect, useState } from "react";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
