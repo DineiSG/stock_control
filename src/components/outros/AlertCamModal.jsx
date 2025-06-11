@@ -1,3 +1,12 @@
+// Verificar permissão de notificação
+/*if (Notification.permission !== "granted") {
+      Notification.requestPermission().then((permission) => {
+        if (permission !== "granted") {
+          console.warn("Permissão de notificação negada.");
+          }
+          });
+          }*/
+
 import { useEffect, useState } from "react";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
@@ -8,40 +17,88 @@ const AlertCamModal = () => {
   const [modalAberto, setModalAberto] = useState(false);
   const [stompClient, setStompClient] = useState(null);
 
-  // Conectar ao WebSocket quando o componente for montado
+
+  // Desbloquiar áudio ao clicar na página
+  // Isso é necessário para que o áudio possa ser reproduzido sem bloqueio do navegador
   useEffect(() => {
+    const desbloquearAudio = () => {
+      const audio = document.getElementById("alertSound");
+      if (audio) {
+        audio.play().then(() => {
+          audio.pause();
+          audio.currentTime = 0;
+          console.log("Áudio desbloqueado com sucesso.");
+        }).catch((err) => {
+          console.warn("Falha ao desbloquear o áudio:", err);
+        });
+      }
+      document.removeEventListener("click", desbloquearAudio);// Remove o ouvinte após a interação
+    };
+
+    document.addEventListener("click", desbloquearAudio);// Aguarda o primeiro clique do usuário
+
+    // Solicitar permissão de notificação (opcional)
     if (Notification.permission !== "granted") {
-      Notification.requestPermission().then((permission) => {
-        if (permission !== "granted") {
-          console.warn("Permissão de notificação negada.");
-        }
-      });
+      Notification.requestPermission();
     }
-    // Criar conexão WebSocket
-    const socket = new SockJS("http://localhost:8092/ws"); // Ajuste para o endereço do seu servidor
+  }, []);
+
+  useEffect(() => {
+    const socket = new SockJS("http://localhost:8092/ws");// Conecta ao endpoint SockJS
     const client = new Client({
       webSocketFactory: () => socket,
-      debug: (str) => {
-        console.log(str);
-      },
-      reconnectDelay: 5000,
-      heartbeatIncoming: 4000,
-      heartbeatOutgoing: 4000,
+      debug: (str) => console.log(str),
+      reconnectDelay: 5000,// Reconexão automática após 5s
+      heartbeatIncoming: 4000,// Heartbeat de entrada
+      heartbeatOutgoing: 4000,// Heartbeat de saída
     });
 
-    // Configurar o que acontece quando conectar
+    // Ao conectar com sucesso
     client.onConnect = () => {
       console.log("Conectado ao WebSocket");
 
-      // Inscrever-se no tópico de mensagens
       client.subscribe("/topic/mensagens", (mensagem) => {
         const novaMsg = mensagem.body;
-        setMensagens((msgs) => [...msgs, novaMsg]);
+        setMensagens((msgs) => [...msgs, novaMsg]);// Armazena a nova mensagem
+        setModalAberto(true);// Abre o modal
 
-        // Abrir o modal automaticamente quando receber uma mensagem
-        setModalAberto(true);
 
-        // Exibir notificação se estiver em outra aba
+        //Piscar título da aba do navegador
+        let originalTitle = document.title;
+        let interval;
+
+        function startTitleBlink(mensagem = "🔔 Atenção!") {
+          interval = setInterval(() => {
+            document.title =
+              document.title === originalTitle ? mensagem : originalTitle;
+          }, 1000);
+        }
+
+        startTitleBlink(mensagem.body);
+
+        // Para o piscar do título quando a aba for focada
+        function stopTitleBlink() {
+          clearInterval(interval);
+          document.title = originalTitle;
+        }
+
+        // Adiciona evento de foco na aba
+        document.addEventListener("visibilitychange", () => {
+          if (!document.hidden) {
+            stopTitleBlink();
+          }
+        });
+
+        // Som de alerta
+        const audio = document.getElementById("alertSound");
+        if (audio) {
+          audio.currentTime = 0;
+          audio.play().catch((err) => {
+            console.warn( "Som bloqueado até que o usuário interaja com a página.", err ); // O navegador pode bloquear o som até que o usuário interaja com a página
+          });
+        }
+
+        // Notificação (se permitido)
         if (Notification.permission === "granted") {
           new Notification("Auto Control", {
             body: mensagem.body,
@@ -51,17 +108,16 @@ const AlertCamModal = () => {
       });
     };
 
-    // Configurar o que acontece em caso de erro
+    // Em caso de erro na conexão
+    // Exibe mensagem de erro no console
     client.onStompError = (frame) => {
       console.error("Erro na conexão Stomp:", frame.headers["message"]);
       console.error("Detalhes adicionais:", frame.body);
     };
 
-    // Ativar a conexão
     client.activate();
     setStompClient(client);
 
-    // Limpar a conexão quando o componente for desmontado
     return () => {
       if (client) {
         client.deactivate();
@@ -69,19 +125,18 @@ const AlertCamModal = () => {
     };
   }, []);
 
-  // Função para fechar o modal
+  // Função para fechar o modal e limpar as mensagens
   const fecharModal = () => {
     setModalAberto(false);
-    setMensagens([]); // Limpa as mensagens ao fechar o modal
+    setMensagens([]);
   };
 
   return (
     <>
-      {/* Botão para abrir o modal manualmente */}
-      {/*<button onClick={() => setModalAberto(true)} className={styles.btn_abrir_modal}>
-                Ver Mensagens ({mensagens.length})
-            </button>*/}
-      {/* Modal */}
+      {/* Elemento de som */}
+      <audio id="alertSound" src="/alerta.mp3" preload="auto" />
+
+      {/* Modal de alerta */}
       {modalAberto && (
         <div className={styles.modal_overlay}>
           <div className={styles.modal_conteudo}>
@@ -109,9 +164,11 @@ const AlertCamModal = () => {
               )}
             </div>
             <div className={styles.modal_rodape}>
+              {/* Botão para fechar o modal */}
               <button
                 onClick={fecharModal}
-                className={styles.btn_fechar_rodape}>
+                className={styles.btn_fechar_rodape}
+              >
                 Fechar
               </button>
             </div>
