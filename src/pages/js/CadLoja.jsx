@@ -5,7 +5,6 @@ import styles from '../styles/CadLoja.module.css'
 const CadLoja = () => {
 
     const [descricao, setDescricao] = useState('')
-    const [box, setBox] = useState('')
     const [telefone, setTelefone] = useState('')
     const [email, setEmail] = useState('')
     const [vagas, setVagas]=useState("1000")
@@ -36,7 +35,7 @@ const CadLoja = () => {
 
         e.preventDefault()
         const payload = {
-            descricao, box, telefone, email, qtdVeiculos, dataRegistro, vagas
+            descricao, telefone, email, qtdVeiculos, dataRegistro, vagas
         }
 
         const toUpperCasePayload = (data) => {
@@ -91,11 +90,6 @@ const CadLoja = () => {
                             <label>
                                 <p>Nome:</p>
                                 <input className={styles.nome} type='text' name='descricao' value={descricao} onChange={(e) => setDescricao(e.target.value)} required></input>
-                            </label>
-
-                            <label>
-                                <p>Nº Box:</p>
-                                <input className={styles.box} type='number' name='box' value={box} onChange={(e) => setBox(e.target.value)} required></input>
                             </label>
                             <label>
                                 <p>Tel.:</p>

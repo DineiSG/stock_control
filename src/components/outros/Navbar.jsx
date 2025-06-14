@@ -93,7 +93,7 @@ const Navbar = () => {
                     <p className={styles.nav}>GESTÃO DE ESTOQUE</p>
                     <li><Link to='cad_veic' className={styles.dropdown}>Cad. Veiculo BIN</Link></li>
                     <li><Link to='cadastro_manual' className={styles.dropdown}>Cad. Veiculo S/ BIN</Link></li>
-                    {/*<li><Link to='cad_loja' className={styles.dropdown}>Cad. Loja</Link></li>*/}
+                    <li><Link to='cad_loja' className={styles.dropdown}>Cad. Loja</Link></li>
                     {/*<li><Link to='/inventario' className={styles.dropdown}>Inventário</Link> </li>*/}
                     <li><Link to='/buscas' className={styles.dropdown} i>Pesquisar</Link></li>
                     <p className={styles.nav}>ADMINISTRAÇÃO</p>
