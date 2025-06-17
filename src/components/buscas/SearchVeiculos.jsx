@@ -122,7 +122,7 @@ const SearchVeiculos = () => {
     /*const tag = editableFields.tag;*/
 
     /*Função que salva os dados */
-    const handleSave = async () => {
+const handleSave = async () => {
 
         /*const convertedValue = hexToWiegand(tag);
         editableFields.valorMeioAcesso = convertedValue;
@@ -136,7 +136,7 @@ const SearchVeiculos = () => {
             const responseUnidade = await fetch(`http://localhost:8090/api/v1/veiculos/unidade/${unidade}`)
             const data = await responseUnidade.json()
 
-            const filteredResults = data.filter(veiculo => veiculo.valorMeioAcesso !== '').length;
+            const filteredResults = data.filter(veiculo => veiculo.placa !== '').length;
             console.log("Quantidade de veiculos: ", filteredResults.length)
 
             const responseLoja = await fetch(`http://localhost:8090/api/v1/lojas`)
@@ -180,7 +180,7 @@ const SearchVeiculos = () => {
     useEffect(() => {
         const fetchLojas = async () => {
             try {
-                const response = await fetch(`http://localhost:8090/api/v1/lojas`)
+                const response = await fetch(`http://192.168.1.112:8090/api/v1/lojas`)
                 const data = await response.json()
                 if (Array.isArray(data)) {
                     const lojasOrdenadas = data.sort((a, b) => a.descricao.localeCompare(b.descricao))
@@ -248,8 +248,8 @@ const SearchVeiculos = () => {
                                             </option>
                                         ))}
                                     </select> : result.unidade}</th>
-                                    <th>Ano de Fabricação: {result.ano}</th>
-                                    <th>Ano Modelo: {result.ano_modelo}</th>
+                                    <th>Ano de Fabricação: {edit ? <input className={styles.edit_data} type='text' name="ano_fabricacao" value={editableFields.ano_fabricacao} onChange={handleInputChange} /> : result.ano_fabricacao}</th>
+                                    <th>Ano Modelo: {edit ? <input className={styles.edit_data} type='text' name="ano_modelo" value={editableFields.ano_modelo} onChange={handleInputChange} /> : result.ano_modelo}</th>
                                     <th>Observaçoes: {edit ? <input className={styles.edit_data} type='text' name="observacoes" value={editableFields.observacoes} onChange={handleInputChange} /> : result.observacoes}</th>
                                 </tr>
                             ))}

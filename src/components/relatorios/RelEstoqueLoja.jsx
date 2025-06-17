@@ -147,7 +147,7 @@ const RelEstoqueLoja = () => {
                   <option value=""></option>
                   <option value="ESTOQUE GERAL">ESTOQUE GERAL</option>
                   {lojas.map((loja) => (
-                    <option key={loja.id} value={loja.descricao}>
+                    <option key={loja.descricao} value={loja.descricao}>
                       {loja.descricao}
                     </option>
                   ))}

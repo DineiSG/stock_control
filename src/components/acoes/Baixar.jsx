@@ -10,7 +10,7 @@ const Baixar = () => {
   const [selectedMotivo, setSelectedMotivo] = useState('')
   const [editableFields, setEditableFields] = useState({
     id: '', placa: '', marca: '', modelo: '', cor: '', observacoes: '', renavan: '',
-    id_unidade: '', unidade: '', valorMeioAcesso: '', motivo: ''
+    id_unidade: '', unidade: '', valorMeioAcesso: '', motivo: '', dataRegistro: ''
   })
 
   /*Função que busca informações de um veiculo de acordo com a placa */
@@ -85,13 +85,13 @@ const Baixar = () => {
     };
 
     //Atribuindo a função à coluna data_registro
-    const data_registro = formatTimestamp(new Date());
+    const dataRegistro = formatTimestamp(new Date());
 
     //Esta função retem a data atual
     const currentDate = new Date().toISOString();
 
     //Esta funçao envia para o bd o motivo e a data da baixa (data_registro) para a tabela vaga.baixas
-    const baixaData = { ...editableFields, motivo: selectedMotivo, data_registro };
+    const baixaData = { ...editableFields, motivo: selectedMotivo, dataRegistro };
 
 
     //Função que insere os dados na tabela vaga.baixas

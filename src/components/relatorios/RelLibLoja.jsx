@@ -140,7 +140,7 @@ const [filtroLoja, setFiltroLoja] = useState(false);
                 <option value=""></option>
                 <option value="TODAS AS LOJAS">TODAS AS LOJAS</option>
                 {lojas.map((loja) => (
-                  <option key={loja.id} value={loja.descricao}>
+                  <option key={loja.descricao} value={loja.descricao}>
                     {loja.descricao}
                   </option>
                 ))}

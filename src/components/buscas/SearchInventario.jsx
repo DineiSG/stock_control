@@ -105,7 +105,7 @@ const SearchInventario = () => {
                 <option value=""></option>
                 <option value='TODOS'>TODOS OS INVENTARIOS REALIZADOS</option>
                 {lojas.map((loja) => (
-                  <option key={loja.id} value={loja.descricao}>
+                  <option key={loja.descricao} value={loja.descricao}>
                     {loja.descricao}
                   </option>
                 ))}

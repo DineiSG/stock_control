@@ -97,9 +97,9 @@ const Navbar = () => {
                     {/*<li><Link to='/inventario' className={styles.dropdown}>Inventário</Link> </li>*/}
                     <li><Link to='/buscas' className={styles.dropdown} i>Pesquisar</Link></li>
                     <p className={styles.nav}>ADMINISTRAÇÃO</p>
-                    <li><button onClick={() => handleOpenModal('/liberacoes')} className={styles.dropdown}>Liberar Veículo</button></li>
-                    <li><button onClick={() => handleOpenModal('/baixar_veic')} className={styles.dropdown}>Baixar Veículo</button></li>
-                    <li><button onClick={() => handleOpenModal('/cad_user')} className={styles.dropdown}>Cad. Usuário</button></li>
+                    <li><Link to='/liberacoes' className={styles.dropdown}>Liberar Veículo</Link></li>
+                    <li><Link to='/baixar_veic' className={styles.dropdown}>Baixar Veículo</Link></li>
+                    <li><Link to='/cad_user' className={styles.dropdown}>Cad. Usuário</Link></li>
                     <li><Link to='relatorio_estoque' className={styles.dropdown}>Relatórios</Link></li>
                     <li><Link to='dashboard' className={styles.dropdown}>Dashboard</Link></li>
 

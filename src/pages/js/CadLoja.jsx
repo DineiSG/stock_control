@@ -14,7 +14,7 @@ const CadLoja = () => {
 
 
     const handleSubmit = async (e) => {
-        /*Função que trata da inserção de data de forma automática */
+        /*Função que trata da inserção de data de forma automática
         const formatTimestamp = (date) => {
             const pad = (num, size) => ('000' + num).slice(size * -1);
             const offset = -date.getTimezoneOffset();
@@ -31,11 +31,11 @@ const CadLoja = () => {
                 sign + offsetHours + ':' + offsetMinutes
             return dateString;
         };
-        const dataRegistro = formatTimestamp(new Date());
+        const dataRegistro = formatTimestamp(new Date()); */
 
         e.preventDefault()
         const payload = {
-            descricao, telefone, email, qtdVeiculos, dataRegistro, vagas
+            descricao, telefone, email, qtdVeiculos, vagas
         }
 
         const toUpperCasePayload = (data) => {
